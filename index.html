@@ -1,0 +1,1585 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Екі тіл">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#132026" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Американский английский и казахский: уроки, произношение, собеседник и повторение.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<title>Екі тіл</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+:root{color-scheme:light; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0; font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; -webkit-tap-highlight-color:transparent}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<style>
+/* Layout: one app column; top bar with a steppe ornament band, tabbed views, full-screen lesson overlay */
+:root{
+  --bg:#EDF1F3; --surface:#FFFFFF; --surface-2:#E2E8EC; --ink:#122129; --muted:#5A6A73; --line:#D2DBE0;
+  --sky:#0B7BA6; --gold:#C98A12; --brick:#B9442C; --ok:#1C8556; --ok-bg:#DDF2E7; --bad:#C23838; --bad-bg:#F8E0E0;
+  --accent:var(--sky); --accent-2:var(--gold); --on-accent:#FFFFFF;
+  --f-display:"Unbounded","Manrope",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0B1317; --surface:#132026; --surface-2:#1A2B33; --ink:#E4EDF0; --muted:#92A4AD; --line:#253740;
+  --sky:#3AB2DD; --gold:#EDB540; --brick:#EC6E53; --ok:#45C38A; --ok-bg:#143326; --bad:#F06A6A; --bad-bg:#3A1A1C; --on-accent:#08141A; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0B1317; --surface:#132026; --surface-2:#1A2B33; --ink:#E4EDF0; --muted:#92A4AD; --line:#253740;
+  --sky:#3AB2DD; --gold:#EDB540; --brick:#EC6E53; --ok:#45C38A; --ok-bg:#143326; --bad:#F06A6A; --bad-bg:#3A1A1C; --on-accent:#08141A; color-scheme:dark }
+body[data-lang="en"]{ --accent:var(--brick); --accent-2:var(--sky) }
+body[data-lang="kk"]{ --accent:var(--sky); --accent-2:var(--gold) }
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased}
+button{font:inherit; color:inherit; cursor:pointer}
+button:focus-visible, input:focus-visible, select:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display); font-weight:700; text-wrap:balance; margin:0; letter-spacing:-.01em}
+.wrap{max-width:960px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+.muted{color:var(--muted)}
+.label{font-size:11px; text-transform:uppercase; letter-spacing:.09em; font-weight:700; color:var(--muted)}
+
+/* top bar */
+.top{background:var(--surface); border-bottom:1px solid var(--line); position:sticky; top:env(safe-area-inset-top,0px); z-index:20}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--surface)}
+.top-row{display:flex; align-items:center; gap:12px; padding-block:12px; flex-wrap:wrap}
+.logo{display:flex; align-items:baseline; gap:8px; margin-right:auto}
+.logo b{font-family:var(--f-display); font-size:20px; letter-spacing:-.02em}
+.logo span{font-size:12px; color:var(--muted)}
+.seg{display:inline-flex; background:var(--surface-2); border-radius:999px; padding:3px}
+.seg button{border:0; background:transparent; padding:7px 14px; border-radius:999px; font-weight:700; font-size:13px; color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 3px rgb(0 0 0 / .12)}
+.chips{display:flex; gap:8px}
+.chip{display:inline-flex; align-items:center; gap:6px; font-weight:700; font-size:13px; padding:6px 10px; border-radius:999px; background:var(--surface-2); font-variant-numeric:tabular-nums}
+.chip svg{width:15px; height:15px}
+.ornament{display:block; width:100%; height:12px; color:var(--accent); opacity:.55}
+body[data-lang="en"] .orn-kk, body[data-lang="kk"] .orn-en{display:none}
+.tabs{display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; padding-bottom:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{border:0; background:none; padding:10px 12px; font-weight:700; font-size:14px; color:var(--muted); border-bottom:3px solid transparent; white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--accent)}
+
+main{padding-block:24px 64px}
+.view{display:grid; gap:20px}
+
+/* hero / today */
+.today{display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px}
+.ring{width:96px; height:96px; position:relative}
+.ring svg{width:100%; height:100%; transform:rotate(-90deg)}
+.ring .num{position:absolute; inset:0; display:grid; place-items:center; text-align:center; font-family:var(--f-display); font-size:18px; line-height:1.1}
+.ring .num small{display:block; font-family:var(--f-body); font-size:11px; color:var(--muted); font-weight:600}
+.today h1{font-size:clamp(20px,3.6vw,28px)}
+.today-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+.btn{border:0; border-radius:12px; padding:12px 18px; font-weight:800; font-size:15px; background:var(--accent); color:var(--on-accent); box-shadow:0 3px 0 color-mix(in srgb, var(--accent) 60%, #000)}
+.btn:active{transform:translateY(2px); box-shadow:0 1px 0 color-mix(in srgb, var(--accent) 60%, #000)}
+.btn.ghost{background:var(--surface-2); color:var(--ink); box-shadow:0 3px 0 var(--line)}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+.btn.wide{width:100%}
+
+/* levels path */
+.level{display:grid; gap:12px}
+.level-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.level-head h2{font-size:18px}
+.badge{font-family:var(--f-display); font-size:12px; padding:4px 9px; border-radius:8px; background:var(--accent); color:var(--on-accent)}
+.topics{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px}
+.topic{display:grid; gap:6px; text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; position:relative; min-width:0}
+.topic:hover{border-color:var(--accent)}
+.topic .t{font-weight:800; font-size:16px}
+.topic .s{font-size:13px; color:var(--muted)}
+.topic .meter{height:6px; border-radius:6px; background:var(--surface-2); overflow:hidden; margin-top:4px}
+.topic .meter i{display:block; height:100%; background:var(--ok)}
+.topic .flag{position:absolute; top:12px; right:12px; font-size:11px; font-weight:800; padding:3px 8px; border-radius:999px}
+.flag.done{background:var(--ok-bg); color:var(--ok)}
+.flag.next{background:var(--accent); color:var(--on-accent)}
+
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px; display:grid; gap:12px; min-width:0}
+.panel h2{font-size:18px}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px}
+.stat{background:var(--surface-2); border-radius:12px; padding:14px}
+.stat b{display:block; font-family:var(--f-display); font-size:24px; font-variant-numeric:tabular-nums}
+.bars{display:grid; grid-template-columns:repeat(14,1fr); gap:6px; align-items:end; height:120px}
+.bars div{display:grid; gap:4px; justify-items:center; align-content:end; height:100%}
+.bars i{display:block; width:100%; max-width:22px; border-radius:5px 5px 2px 2px; background:var(--accent); min-height:3px}
+.bars i.zero{background:var(--surface-2)}
+.bars span{font-size:10px; color:var(--muted); font-variant-numeric:tabular-nums}
+
+/* grammar */
+details.gram{background:var(--surface); border:1px solid var(--line); border-radius:var(--r)}
+details.gram summary{cursor:pointer; padding:16px 20px; font-weight:800; display:flex; gap:10px; align-items:center; list-style:none}
+details.gram summary::-webkit-details-marker{display:none}
+details.gram summary::after{content:"+"; margin-left:auto; font-family:var(--f-display); color:var(--muted)}
+details.gram[open] summary::after{content:"–"}
+.gram-body{padding:0 20px 20px; display:grid; gap:14px; max-width:72ch}
+.gram-body h3{font-size:14px; font-family:var(--f-body); font-weight:800}
+.gram-body p{margin:0}
+.ex{background:var(--surface-2); border-radius:10px; padding:10px 12px; display:grid; gap:2px; font-size:14px}
+.ex b{font-weight:700}
+.ex span{color:var(--muted)}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse; font-size:14px; min-width:420px}
+.tbl td,.tbl th{border-bottom:1px solid var(--line); padding:6px 10px; text-align:left}
+.tbl th{font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted)}
+
+/* alphabet */
+.letters{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px}
+.letter{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; display:grid; gap:6px; text-align:left}
+.letter .big{font-family:var(--f-display); font-size:34px; color:var(--accent); line-height:1}
+.letter .w{font-weight:800}
+.letter .h{font-size:13px; color:var(--muted)}
+
+/* review cards */
+.flash{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:32px 20px; min-height:240px; display:grid; place-items:center; text-align:center; gap:10px}
+.flash .front{font-family:var(--f-display); font-size:clamp(22px,5vw,34px); overflow-wrap:anywhere}
+.flash .back{font-size:18px; font-weight:700}
+.rate{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+.rate button{border:1px solid var(--line); background:var(--surface); border-radius:12px; padding:10px 4px; font-weight:800; font-size:13px; display:grid; gap:2px}
+.rate button small{font-weight:600; color:var(--muted); font-size:11px}
+.rate .again{color:var(--bad)} .rate .good{color:var(--ok)}
+
+.speak{border:0; background:var(--surface-2); width:40px; height:40px; border-radius:50%; display:inline-grid; place-items:center; flex:none}
+.speak svg{width:20px; height:20px; color:var(--accent)}
+.speak.big{width:88px; height:88px} .speak.big svg{width:40px; height:40px}
+
+/* lesson overlay */
+.overlay{position:fixed; inset:0; z-index:50; background:var(--bg); display:flex; flex-direction:column; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
+.ov-top{display:flex; align-items:center; gap:14px; padding-block:14px}
+.close{border:0; background:none; font-size:26px; line-height:1; color:var(--muted); padding:4px 8px}
+.prog{flex:1; height:12px; background:var(--surface-2); border-radius:999px; overflow:hidden}
+.prog i{display:block; height:100%; background:var(--ok); border-radius:999px; transition:width .3s}
+.ov-body{flex:1; overflow-y:auto}
+.ov-body .wrap{max-width:640px; padding-block:12px 24px; display:grid; gap:18px}
+.q-title{font-size:clamp(18px,3.5vw,22px)}
+.prompt{display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px}
+.prompt .p{font-size:clamp(20px,4.5vw,28px); font-weight:800; overflow-wrap:anywhere; min-width:0}
+.options{display:grid; gap:10px}
+.opt{display:flex; gap:12px; align-items:center; text-align:left; background:var(--surface); border:2px solid var(--line); border-radius:12px; padding:14px 16px; font-weight:700; font-size:16px; box-shadow:0 2px 0 var(--line); min-width:0}
+.opt .k{font-size:12px; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:1px 7px; flex:none}
+.opt.sel{border-color:var(--accent); background:color-mix(in srgb, var(--accent) 10%, var(--surface))}
+.opt.right{border-color:var(--ok); background:var(--ok-bg)}
+.opt.wrong{border-color:var(--bad); background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+.answer-line{min-height:64px; border-bottom:2px solid var(--line); display:flex; flex-wrap:wrap; gap:8px; padding:8px 0; align-content:flex-start}
+.bank{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
+.tok{border:2px solid var(--line); background:var(--surface); border-radius:10px; padding:8px 12px; font-weight:700; box-shadow:0 2px 0 var(--line)}
+.tok.used{visibility:hidden}
+.match{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.match .col{display:grid; gap:10px; align-content:start; min-width:0}
+.match .opt{justify-content:center; text-align:center; font-size:15px; padding:12px 8px}
+.match .opt.gone{opacity:.35; border-color:var(--ok)}
+.typebox{width:100%; font:inherit; font-size:18px; font-weight:600; padding:14px 16px; border-radius:12px; border:2px solid var(--line); background:var(--surface); color:var(--ink)}
+.kbd{display:flex; flex-wrap:wrap; gap:6px}
+.kbd button{border:1px solid var(--line); background:var(--surface); border-radius:8px; min-width:38px; padding:6px 8px; font-weight:800; font-size:16px}
+.ov-foot{border-top:1px solid var(--line); background:var(--surface)}
+.ov-foot .wrap{max-width:640px; padding-block:14px; display:grid; gap:10px}
+.ov-foot.ok{background:var(--ok-bg); border-color:var(--ok)}
+.ov-foot.bad{background:var(--bad-bg); border-color:var(--bad)}
+.fb-title{font-weight:800; font-size:17px}
+.ov-foot.ok .fb-title{color:var(--ok)} .ov-foot.bad .fb-title{color:var(--bad)}
+.ov-foot.ok .btn{background:var(--ok); box-shadow:0 3px 0 color-mix(in srgb, var(--ok) 60%, #000); color:var(--surface)}
+.ov-foot.bad .btn{background:var(--bad); box-shadow:0 3px 0 color-mix(in srgb, var(--bad) 60%, #000); color:var(--surface)}
+.study-card{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px 20px; display:grid; gap:10px; justify-items:center; text-align:center}
+.study-card .w{font-family:var(--f-display); font-size:clamp(24px,6vw,36px); overflow-wrap:anywhere}
+.study-card .r{font-size:18px; font-weight:700; color:var(--muted)}
+.result{text-align:center; display:grid; gap:14px; justify-items:center; padding-top:24px}
+.result .score{font-family:var(--f-display); font-size:56px; color:var(--accent)}
+.toast{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:10px 16px; border-radius:10px; font-weight:600; font-size:14px; z-index:80; max-width:calc(100% - 32px)}
+.note{font-size:13px; color:var(--muted)}
+body:has(.overlay) .toast{bottom:calc(130px + env(safe-area-inset-bottom,0px))}
+.plan{display:grid; gap:10px; margin:0; padding-left:20px}
+.plan li{padding-left:4px}
+.goal-sel{display:flex; gap:8px; flex-wrap:wrap}
+.hearts{display:inline-flex; align-items:center; gap:5px; font-weight:800; color:var(--bad); font-variant-numeric:tabular-nums}
+.hearts svg{width:22px; height:22px}
+.combo{display:inline-block; margin-left:8px; font-size:13px; font-weight:800; padding:2px 9px; border-radius:999px; background:var(--gold); color:#1b1300}
+.mic{width:96px; height:96px; border-radius:50%; border:0; background:var(--accent); color:var(--on-accent); display:grid; place-items:center; box-shadow:0 4px 0 color-mix(in srgb, var(--accent) 60%, #000)}
+.mic svg{width:42px; height:42px}
+.mic.on{background:var(--bad); animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--bad) 55%, transparent)}100%{box-shadow:0 0 0 24px transparent}}
+.heard{font-size:18px; font-weight:700; text-align:center; min-height:28px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center}
+.heard .ok{color:var(--ok)} .heard .miss{color:var(--bad); text-decoration:underline wavy}
+.heard .part{color:var(--muted); font-style:italic}
+.stars{display:flex; gap:4px; justify-content:center}
+.stars svg{width:30px; height:30px}
+.stars.sm svg{width:16px; height:16px}
+.star-on{color:var(--gold)} .star-off{color:var(--surface-2)}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .35s}
+@keyframes pop{50%{transform:scale(1.15)}}
+.games{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px}
+.game{display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center; text-align:left; border:0; border-radius:var(--r); padding:18px; background:var(--ink); color:var(--bg)}
+.game .gi{width:52px; height:52px; border-radius:14px; display:grid; place-items:center; background:var(--accent); color:var(--on-accent)}
+.game .gi svg{width:28px; height:28px}
+.game b{font-family:var(--f-display); font-size:16px; display:block}
+.game span{font-size:13px; opacity:.75}
+.topic.locked{opacity:.5}
+.ach-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px}
+.ach{display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:center; background:var(--surface-2); border-radius:12px; padding:12px; opacity:.5}
+.ach.got{opacity:1; background:color-mix(in srgb, var(--gold) 18%, var(--surface))}
+.ach .medal{width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:var(--line); font-family:var(--f-display); font-size:13px}
+.ach.got .medal{background:var(--gold); color:#1b1300}
+.ach b{display:block; font-size:13px} .ach span{font-size:12px; color:var(--muted)}
+.bz-score{font-family:var(--f-display); font-size:44px; color:var(--accent); text-align:center; line-height:1}
+#confetti{position:fixed; inset:0; pointer-events:none; z-index:90; width:100%; height:100%}
+
+
+.hero-stats{display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:12px}
+.hero{background:var(--accent); color:var(--on-accent); border-radius:12px; padding:14px 16px; display:grid; align-content:center}
+.hero b{font-family:var(--f-display); font-size:48px; line-height:1; font-variant-numeric:tabular-nums}
+.hero span{font-weight:700} .hero small{opacity:.8; font-weight:600}
+.chart{display:grid; grid-template-columns:28px 1fr; grid-template-rows:160px auto auto; column-gap:8px}
+.yax{display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end; font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; margin-block:-7px}
+.plot{position:relative; display:grid; gap:2px; align-items:end; height:160px}
+.plot .gl{position:absolute; left:0; right:0; height:0; border-top:1px dashed var(--line)}
+.plot .gl.base{border-top:1px solid var(--muted); opacity:.5}
+.plot .col{height:100%; display:flex; align-items:flex-end; justify-content:center; cursor:default; position:relative; z-index:1}
+.plot .col b{display:block; width:100%; max-width:18px; background:var(--accent); border-radius:4px 4px 0 0}
+.plot .col:hover b{filter:brightness(1.15)}
+.plot .col:hover{background:color-mix(in srgb, var(--accent) 8%, transparent); border-radius:4px}
+.xax{grid-column:2; display:grid; gap:2px; font-size:10px; color:var(--muted); font-variant-numeric:tabular-nums; margin-top:4px}
+.xax span{text-align:center; white-space:nowrap; overflow:visible}
+.unit{grid-column:2; font-size:11px; color:var(--muted); margin-top:2px}
+.heat-wrap{display:grid; grid-template-columns:auto 1fr; gap:6px; overflow-x:auto}
+.heat-days{display:grid; grid-template-rows:repeat(7,1fr); font-size:10px; color:var(--muted); gap:3px}
+.heat{display:grid; grid-template-rows:repeat(7,1fr); grid-auto-flow:column; grid-auto-columns:minmax(12px,1fr); gap:3px}
+.heat i, .heat-legend i{display:block; aspect-ratio:1; border-radius:3px; min-width:12px}
+.h0{background:var(--surface-2)} .hf{background:transparent}
+.h1{background:color-mix(in srgb, var(--accent) 30%, var(--surface-2))}
+.h2{background:color-mix(in srgb, var(--accent) 55%, var(--surface-2))}
+.h3{background:color-mix(in srgb, var(--accent) 78%, var(--surface-2))}
+.h4{background:var(--accent)}
+.heat-legend{display:flex; gap:4px; align-items:center; justify-content:flex-end; font-size:11px; color:var(--muted)}
+.heat-legend i{width:12px}
+table.cmp td, table.cmp th{font-variant-numeric:tabular-nums}
+table.cmp tr.cur td{font-weight:800}
+#tip{position:fixed; z-index:95; pointer-events:none; background:var(--ink); color:var(--bg); font-size:12px; font-weight:600; padding:6px 9px; border-radius:8px; white-space:nowrap}
+@media (max-width:700px){ .hero-stats{grid-template-columns:1fr 1fr} .hero{grid-column:1/-1} }
+.scen{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px}
+.chat{display:grid; gap:12px; max-width:720px; width:100%; margin:0 auto}
+.msgs{display:grid; gap:12px; align-content:start}
+.msg{max-width:88%; display:grid; gap:6px; min-width:0}
+.msg.ai{justify-self:start} .msg.me{justify-self:end}
+.bubble{padding:12px 14px; border-radius:16px; font-size:16px; overflow-wrap:anywhere}
+.ai .bubble{background:var(--surface); border:1px solid var(--line); border-bottom-left-radius:4px}
+.me .bubble{background:var(--accent); color:var(--on-accent); border-bottom-right-radius:4px}
+.msg-tools{display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:13px}
+.linkbtn{border:0; background:none; padding:2px 0; color:var(--accent); font-weight:700; font-size:13px}
+.fix{background:var(--ok-bg); border-radius:12px; padding:10px 12px; font-size:14px; display:grid; gap:4px; justify-self:end; max-width:88%}
+.fix b{color:var(--ok)}
+.composer{display:grid; grid-template-columns:1fr auto auto; gap:8px; align-items:end; position:sticky; bottom:0; background:var(--bg); padding-block:10px calc(10px + env(safe-area-inset-bottom,0px))}
+.composer textarea{font:inherit; font-size:16px; resize:none; min-height:48px; max-height:140px; padding:12px 14px; border-radius:14px; border:2px solid var(--line); background:var(--surface); color:var(--ink); min-width:0}
+.composer .mic{width:48px; height:48px; box-shadow:none} .composer .mic svg{width:22px; height:22px}
+.typing{color:var(--muted); font-style:italic}
+.field{font:inherit; font-size:15px; padding:10px 12px; border-radius:10px; border:2px solid var(--line); background:var(--surface); color:var(--ink); min-width:0}
+.addrow{display:grid; grid-template-columns:1fr 1fr auto; gap:8px}
+.mylist{display:grid; gap:6px}
+.myrow{display:flex; gap:10px; align-items:center; padding:8px 12px; background:var(--surface-2); border-radius:10px}
+.myrow b{overflow-wrap:anywhere} .myrow span{color:var(--muted); flex:1; overflow-wrap:anywhere; min-width:0}
+.myrow button{border:0; background:none; color:var(--muted); font-size:20px; line-height:1; padding:0 4px}
+@media (max-width:560px){ .addrow{grid-template-columns:1fr} }
+@media (max-width:560px){
+  .today{grid-template-columns:1fr; justify-items:start}
+  .logo span{display:none}
+  .rate button{font-size:12px}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <div class="logo"><b>Екі тіл</b><span>два языка, два раздела</span></div>
+      <div class="seg" role="group" aria-label="Раздел">
+        <button id="lang-en" data-lang="en">English (US)</button>
+        <button id="lang-kk" data-lang="kk">Қазақша</button>
+      </div>
+      <div class="chips">
+        <span class="chip" title="Дней подряд"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 3 3 5"/></svg><span id="streak">0</span></span>
+        <span class="chip" title="Очки опыта"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" style="color:var(--accent)"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg><span id="xp">0</span></span>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="learn" id="tab-learn">Уроки</button>
+      <button role="tab" data-tab="pron" id="tab-pron">Произношение</button>
+      <button role="tab" data-tab="chat" id="tab-chat">Собеседник</button>
+      <button role="tab" data-tab="review" id="tab-review">Повторение</button>
+      <button role="tab" data-tab="grammar" id="tab-grammar">Грамматика</button>
+      <button role="tab" data-tab="progress" id="tab-progress">Прогресс</button>
+    </nav>
+  </div>
+  <svg class="ornament orn-en" aria-hidden="true"><defs><pattern id="orn-us" width="40" height="12" patternUnits="userSpaceOnUse"><path d="M0 3 H14 M26 3 H40 M0 9 H14 M26 9 H40" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M20 1.5l1.2 2.6 2.8.3-2.1 1.9.6 2.8L20 7.7l-2.5 1.4.6-2.8-2.1-1.9 2.8-.3z" fill="currentColor"/></pattern></defs><rect width="100%" height="12" fill="url(#orn-us)"/></svg>
+  <svg class="ornament orn-kk" aria-hidden="true"><defs><pattern id="orn" width="40" height="12" patternUnits="userSpaceOnUse"><path d="M2 11 Q2 2 10 2 Q16 2 16 6.5 Q16 10 12.5 10 Q9.5 10 9.5 7 M38 11 Q38 2 30 2 Q24 2 24 6.5 Q24 10 27.5 10 Q30.5 10 30.5 7 M16 6.5 L24 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></pattern></defs><rect width="100%" height="12" fill="url(#orn)"/></svg>
+</header>
+
+<main class="wrap" id="main"></main>
+<div id="overlay-root"></div>
+
+<script>
+/* ===================== DATA ===================== */
+const LEVELS = [
+  {id:"A1", name:"Начальный"}, {id:"A2", name:"Элементарный"}, {id:"B1", name:"Средний"},
+  {id:"B2", name:"Выше среднего"}, {id:"C1", name:"Продвинутый"}
+];
+const COURSE = {
+en: [
+ {id:"en1", lv:"A1", t:"Знакомство", s:"Приветствия и вежливость",
+  w:["hello|привет","goodbye|до свидания","please|пожалуйста","thank you|спасибо","sorry|извините","name|имя","friend|друг","family|семья"],
+  x:["My name is Nikita|Меня зовут Никита","Nice to meet you|Приятно познакомиться","This is my friend|Это мой друг"]},
+ {id:"en2", lv:"A1", t:"Еда", s:"В кафе и дома",
+  w:["water|вода","bread|хлеб","apple|яблоко","milk|молоко","breakfast|завтрак","delicious|вкусный","hungry|голодный","the check|счёт (в кафе)"],
+  x:["I would like a coffee please|Я бы хотел кофе, пожалуйста","I am very hungry|Я очень голоден","Can I get the check|Можно счёт?"]},
+ {id:"en3", lv:"A1", t:"Город", s:"Как найти дорогу",
+  w:["street|улица","house|дом","store|магазин","station|вокзал, станция","left|налево","right|направо","near|рядом","far|далеко"],
+  x:["Where is the station|Где вокзал?","The store is near my house|Магазин рядом с моим домом","Turn left at the corner|Поверните налево на углу"]},
+ {id:"en4", lv:"A2", t:"Путешествия", s:"Аэропорт, отель, билеты",
+  w:["ticket|билет","luggage|багаж","flight|рейс","passport|паспорт","to book|бронировать","abroad|за границей","journey|поездка","delayed|задержанный"],
+  x:["I want to book a room|Я хочу забронировать номер","Our flight was delayed|Наш рейс задержали","Where can I buy a ticket|Где можно купить билет?"]},
+ {id:"en5", lv:"A2", t:"Учёба и работа", s:"Университет, карьера",
+  w:["job|работа","salary|зарплата","coworker|коллега","deadline|крайний срок","exam|экзамен","to apply|подавать заявку","experience|опыт","skill|навык"],
+  x:["I'm in college|Я учусь в университете (в США говорят college)","I have two years of experience|У меня два года опыта","The deadline is on Friday|Крайний срок в пятницу"]},
+ {id:"en6", lv:"A2", t:"Здоровье", s:"У врача и самочувствие",
+  w:["headache|головная боль","doctor|врач","medicine|лекарство","to feel|чувствовать","tired|уставший","healthy|здоровый","appointment|запись (к врачу)","pain|боль"],
+  x:["I feel tired today|Я сегодня чувствую усталость","I have an appointment with the doctor|У меня запись к врачу","Where does it hurt|Где болит?"]},
+ {id:"en7", lv:"B1", t:"Технологии", s:"Гаджеты и интернет",
+  w:["device|устройство","to download|скачивать","update|обновление","password|пароль","screen|экран","reliable|надёжный","to share|делиться","feature|функция"],
+  x:["Don't forget to update the app|Не забудь обновить приложение","Can you share the link|Можешь поделиться ссылкой?","This laptop is very reliable|Этот ноутбук очень надёжный"]},
+ {id:"en8", lv:"B1", t:"Веб-дизайн", s:"Словарь для работы дизайнером",
+  w:["layout|макет, компоновка","typeface|шрифт (гарнитура)","contrast|контраст","feedback|обратная связь","wireframe|вайрфрейм, каркас","consistent|единообразный","user-friendly|удобный для пользователя","to improve|улучшать"],
+  x:["The layout needs more white space|Макету нужно больше свободного места","Users gave us useful feedback|Пользователи дали нам полезную обратную связь","I made a wireframe for the home page|Я сделал вайрфрейм главной страницы"]},
+ {id:"en9", lv:"B1", t:"Мнения", s:"Спорить и соглашаться",
+  w:["opinion|мнение","to agree|соглашаться","to argue|спорить","however|однако","although|хотя","to convince|убеждать","obviously|очевидно","to doubt|сомневаться"],
+  x:["In my opinion this idea is better|По-моему, эта идея лучше","I doubt that he will come|Сомневаюсь, что он придёт","I agree with you|Я с тобой согласен"]},
+ {id:"en10", lv:"B2", t:"Бизнес", s:"Компании, рынок, переговоры",
+  w:["revenue|выручка","to negotiate|вести переговоры","stakeholder|заинтересованная сторона","growth|рост","to launch|запускать","competitor|конкурент","efficient|эффективный","to outsource|отдавать на аутсорс"],
+  x:["We launched the product last quarter|Мы запустили продукт в прошлом квартале","Our revenue has grown by twenty percent|Наша выручка выросла на двадцать процентов","Our competitors are more efficient|Наши конкуренты эффективнее"]},
+ {id:"en11", lv:"B2", t:"Фразовые глаголы", s:"Без них нет живой речи",
+  w:["give up|сдаваться","look forward to|с нетерпением ждать","figure out|разобраться","put off|откладывать","come up with|придумать","run out of|закончиться (о запасе)","get along with|ладить","turn down|отклонить"],
+  x:["I am looking forward to the weekend|Я с нетерпением жду выходных","We came up with a new idea|Мы придумали новую идею","Don't give up|Не сдавайся"]},
+ {id:"en12", lv:"B2", t:"Аргументы", s:"Академическая и деловая речь",
+  w:["approach|подход","assumption|предположение","consequence|последствие","significant|значительный","to emphasize|подчёркивать","to acknowledge|признавать","nevertheless|тем не менее","to reconsider|пересмотреть"],
+  x:["Nevertheless we should reconsider our approach|Тем не менее нам стоит пересмотреть наш подход","This decision had serious consequences|У этого решения были серьёзные последствия","I want to emphasize one point|Я хочу подчеркнуть один момент"]},
+ {id:"en13", lv:"C1", t:"Идиомы", s:"Как говорят носители",
+  w:["a piece of cake|проще простого","break the ice|растопить лёд","hit the nail on the head|попасть в точку","once in a blue moon|очень редко","under the weather|неважно себя чувствовать","the ball is in your court|теперь решать тебе","cut corners|халтурить, экономить на качестве","on the same page|одинаково понимать задачу"],
+  x:["That exam was a piece of cake|Этот экзамен был проще простого","Let's make sure we are on the same page|Давай убедимся, что мы одинаково понимаем задачу","I'm a bit under the weather today|Я сегодня неважно себя чувствую"]},
+ {id:"en14", lv:"C1", t:"Точность речи", s:"Слова для тонких мыслей",
+  w:["nuance|нюанс","to elaborate|подробнее объяснить","ambiguous|двусмысленный","compelling|убедительный","to undermine|подрывать","subtle|тонкий, едва заметный","to articulate|чётко формулировать","inevitably|неизбежно"],
+  x:["Could you elaborate on that point|Не могли бы вы подробнее объяснить этот момент?","Her argument was compelling|Её аргумент был убедительным","The wording is a bit ambiguous|Формулировка немного двусмысленная"]},
+ {id:"en15", lv:"C1", t:"Разговорный", s:"Сленг и живые фразы",
+  w:["no worries|без проблем","fair enough|справедливо, согласен","I'm on it|уже занимаюсь","to bail|слиться, не прийти","to grab a bite|перекусить","it's up to you|решать тебе","to catch up|встретиться пообщаться","to be swamped|быть заваленным делами"],
+  x:["I'm swamped this week|Я завален делами на этой неделе","Let's grab a bite after class|Давай перекусим после пары","We should catch up soon|Надо бы скоро встретиться"]},
+ {id:"en16", lv:"A1", t:"Числа и время", s:"Который час и когда встречаемся",
+  w:["seven|семь","twelve|двенадцать","twenty|двадцать","hundred|сто","o'clock|ровно (о времени)","half past|половина (о времени)","today|сегодня","tomorrow|завтра"],
+  x:["What time is it|Который час?","It's half past seven|Половина восьмого","See you tomorrow|До завтра"]},
+ {id:"en17", lv:"A2", t:"Американский быт", s:"Слова, которыми говорят в США",
+  w:["apartment|квартира","elevator|лифт","sidewalk|тротуар","gas station|заправка","cell phone|мобильный телефон","fall|осень","garbage|мусор","downtown|центр города"],
+  x:["My apartment is downtown|Моя квартира в центре города","The elevator is not working|Лифт не работает","I need to stop at the gas station|Мне нужно заехать на заправку"]},
+ {id:"en18", lv:"A2", t:"Ресторан в США", s:"Заказ, чаевые, с собой",
+  w:["to go|с собой","refill|подлить ещё (напиток)","tip|чаевые","appetizer|закуска","entrée|основное блюдо","leftovers|остатки еды","takeout|еда навынос","server|официант"],
+  x:["Is that for here or to go|Здесь или с собой?","Can I get a refill|Можно подлить ещё?","We usually tip twenty percent|Мы обычно оставляем двадцать процентов чаевых"]},
+ {id:"en19", lv:"B1", t:"Small talk", s:"Лёгкий разговор, как у американцев",
+  w:["How's it going|Как дела?","What's up|Как жизнь? Что нового?","Not much|Да ничего особенного","pretty good|неплохо","What do you do|Кем ты работаешь?","Where are you from|Откуда ты?","weekend plans|планы на выходные","Sounds good|Звучит отлично, договорились"],
+  x:["How was your weekend|Как прошли выходные?","Not much what about you|Да ничего особенного, а у тебя?","Any plans for the weekend|Есть планы на выходные?"]},
+ {id:"en20", lv:"B1", t:"Слова-связки", s:"like, you know, I mean",
+  w:["like|типа","you know|ну, знаешь","I mean|в смысле","kind of|вроде как","actually|вообще-то, на самом деле","basically|по сути","literally|буквально (часто для усиления)","anyway|в общем, короче"],
+  x:["I mean it was kind of weird|В смысле, это было как-то странно","Anyway let's get back to work|В общем, давай вернёмся к работе","It was literally the best day ever|Это был буквально лучший день в жизни"]},
+ {id:"en21", lv:"B2", t:"Собеседование", s:"Карьера дизайнера в США",
+  w:["resume|резюме","cover letter|сопроводительное письмо","interview|собеседование","strength|сильная сторона","weakness|слабая сторона","to hire|нанимать","benefits|соцпакет","portfolio|портфолио"],
+  x:["Tell me about yourself|Расскажите о себе","Here is a link to my portfolio|Вот ссылка на моё портфолио","Why do you want to work here|Почему вы хотите здесь работать?"]},
+ {id:"en22", lv:"B2", t:"Фразовые глаголы 2", s:"Самые частые в разговоре",
+  w:["hang out|проводить время вместе","show up|прийти, появиться","work out|тренироваться; получиться","end up|в итоге оказаться","check out|посмотреть, заценить","pick up|забрать; подхватить","go over|просмотреть, обсудить","set up|настроить, организовать"],
+  x:["Let's hang out this weekend|Давай потусуемся на выходных","He didn't show up|Он не пришёл","Check out this website|Зацени этот сайт"]},
+ {id:"en23", lv:"C1", t:"Американский сленг", s:"Как говорит молодёжь в США",
+  w:["awesome|потрясающе, круто","dude|чувак","chill|спокойный, расслабленный","to be down|быть в деле, согласен","legit|реально, по-настоящему","sketchy|подозрительный","stoked|в восторге","to ghost|пропасть, перестать отвечать"],
+  x:["I'm down let's do it|Я в деле, давай","This neighborhood looks sketchy|Этот район выглядит подозрительно","She totally ghosted me|Она просто пропала и перестала отвечать"]},
+ {id:"en24", lv:"C1", t:"Бизнес-идиомы США", s:"Из спорта в офис",
+  w:["touch base|связаться, свериться","ballpark figure|примерная цифра","step up to the plate|взять ответственность","a slam dunk|верное дело","drop the ball|облажаться, упустить","call the shots|принимать решения","a home run|большой успех","get the ball rolling|начать дело"],
+  x:["Can you give me a ballpark figure|Можете назвать примерную цифру?","Let's touch base next week|Давай сверимся на следующей неделе","I dropped the ball on this one|Тут я облажался"]},
+ {id:"en25", lv:"C1", t:"Разговорные сокращения", s:"gonna, wanna, gotta",
+  w:["gonna|going to (собираюсь)","wanna|want to (хочу)","gotta|got to (должен)","kinda|kind of (вроде как)","gimme|give me (дай мне)","lemme|let me (дай я)","y'all|вы все (юг США)","ain't|разг. не (am not / isn't)"],
+  x:["I'm gonna be late|Я опоздаю","Lemme think about it|Дай подумать","I gotta go|Мне пора"]}
+],
+kk: [
+ {id:"kk1", lv:"A1", t:"Танысу", s:"Знакомство и вежливость",
+  w:["сәлем|привет","сәлеметсіз бе|здравствуйте","сау болыңыз|до свидания","рахмет|спасибо","кешіріңіз|извините","иә|да","жоқ|нет","дос|друг"],
+  x:["Менің атым Никита|Меня зовут Никита","Танысқаныма қуаныштымын|Рад познакомиться","Қалыңыз қалай|Как ваши дела?"]},
+ {id:"kk2", lv:"A1", t:"Отбасы", s:"Семья и родные",
+  w:["отбасы|семья","ана|мама","әке|папа","аға|старший брат","әпке|старшая сестра","іні|младший брат","ата|дедушка","әже|бабушка"],
+  x:["Менің отбасым үлкен|Моя семья большая","Бұл менің ағам|Это мой старший брат","Әжем ауылда тұрады|Моя бабушка живёт в ауле"]},
+ {id:"kk3", lv:"A1", t:"Сандар", s:"Числа и возраст",
+  w:["бір|один","екі|два","үш|три","төрт|четыре","бес|пять","алты|шесть","жеті|семь","он|десять"],
+  x:["Мен жиырма жастамын|Мне двадцать лет","Маған екі кітап керек|Мне нужны две книги","Бізде үш сабақ бар|У нас три урока"]},
+ {id:"kk4", lv:"A2", t:"Тамақ", s:"Еда и дастархан",
+  w:["тамақ|еда","су|вода","нан|хлеб","ет|мясо","сүт|молоко","шай|чай","алма|яблоко","дәмді|вкусный"],
+  x:["Маған шай беріңізші|Дайте мне, пожалуйста, чай","Бұл тамақ өте дәмді|Эта еда очень вкусная","Мен ет жемеймін|Я не ем мясо"]},
+ {id:"kk5", lv:"A2", t:"Қала", s:"Город и направления",
+  w:["көше|улица","үй|дом","дүкен|магазин","аурухана|больница","оңға|направо","солға|налево","жақын|близко","алыс|далеко"],
+  x:["Дүкен қайда|Где магазин?","Аурухана жақын жерде|Больница близко","Келесі көшеде солға бұрылыңыз|На следующей улице поверните налево"]},
+ {id:"kk6", lv:"A2", t:"Күн тәртібі", s:"Распорядок дня",
+  w:["тұру|вставать","ұйықтау|спать","оқу|учиться, читать","жұмыс|работа","таңертең|утром","кешке|вечером","бүгін|сегодня","ертең|завтра"],
+  x:["Мен таңертең жетіде тұрамын|Я встаю в семь утра","Ертең мен жұмыс істеймін|Завтра я работаю","Кешке кітап оқимын|Вечером я читаю книгу"]},
+ {id:"kk7", lv:"B1", t:"Саяхат", s:"Поездки по Казахстану",
+  w:["саяхат|путешествие","билет|билет","ұшақ|самолёт","пойыз|поезд","қонақүй|гостиница","жол|дорога","демалыс|отдых, отпуск","шекара|граница"],
+  x:["Мен Алматыға пойызбен барамын|Я еду в Алматы на поезде","Бізге қонақүйден бөлме керек|Нам нужен номер в гостинице","Жол қанша уақыт алады|Сколько времени займёт дорога?"]},
+ {id:"kk8", lv:"B1", t:"Сезім", s:"Чувства и настроение",
+  w:["қуаныш|радость","қайғы|печаль","ашу|гнев","қорқыныш|страх","бақытты|счастливый","шаршау|уставать","қобалжу|волноваться","сағыну|скучать"],
+  x:["Мен сені сағындым|Я по тебе соскучился","Бүгін мен өте бақыттымын|Сегодня я очень счастлив","Қобалжыма бәрі жақсы болады|Не волнуйся, всё будет хорошо"]},
+ {id:"kk9", lv:"B1", t:"Оқу мен жұмыс", s:"Учёба, экзамены, карьера",
+  w:["емтихан|экзамен","сабақ|урок, занятие","мұғалім|учитель","тапсырма|задание","тәжірибе|опыт","жалақы|зарплата","мамандық|специальность","дизайнер|дизайнер"],
+  x:["Мен университетте оқимын|Я учусь в университете","Ертең бізде емтихан бар|Завтра у нас экзамен","Менің мамандығым цифрлық трансформация|Моя специальность цифровая трансформация"]},
+ {id:"kk10", lv:"B2", t:"Табиғат", s:"Степь, горы, небо",
+  w:["дала|степь","тау|гора","көл|озеро","өзен|река","орман|лес","жел|ветер","аспан|небо","жұлдыз|звезда"],
+  x:["Қазақ даласы өте кең|Казахская степь очень широкая","Түнде аспанда жұлдыздар көп|Ночью на небе много звёзд","Таудағы көл өте әдемі|Озеро в горах очень красивое"]},
+ {id:"kk11", lv:"B2", t:"Пікір", s:"Выражать мнение",
+  w:["менің ойымша|по-моему","келісемін|я согласен","келіспеймін|я не согласен","себебі|потому что","алайда|однако","мысалы|например","сондықтан|поэтому","әрине|конечно"],
+  x:["Менің ойымша бұл жақсы идея|По-моему, это хорошая идея","Мен келіспеймін себебі уақыт аз|Я не согласен, потому что мало времени","Сондықтан біз ертең бастаймыз|Поэтому мы начнём завтра"]},
+ {id:"kk12", lv:"B2", t:"Мәдениет", s:"Традиции и праздники",
+  w:["дәстүр|традиция","мереке|праздник","домбыра|домбра","қонақжай|гостеприимный","дастархан|дастархан, накрытый стол","киіз үй|юрта","ән|песня","ұлт|нация, народ"],
+  x:["Наурыз көктем мерекесі|Наурыз — праздник весны","Қазақтар қонақжай халық|Казахи — гостеприимный народ","Ол домбыра тартады|Он играет на домбре"]},
+ {id:"kk13", lv:"C1", t:"Іскерлік тіл", s:"Деловой казахский",
+  w:["келіссөз|переговоры","келісімшарт|договор","табыс|доход","кәсіпкер|предприниматель","серіктес|партнёр","мүмкіндік|возможность","жоба|проект","шешім|решение"],
+  x:["Біз жаңа жобаны бастадық|Мы начали новый проект","Бұл маңызды шешім|Это важное решение","Келісімшартқа ертең қол қоямыз|Договор подпишем завтра"]},
+ {id:"kk14", lv:"C1", t:"Қоғам", s:"Общество и идеи",
+  w:["болашақ|будущее","тарих|история","бостандық|свобода","жауапкершілік|ответственность","тәуелсіздік|независимость","даму|развитие","ғылым|наука","маңызды|важный"],
+  x:["Болашақ біздің қолымызда|Будущее в наших руках","Ғылым дамудың негізі|Наука — основа развития","Тарихты білу маңызды|Знать историю важно"]},
+ {id:"kk15", lv:"C1", t:"Мақал-мәтелдер", s:"Пословицы, которые знает каждый",
+  w:["Жеті рет өлшеп, бір рет кес|Семь раз отмерь, один раз отрежь","Оқу — инемен құдық қазғандай|Учиться — что иглой колодец копать","Бірлік бар жерде тірлік бар|Где единство, там и жизнь","Көп сөз — көмір, аз сөз — алтын|Много слов — уголь, мало слов — золото","Білекті бірді жығады, білімді мыңды жығады|Сильный победит одного, знающий — тысячу","Отан — отбасынан басталады|Родина начинается с семьи"],
+  x:["Жеті рет өлшеп бір рет кес|Семь раз отмерь, один раз отрежь","Бірлік бар жерде тірлік бар|Где единство, там и жизнь"]},
+ {id:"kk16", lv:"A1", t:"Түстер", s:"Цвета",
+  w:["ақ|белый","қара|чёрный","қызыл|красный","көк|синий, голубой","жасыл|зелёный","сары|жёлтый","қоңыр|коричневый","сұр|серый"],
+  x:["Аспан көк|Небо голубое","Менің көлігім ақ|Моя машина белая","Маған қызыл түс ұнайды|Мне нравится красный цвет"]},
+ {id:"kk17", lv:"A1", t:"Апта күндері", s:"Дни недели",
+  w:["дүйсенбі|понедельник","сейсенбі|вторник","сәрсенбі|среда","бейсенбі|четверг","жұма|пятница","сенбі|суббота","жексенбі|воскресенье","апта|неделя"],
+  x:["Бүгін сенбі|Сегодня суббота","Жұмада кездесеміз|Встретимся в пятницу","Жексенбіде демаламын|В воскресенье отдыхаю"]},
+ {id:"kk18", lv:"A2", t:"Дене", s:"Тело и самочувствие",
+  w:["бас|голова","көз|глаз","құлақ|ухо","қол|рука","аяқ|нога","жүрек|сердце","тіс|зуб","шаш|волосы"],
+  x:["Менің басым ауырады|У меня болит голова","Қолыңды жу|Помой руки","Тісім ауырып тұр|У меня болит зуб"]},
+ {id:"kk19", lv:"A2", t:"Ауа райы", s:"Погода",
+  w:["ауа райы|погода","күн|солнце; день","жаңбыр|дождь","қар|снег","бұлт|облако","суық|холодный","ыстық|жаркий","жылы|тёплый"],
+  x:["Бүгін күн суық|Сегодня холодно","Ертең жаңбыр жауады|Завтра пойдёт дождь","Ауа райы қандай|Какая погода?"]},
+ {id:"kk20", lv:"A2", t:"Дүкенде", s:"Покупки и цены",
+  w:["баға|цена","ақша|деньги","арзан|дешёвый","қымбат|дорогой","сатып алу|покупать","сату|продавать","киім|одежда","қанша|сколько"],
+  x:["Бұл қанша тұрады|Сколько это стоит?","Бұл өте қымбат|Это очень дорого","Мен жаңа киім сатып алдым|Я купил новую одежду"]},
+ {id:"kk21", lv:"B1", t:"Негізгі етістіктер", s:"Главные глаголы",
+  w:["бару|идти, ехать (туда)","келу|приходить","айту|сказать","білу|знать","түсіну|понимать","сөйлеу|говорить","жазу|писать","көру|видеть"],
+  x:["Мен түсінбедім|Я не понял","Баяу сөйлеңізші|Говорите, пожалуйста, медленнее","Сіз орысша білесіз бе|Вы знаете русский?"]},
+ {id:"kk22", lv:"B1", t:"Технология", s:"Интернет и гаджеты",
+  w:["ғаламтор|интернет","хабарлама|сообщение","қосымша|приложение","құпиясөз|пароль","жүктеу|загружать","әлеуметтік желі|соцсеть","пернетақта|клавиатура","тінтуір|компьютерная мышь"],
+  x:["Маған хабарлама жаз|Напиши мне сообщение","Құпиясөзді ұмытып қалдым|Я забыл пароль","Бұл қосымша өте ыңғайлы|Это приложение очень удобное"]},
+ {id:"kk23", lv:"B2", t:"Мінез", s:"Характер человека",
+  w:["ақылды|умный","мейірімді|добрый","еңбекқор|трудолюбивый","жалқау|ленивый","батыл|смелый","сабырлы|терпеливый, спокойный","адал|честный, верный","мақтаншақ|хвастливый"],
+  x:["Ол өте еңбекқор адам|Он очень трудолюбивый человек","Батыл бол|Будь смелым","Адал дос үлкен байлық|Верный друг — большое богатство"]},
+ {id:"kk24", lv:"C1", t:"Ресми тіл", s:"Официальная речь",
+  w:["құрметті|уважаемый","өтініш|просьба, заявление","қатысу|участвовать","ұсыныс|предложение","мәселе|вопрос, проблема","талқылау|обсуждать","мақсат|цель","нәтиже|результат"],
+  x:["Құрметті әріптестер|Уважаемые коллеги","Бұл мәселені талқылайық|Давайте обсудим этот вопрос","Біздің мақсатымыз айқын|Наша цель ясна"]}
+]};
+
+const GRAMMAR = {
+en: [
+ {lv:"A1", t:"To be, Present Simple, артикли", b:`
+  <h3>Глагол to be: am / is / are</h3><p>В английском в предложении всегда есть глагол. Где по-русски «Я студент», по-английски нужен <b>am</b>.</p>
+  <div class="ex"><b>I am a student. She is at home. They are friends.</b><span>Я студент. Она дома. Они друзья.</span></div>
+  <h3>Present Simple</h3><p>Привычки и факты. Для he / she / it добавляем <b>-s</b>, в вопросах и отрицаниях помогает <b>do / does</b>.</p>
+  <div class="ex"><b>I work. He works. Does he work? He doesn't work.</b><span>Я работаю. Он работает. Он работает? Он не работает.</span></div>
+  <h3>Артикли a / an / the</h3><p><b>a / an</b> — «какой-то, один из», <b>the</b> — «тот самый, известный».</p>
+  <div class="ex"><b>I have a cat. The cat is black.</b><span>У меня есть кошка. Эта кошка чёрная.</span></div>
+  <h3>По-американски: have, а не have got</h3><p>В США говорят <b>I have a car</b> и <b>Do you have a pen?</b> Британское <i>I've got</i> встречается реже.</p>`},
+ {lv:"A2", t:"Past Simple, будущее, сравнения", b:`
+  <h3>Past Simple</h3><p>Правильные глаголы получают <b>-ed</b>, неправильные учатся списком: go → went, see → saw, buy → bought.</p>
+  <div class="ex"><b>I visited New York. We went to the movies. Did you see it?</b><span>Я побывал в Нью-Йорке. Мы ходили в кино. Ты это видел?</span></div>
+  <h3>Will или going to</h3><p><b>will</b> — решение в момент речи и прогноз, <b>going to</b> — заранее принятый план.</p>
+  <div class="ex"><b>I'll help you. I'm going to study design.</b><span>Я помогу тебе. Я собираюсь изучать дизайн.</span></div>
+  <h3>Сравнения</h3><p>Короткие слова: <b>-er / the -est</b>, длинные: <b>more / the most</b>.</p>
+  <div class="ex"><b>cheaper, the cheapest; more expensive, the most expensive</b><span>дешевле, самый дешёвый; дороже, самый дорогой</span></div>`},
+ {lv:"B1", t:"Present Perfect, условные предложения, модальные", b:`
+  <h3>Present Perfect или Past Simple</h3><p>Present Perfect связывает прошлое с настоящим: результат важен сейчас, время не указано. Если есть «когда» (yesterday, in 2020), нужен Past Simple.</p>
+  <div class="ex"><b>I have finished the project. I finished it yesterday.</b><span>Я закончил проект (он готов). Я закончил его вчера.</span></div>
+  <h3>First и Second Conditional</h3><div class="ex"><b>If it rains, we will stay home.</b><span>Если пойдёт дождь, мы останемся дома (реально).</span></div>
+  <div class="ex"><b>If I had more time, I would learn Kazakh faster.</b><span>Если бы у меня было больше времени, я бы учил казахский быстрее (воображаемо).</span></div>
+  <h3>Модальные глаголы</h3><p><b>must</b> — внутренняя необходимость, <b>have to</b> — обстоятельства, <b>should</b> — совет, <b>might</b> — возможность.</p>
+  <h3>Американская особенность</h3><p>В США Past Simple часто ставят там, где британцы говорят Present Perfect: <b>Did you eat yet?</b> вместо <i>Have you eaten yet?</i> Ещё в американском есть форма <b>gotten</b>: <i>It's gotten colder.</i></p>`},
+ {lv:"B2", t:"Пассив, Third Conditional, косвенная речь", b:`
+  <h3>Passive Voice</h3><p>Важно действие, а не кто его сделал: <b>be + V3</b>.</p>
+  <div class="ex"><b>The website was designed in 2024. It is being updated now.</b><span>Сайт был создан в 2024. Сейчас его обновляют.</span></div>
+  <h3>Third Conditional</h3><p>Сожаление о прошлом, которое уже не изменить.</p>
+  <div class="ex"><b>If I had left earlier, I wouldn't have missed the train.</b><span>Если бы я вышел раньше, я бы не опоздал на поезд.</span></div>
+  <h3>Reported Speech</h3><p>Время «сдвигается» на шаг назад: is → was, will → would, have done → had done.</p>
+  <div class="ex"><b>"I'm tired." → She said she was tired.</b><span>«Я устала». → Она сказала, что устала.</span></div>`},
+ {lv:"C1", t:"Инверсия, смешанные условия, акценты", b:`
+  <h3>Инверсия для выразительности</h3><p>После отрицательных наречий в начале фразы порядок как в вопросе. Звучит книжно и сильно.</p>
+  <div class="ex"><b>Never have I seen such a clean layout. Not only did he come, but he also helped.</b><span>Никогда я не видел такого чистого макета. Он не только пришёл, но и помог.</span></div>
+  <h3>Mixed Conditionals</h3><div class="ex"><b>If I had studied harder, I would be fluent now.</b><span>Если бы я тогда учился усерднее, сейчас я бы говорил свободно.</span></div>
+  <h3>Cleft sentences</h3><p>Выделяем главное, перестраивая фразу.</p>
+  <div class="ex"><b>What I really need is practice. It was Anna who found the bug.</b><span>Что мне действительно нужно, так это практика. Именно Анна нашла ошибку.</span></div>
+  <h3>Как звучать естественно</h3><p>На этом уровне важнее не правила, а сочетаемость: <i>make a decision</i>, а не <i>do a decision</i>; <i>heavy rain</i>, а не <i>strong rain</i>. Выписывайте целые фразы из сериалов и подкастов.</p>
+  <h3>Живая американская речь</h3><p>В разговоре звуки сливаются: <b>going to → gonna, want to → wanna, got to → gotta, did you → didja</b>. Пишут так только в переписке, но понимать на слух это нужно обязательно. Тренируйтесь в теме «Разговорные сокращения» и в диктантах.</p>`}
+],
+kk: [
+ {lv:"A1", t:"Сингармонизм, личные окончания, порядок слов", b:`
+  <h3>Закон сингармонизма</h3><p>Главное правило казахского. Гласные делятся на твёрдые (<b>а, о, ұ, ы</b>) и мягкие (<b>ә, ө, ү, і, е</b>). Окончание подстраивается под последний гласный слова.</p>
+  <div class="ex"><b>бала → балалар, үй → үйлер</b><span>ребёнок → дети, дом → дома</span></div>
+  <h3>«Я — студент»: личные окончания</h3><p>Связка «есть» выражается окончанием: <b>-мын/-мін, -пын/-пін, -бын/-бін</b>.</p>
+  <div class="ex"><b>Мен студентпін. Сен студентсің. Ол студент.</b><span>Я студент. Ты студент. Он студент.</span></div>
+  <h3>Порядок слов</h3><p>Глагол всегда в конце: подлежащее, дополнение, сказуемое.</p>
+  <div class="ex"><b>Мен кітап оқимын.</b><span>Я книгу читаю.</span></div>`},
+ {lv:"A2", t:"Множественное число, принадлежность, отрицание", b:`
+  <h3>Множественное число</h3><div class="tbl"><table><tr><th>После</th><th>Твёрдое</th><th>Мягкое</th><th>Пример</th></tr>
+  <tr><td>гласных, р, й, у</td><td>-лар</td><td>-лер</td><td>балалар, үйлер</td></tr>
+  <tr><td>л, м, н, ң, з, ж</td><td>-дар</td><td>-дер</td><td>қыздар, гүлдер</td></tr>
+  <tr><td>глухих и б, в, г, д</td><td>-тар</td><td>-тер</td><td>кітаптар, мектептер</td></tr></table></div>
+  <h3>Принадлежность</h3><p>«Мой» выражается окончанием, слово <b>менің</b> можно опустить.</p>
+  <div class="ex"><b>(менің) кітабым, (сенің) кітабың, (оның) кітабы</b><span>моя книга, твоя книга, его книга</span></div>
+  <h3>Отрицание</h3><p>В глаголах <b>-ма/-ме, -ба/-бе, -па/-пе</b>, в существительных слово <b>емес</b>.</p>
+  <div class="ex"><b>Мен бармаймын. Ол дәрігер емес.</b><span>Я не пойду. Он не врач.</span></div>`},
+ {lv:"B1", t:"Семь падежей", b:`
+  <p>Вместо предлогов казахский использует падежные окончания. Выучите их на одном слове, например <b>үй</b> (дом) и <b>қала</b> (город).</p>
+  <div class="tbl"><table><tr><th>Падеж</th><th>Вопрос</th><th>Окончания</th><th>Пример</th></tr>
+  <tr><td>Атау (именит.)</td><td>кім? не?</td><td>—</td><td>қала</td></tr>
+  <tr><td>Ілік (родит.)</td><td>кімнің? ненің?</td><td>-ның/-нің, -дың/-дің, -тың/-тің</td><td>қаланың</td></tr>
+  <tr><td>Барыс (направит.)</td><td>кімге? неге? қайда?</td><td>-ға/-ге, -қа/-ке</td><td>қалаға — в город</td></tr>
+  <tr><td>Табыс (винит.)</td><td>кімді? нені?</td><td>-ны/-ні, -ды/-ді, -ты/-ті</td><td>қаланы</td></tr>
+  <tr><td>Жатыс (местный)</td><td>қайда? кімде?</td><td>-да/-де, -та/-те</td><td>қалада — в городе</td></tr>
+  <tr><td>Шығыс (исходный)</td><td>қайдан? кімнен?</td><td>-дан/-ден, -тан/-тен, -нан/-нен</td><td>қаладан — из города</td></tr>
+  <tr><td>Көмектес (творит.)</td><td>кіммен? немен?</td><td>-мен, -бен, -пен</td><td>пойызбен — на поезде</td></tr></table></div>
+  <div class="ex"><b>Мен үйден шығып, қалаға бардым.</b><span>Я вышел из дома и поехал в город.</span></div>`},
+ {lv:"B2", t:"Прошедшее и будущее, «сейчас делаю»", b:`
+  <h3>Прошедшее время</h3><p><b>-ды/-ді, -ты/-ті</b> — видел своими глазами; <b>-ған/-ген</b> — результат, опыт.</p>
+  <div class="ex"><b>Мен Астанаға бардым. Мен Астанада болғанмын.</b><span>Я съездил в Астану. Я бывал в Астане.</span></div>
+  <h3>Будущее время</h3><p><b>-а/-е/-й + личное окончание</b> — обычное будущее и настоящее; <b>-мақ/-мек</b> — намерение.</p>
+  <div class="ex"><b>Ертең барамын. Мен дизайнер болмақпын.</b><span>Завтра пойду. Я намерен стать дизайнером.</span></div>
+  <h3>Действие прямо сейчас</h3><p>Деепричастие + вспомогательный глагол: <b>жатыр, отыр, тұр, жүр</b>.</p>
+  <div class="ex"><b>Мен қазір оқып жатырмын. Ол жұмыс істеп жүр.</b><span>Я сейчас читаю. Он (в последнее время) работает.</span></div>`},
+ {lv:"C1", t:"Условие, желание, причастия", b:`
+  <h3>Условное наклонение</h3><p><b>-са/-се</b> + личное окончание.</p>
+  <div class="ex"><b>Уақытым болса, сізге көмектесемін.</b><span>Если у меня будет время, я вам помогу.</span></div>
+  <h3>«Хочу сделать»</h3><p><b>-ғы/-гі/-қы/-кі + притяжательное + келеді</b>.</p>
+  <div class="ex"><b>Менің қазақша еркін сөйлегім келеді.</b><span>Я хочу свободно говорить по-казахски.</span></div>
+  <h3>Причастия вместо придаточных</h3><p>Там, где русский использует «который», казахский ставит причастие перед словом.</p>
+  <div class="ex"><b>Мен оқыған кітап — кеше сатып алған кітап.</b><span>Книга, которую я прочитал, — книга, которую я вчера купил.</span></div>
+  <h3>Как звучать естественно</h3><p>Носители часто вставляют мақал-мәтелдер в речь. Уместная пословица в разговоре сразу показывает высокий уровень и уважение к языку.</p>`}
+]};
+
+const LETTERS = [
+ ["Ә ә","әке","папа","Широкое «э», почти как «я» в слове «пять»."],
+ ["Ғ ғ","ғылым","наука","Мягкое горловое «г», как в украинском «гарно»."],
+ ["Қ қ","қала","город","Глубокое «к», произносится в глубине горла."],
+ ["Ң ң","таң","рассвет","Носовое «н», как «ng» в английском song."],
+ ["Ө ө","өзен","река","Как «ё» в слове «тётя», губы округлены."],
+ ["Ұ ұ","ұшақ","самолёт","Короткое твёрдое «у»."],
+ ["Ү ү","үй","дом","Мягкое «у», как немецкое ü. Губы для «у», язык для «и»."],
+ ["Һ һ","гауһар","бриллиант","Лёгкое выдыхаемое «х», как английское h."],
+ ["І і","іні","младший брат","Очень короткое мягкое «и»."]
+];
+
+const PRON = {
+en: [
+ {id:"p1", t:"Звук th", s:"Язык между зубами", items:["think|думать","this|это","three|три","mother|мама","birthday|день рождения","Thank you very much|Большое спасибо"]},
+ {id:"p2", t:"W и V", s:"Губы трубочкой или зубы на губе", items:["west|запад","very|очень","wine|вино","vine|лоза","wonderful view|чудесный вид","We were very well|У нас всё было отлично"]},
+ {id:"p3", t:"Долгие и краткие", s:"ship или sheep", items:["ship|корабль","sheep|овца","live|жить","leave|уходить","full|полный","fool|дурак"]},
+ {id:"p4", t:"Американская R", s:"Твёрдое r в конце слога", items:["car|машина","world|мир","girl|девушка","bird|птица","morning|утро","Are you ready for the party|Ты готов к вечеринке?"]},
+ {id:"p5", t:"Flap T", s:"water звучит как «уодэр»", items:["water|вода","better|лучше","city|город","party|вечеринка","a lot of|много","Get it out of here|Убери это отсюда"]},
+ {id:"p6", t:"Живые фразы", s:"Интонация и связность", items:["How are you doing today|Как у тебя дела сегодня?","Nice to meet you|Приятно познакомиться","Could you repeat that please|Не могли бы вы повторить?","I'd like a cup of coffee|Я бы хотел чашку кофе","What do you do for a living|Кем ты работаешь?","See you later|Увидимся"]},
+ {id:"p7", t:"Скороговорки", s:"Финальный босс", items:["She sells seashells by the seashore|Она продаёт ракушки на берегу","Red leather yellow leather|Красная кожа, жёлтая кожа","Three free throws|Три штрафных броска","Which witch is which|Какая ведьма какая?","I scream you scream we all scream for ice cream|Я кричу, ты кричишь, мы все кричим о мороженом","Peter Piper picked a peck of pickled peppers|Питер Пайпер собрал меру маринованных перцев"]}
+],
+kk: [
+ {id:"p1", t:"Ә, Ө, Ү, І", s:"Мягкие гласные", items:["әке|папа","өзен|река","үй|дом","іні|младший брат","сәлем|привет","көл|озеро"]},
+ {id:"p2", t:"Қ, Ғ, Ң", s:"Горловые и носовой", items:["қала|город","қағаз|бумага","ағаш|дерево","ғылым|наука","таң|рассвет","мың|тысяча"]},
+ {id:"p3", t:"Ұ и Ы", s:"Твёрдые гласные", items:["ұшақ|самолёт","ұл|сын","қыз|девушка","жылы|тёплый","құс|птица","ұлт|нация"]},
+ {id:"p4", t:"Живые фразы", s:"Приветствия и вопросы", items:["Сәлеметсіз бе|Здравствуйте","Қалыңыз қалай|Как ваши дела?","Рахмет, жақсы|Спасибо, хорошо","Танысқаныма қуаныштымын|Рад познакомиться","Сіздің атыңыз кім|Как вас зовут?","Сау болыңыз|До свидания"]},
+ {id:"p5", t:"Фразы выживания", s:"Когда что-то непонятно", items:["Мен қазақ тілін үйреніп жүрмін|Я изучаю казахский язык","Баяу сөйлеңізші|Говорите, пожалуйста, медленнее","Қайталап жіберіңізші|Повторите, пожалуйста","Бұл қазақша қалай болады|Как это будет по-казахски?","Түсінбедім|Я не понял","Көмектесіп жіберіңізші|Помогите, пожалуйста"]},
+ {id:"p6", t:"Длинные слова", s:"Цепочки окончаний", items:["кітапханада|в библиотеке","достарыммен|с моими друзьями","балаларымызға|нашим детям","университеттерде|в университетах","мұғалімдерімізбен|с нашими учителями","қуаныштымын|я рад"]},
+ {id:"p7", t:"Мақалдар вслух", s:"Пословицы с ритмом", items:["Жеті рет өлшеп, бір рет кес|Семь раз отмерь, один раз отрежь","Бірлік бар жерде тірлік бар|Где единство, там и жизнь","Отан — отбасынан басталады|Родина начинается с семьи","Көп сөз — көмір, аз сөз — алтын|Много слов — уголь, мало слов — золото","Еңбектің наны тәтті|Хлеб, добытый трудом, сладок","Ақыл — жастан, асыл — тастан|Ум — от молодых, драгоценность — из камня"]}
+]};
+
+/* ===================== STATE ===================== */
+const LS_KEY = "ekitil.v2";
+const DAY = 86400000;
+const todayKey = (d=new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+function freshState(){ return {v:1, updatedAt:0, lang:"en", goal:30, sound:true, totalXp:0, maxStreak:0, hist:{}, streak:{count:0,last:""}, langs:{en:{done:{},cards:{},pron:{},best:0}, kk:{done:{},cards:{},pron:{},best:0}}}; }
+function fixState(){ for(const l of ["en","kk"]){ const x = S.langs[l] = Object.assign({done:{},cards:{},pron:{},best:0,custom:[],hist:{},time:{},hours:Array(24).fill(0),streak:{count:0,last:""},maxStreak:0,xp:0}, S.langs[l]||{}); if(!Array.isArray(x.hours)||x.hours.length!==24) x.hours=Array(24).fill(0); } if(S.lang!=="en"&&S.lang!=="kk") S.lang="en"; S.chatCount ||= 0; }
+let S = freshState();
+try{ const raw = localStorage.getItem(LS_KEY) || localStorage.getItem("ekitil.en.v1") || localStorage.getItem("ekitil.v1"); if(raw){ S = Object.assign(freshState(), JSON.parse(raw)); } }catch(e){}
+fixState();
+let ui = {tab:"learn"};
+try{ ui.tab = localStorage.getItem("ekitil.tab") || "learn"; }catch(e){}
+
+let db=null, docRef=null, saveTimer=null;
+function save(){
+  S.updatedAt = Date.now();
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){}
+  if(docRef){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>{ docRef.set({json:JSON.stringify(S), updatedAt:S.updatedAt}).catch(()=>{}); }, 1200); }
+}
+async function initCloud(){
+  try{
+    if(!window.claude?.use) return;
+    const [dbm, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+    if(!dbm || !user) return;
+    const id = await user.id(); if(!id) return;
+    db = dbm; docRef = db.doc("data/users/"+id+"/progress");
+    const snap = await docRef.get();
+    const d = snap && snap.exists !== false ? snap.data() : null;
+    if(d && d.json && (d.updatedAt||0) > (S.updatedAt||0)){
+      S = Object.assign(freshState(), JSON.parse(d.json)); fixState();
+      try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){}
+      render(); toast("Прогресс загружен из облака");
+    } else if(S.updatedAt){ docRef.set({json:JSON.stringify(S), updatedAt:S.updatedAt}).catch(()=>{}); }
+  }catch(e){ /* работаем локально */ }
+}
+
+function addXp(n){
+  const k = todayKey();
+  const LL = S.langs[S.lang];
+  S.hist[k] = (S.hist[k]||0) + n; S.totalXp += n;
+  LL.hist[k] = (LL.hist[k]||0) + n; LL.xp += n;
+  if(LL.streak.last !== k){ LL.streak.count = LL.streak.last === todayKey(new Date(Date.now()-DAY)) ? LL.streak.count+1 : 1; LL.streak.last = k; }
+  LL.maxStreak = Math.max(LL.maxStreak||0, LL.streak.count);
+  const y = todayKey(new Date(Date.now()-DAY));
+  if(S.streak.last !== k){ S.streak.count = S.streak.last === y ? S.streak.count+1 : 1; S.streak.last = k; }
+  S.maxStreak = Math.max(S.maxStreak||0, S.streak.count);
+  save();
+}
+const streakNow = (l=S.lang) => { const st=S.langs[l].streak; return (st.last===todayKey() || st.last===todayKey(new Date(Date.now()-DAY))) ? st.count : 0; };
+/* time tracking: counts active minutes per language, per day and per hour */
+let lastAct = Date.now();
+["pointerdown","keydown","scroll"].forEach(ev=>addEventListener(ev, ()=>{ lastAct=Date.now(); }, {passive:true, capture:true}));
+setInterval(()=>{
+  if(document.visibilityState!=="visible" || Date.now()-lastAct > 90000) return;
+  const LL=S.langs[S.lang], k=todayKey(), h=new Date().getHours();
+  LL.time[k]=(LL.time[k]||0)+10; LL.hours[h]+=10; save();
+  if(ui.tab==="progress" && !LS && !PS && !BZ && Math.random()<.2) { const el=$("#today-min"); if(el) el.textContent = Math.round(LL.time[k]/60); }
+}, 10000);
+
+/* ===================== AUDIO ===================== */
+let ttsCap = null;
+window.claude?.use?.("tts").then(t=>{ ttsCap=t; }).catch(()=>{});
+function voiceFor(lang){
+  if(!("speechSynthesis" in window)) return null;
+  const vs = speechSynthesis.getVoices();
+  return lang==="kk" ? vs.find(v=>/^kk/i.test(v.lang)) : (vs.find(v=>/^en[-_]US/i.test(v.lang)) || vs.find(v=>/^en/i.test(v.lang)));
+}
+if("speechSynthesis" in window){ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = ()=>{}; }
+function canSpeak(lang){ return !!ttsCap || !!voiceFor(lang); }
+const warned = {};
+function speakLocal(text, lang){
+  const v = voiceFor(lang);
+  if(!v){ if(warned[lang]) return; warned[lang]=1; toast(lang==="kk" ? "На этом устройстве нет казахского голоса. Читайте вслух сами — это тоже тренировка." : "Озвучка недоступна в этом браузере"); return; }
+  speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.voice=v; u.lang=v.lang; u.rate=rate; speechSynthesis.speak(u);
+}
+let rate = .9;
+function speak(text, lang=S.lang, r=.9){
+  rate = r;
+  if(ttsCap){ ttsCap.speak(text, {language: lang==="kk"?"kk":"en-US", rate:Math.max(.7,r)}).catch(e=>{ if(e?.code==="not_granted") ttsCap=null; if(e?.code!=="stopped" && e?.code!=="replaced") speakLocal(text, lang); }); return; }
+  speakLocal(text, lang);
+}
+/* game sounds */
+let actx = null;
+function sfx(type){
+  if(!S.sound) return;
+  try{
+    actx ||= new (window.AudioContext||window.webkitAudioContext)();
+    const notes = {good:[660,990], bad:[200,150], win:[523,659,784,1047], combo:[784,988,1175]}[type] || [880];
+    notes.forEach((f,i)=>{ const o=actx.createOscillator(), g=actx.createGain(); o.type = type==="bad"?"square":"triangle"; o.frequency.value=f;
+      const t=actx.currentTime+i*.09; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(type==="bad"?.04:.14,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+.24);
+      o.connect(g).connect(actx.destination); o.start(t); o.stop(t+.26); });
+  }catch(e){}
+}
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv=document.createElement("canvas"); cv.id="confetti"; document.body.append(cv);
+  const dpr=devicePixelRatio||1; cv.width=innerWidth*dpr; cv.height=innerHeight*dpr; const c=cv.getContext("2d"); c.scale(dpr,dpr);
+  const cs=getComputedStyle(document.body); const cols=["--accent","--gold","--ok","--sky","--brick"].map(v=>cs.getPropertyValue(v).trim());
+  const ps=[...Array(140)].map(()=>({x:innerWidth/2+(Math.random()-.5)*120, y:innerHeight*.35, vx:(Math.random()-.5)*14, vy:-Math.random()*14-4, s:5+Math.random()*6, r:Math.random()*6, c:cols[Math.random()*cols.length|0]}));
+  const t0=performance.now();
+  (function f(t){ c.clearRect(0,0,innerWidth,innerHeight);
+    ps.forEach(p=>{ p.vy+=.45; p.x+=p.vx; p.y+=p.vy; p.vx*=.99; p.r+=.15; c.save(); c.translate(p.x,p.y); c.rotate(p.r); c.fillStyle=p.c; c.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); c.restore(); });
+    if(t-t0<2200) requestAnimationFrame(f); else cv.remove(); })(t0);
+}
+/* speech recognition for pronunciation */
+let dict = null; const dictNo = {};
+/* browser speech recognition, used when the page runs outside claude.ai (e.g. Safari on iPhone) */
+function webSpeechDict(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition; if(!SR) return null;
+  let rec=null, state="idle", stopRes=null; const h={p:[],f:[],s:[]};
+  const emit=(k,e)=>h[k].forEach(f=>{ try{ f(e); }catch(_){} });
+  const setState=(st,reason)=>{ state=st; emit("s", st==="idle"?{state:st,reason}:{state:st}); };
+  return {
+    start(opts={}){ return new Promise((res,rej)=>{
+      try{
+        rec = new SR(); rec.lang = opts.language==="kk" ? "kk-KZ" : (opts.language||"en-US"); rec.interimResults = true; rec.continuous = true;
+        rec.onstart = ()=>{ setState("listening"); res(); };
+        rec.onresult = e=>{ let interim=""; for(let i=e.resultIndex;i<e.results.length;i++){ const r=e.results[i]; if(r.isFinal) emit("f",{text:" "+r[0].transcript.trim()}); else interim+=r[0].transcript; } emit("p",{text:interim}); };
+        rec.onerror = e=>{ const code = (e.error==="not-allowed"||e.error==="service-not-allowed") ? "not_granted" : e.error==="language-not-supported" ? "unavailable" : (e.error==="no-speech"||e.error==="aborted") ? "stopped" : "upstream_error";
+          if(state==="starting") rej({code}); setState("idle", code); };
+        rec.onend = ()=>{ if(state!=="idle") setState("idle","stopped"); if(stopRes){ stopRes(); stopRes=null; } };
+        setState("starting"); rec.start();
+      }catch(err){ setState("idle","unavailable"); rej({code:"unavailable"}); }
+    }); },
+    stop(){ return new Promise(r=>{ if(!rec || state==="idle") return r(); stopRes=r; try{ rec.stop(); }catch(_){ r(); } }); },
+    active:()=>state!=="idle",
+    onPartial:f=>{ h.p.push(f); return ()=>{}; }, onFinal:f=>{ h.f.push(f); return ()=>{}; }, onState:f=>{ h.s.push(f); return ()=>{}; }
+  };
+}
+const IN_CLAUDE = !!window.claude?.use;
+(IN_CLAUDE ? claude.use("dictation") : Promise.resolve(null)).then(d=>{
+  d = d || (IN_CLAUDE ? null : webSpeechDict());
+  if(!d) return; dict = d;
+  d.onPartial(({text})=>{ if(PS){ PS.partial=text; paintHeard(); } else if(CH && CH.listening){ const el=$("#chat-in"); if(el) el.placeholder = text || "…"; } });
+  d.onFinal(({text})=>{ if(!PS && CH && CH.listening){ const el=$("#chat-in"); if(el){ el.value = (el.value + text).replace(/^\s+/,""); } return; }
+    if(PS){ PS.heard += text; PS.partial=""; paintHeard(); clearTimeout(PS.t); PS.t=setTimeout(()=>{ if(PS && PS.listening) dict.stop().then(evalPron).catch(()=>{}); }, 1400); } });
+  d.onState(({state, reason})=>{
+    if(!PS){ if(CH){ CH.listening = state!=="idle"; const m=$('[data-act="chatmic"]'); if(m) m.classList.toggle("on", CH.listening); if(state==="idle"){ const el=$("#chat-in"); if(el) el.placeholder = S.lang==="kk"?"Қазақша жазыңыз…":"Type in English…"; } } return; }
+    const was = PS.listening; PS.listening = state!=="idle";
+    if(state==="idle" && (reason==="not_granted"||reason==="unavailable")){ dictNo[PS.lang]=true; }
+    if(was!==PS.listening) renderOverlay();
+  });
+  if(ui.tab==="pron") render();
+}).catch(()=>{});
+const micOk = lang => !!dict && !dictNo[lang];
+const ICON_MIC = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>`;
+const ICON_BOLT = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>`;
+const ICON_HEART = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>`;
+const ICON_STAR = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>`;
+const starsHtml = (n, sm) => `<span class="stars ${sm?"sm":""}">${[1,2,3].map(i=>`<span class="${i<=n?"star-on":"star-off"}">${ICON_STAR}</span>`).join("")}</span>`;
+const pronStars = l => Object.values(S.langs[l].pron).reduce((a,b)=>a+b,0);
+const ICON_SPK =`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>`;
+
+/* ===================== HELPERS ===================== */
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]];} return a; };
+const pair = s => { const [t,r]=s.split("|"); return {t,r}; };
+const words = topic => topic.w.map((s,i)=>({...pair(s), key:topic.id+":"+i, topic:topic.id}));
+const norm = s => s.toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?;:—–\-"«»()]/g," ").replace(/\s+/g," ").trim();
+const KK_LOOSE = {"ә":"а","ғ":"г","қ":"к","ң":"н","ө":"о","ұ":"у","ү":"у","һ":"х","і":"и"};
+const loose = s => norm(s).replace(/[әғқңөұүһі]/g, c=>KK_LOOSE[c]);
+let toastTimer;
+function toast(msg){ let t=$(".toast"); if(!t){ t=document.createElement("div"); t.className="toast"; t.setAttribute("role","status"); document.body.append(t);} t.textContent=msg; t.hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.hidden=true, 3200); }
+const course = () => COURSE[S.lang];
+const L = () => S.langs[S.lang];
+const langName = (l=S.lang) => l==="kk" ? "по-казахски" : "по-английски";
+const langFullOf = () => S.lang==="kk" ? "Kazakh" : "American English";
+function dueCards(lang=S.lang){ const now=Date.now(); return Object.entries(S.langs[lang].cards).filter(([k,c])=>c.d<=now); }
+function wordByKey(key, lang=S.lang){ const [tid,i]=key.split(":");
+  if(tid==="my"){ const c=S.langs[lang].custom.find(x=>String(x.id)===i); return c ? {t:c.t, r:c.r, key, topic:"my"} : null; } const tp=COURSE[lang].find(t=>t.id===tid); if(!tp) return null; return {...pair(tp.w[+i]), key, topic:tid}; }
+function nextTopic(){ return course().find(t=>!(t.id in L().done)) || null; }
+
+const anyLang = f => ["en","kk"].some(l=>f(S.langs[l]));
+const ACH = [
+  ["1","Первый шаг","Пройти первый урок", ()=>anyLang(l=>Object.keys(l.done).length>0)],
+  ["%","Без ошибок","Урок на 100%", ()=>anyLang(l=>Object.values(l.done).some(v=>v>=100))],
+  ["3","Разогрев","3 дня подряд", ()=>Math.max(S.langs.en.maxStreak||0,S.langs.kk.maxStreak||0)>=3],
+  ["7","Неделя","7 дней подряд", ()=>Math.max(S.langs.en.maxStreak||0,S.langs.kk.maxStreak||0)>=7],
+  ["30","Привычка","30 дней подряд", ()=>Math.max(S.langs.en.maxStreak||0,S.langs.kk.maxStreak||0)>=30],
+  ["50","Словарь","50 слов в колодах", ()=>Object.keys(S.langs.en.cards).length+Object.keys(S.langs.kk.cards).length>=50],
+  ["★","Голос","Первая звезда за произношение", ()=>pronStars("en")+pronStars("kk")>0],
+  ["★★","Чистая речь","Все уровни произношения на 3★", ()=>["en","kk"].some(l=>pronStars(l)>=PRON[l].length*3)],
+  ["⚡","Молния","20 очков в «Молнии»", ()=>anyLang(l=>(l.best||0)>=20)],
+  ["Ai","Разговорчивый","20 сообщений ИИ-собеседнику", ()=>(S.chatCount||0)>=20],
+  ["✎","Свой словарь","Добавить 10 своих слов", ()=>S.langs.en.custom.length+S.langs.kk.custom.length>=10],
+  ["C1","Финиш","Пройти все уроки одного курса", ()=>["en","kk"].some(l=>COURSE[l].every(t=>t.id in S.langs[l].done))],
+  ["2","Полиглот","Заниматься обоими языками", ()=>S.langs.en.xp>0 && S.langs.kk.xp>0],
+  ["1K","Тысяча","Набрать 1000 XP", ()=>S.totalXp>=1000]
+];
+
+/* ===================== RENDER ===================== */
+function render(){
+  document.body.dataset.lang = S.lang;
+  document.documentElement.lang = "ru";
+  $("#streak").textContent = streakNow(); $("#xp").textContent = L().xp;
+  $("#lang-en").setAttribute("aria-pressed", S.lang==="en"); $("#lang-kk").setAttribute("aria-pressed", S.lang==="kk");
+  const views = {learn:viewLearn, pron:viewPron, chat:viewChat, review:viewReview, grammar:viewGrammar, progress:viewProgress};
+  if(!views[ui.tab]) ui.tab="learn";
+  document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===ui.tab));
+  $("#main").innerHTML = views[ui.tab]();
+  if(ui.tab==="chat") afterChatRender();
+}
+
+function ringSvg(frac){
+  const r=42, c=2*Math.PI*r, f=Math.min(1,frac);
+  return `<svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="9"/><circle cx="48" cy="48" r="${r}" fill="none" stroke="${f>=1?"var(--ok)":"var(--accent)"}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c*f} ${c}"/></svg>`;
+}
+
+function viewLearn(){
+  const xpToday = L().hist[todayKey()]||0, nt = nextTopic(), due = dueCards().length;
+  const lvTitle = S.lang==="kk" ? "Казахский" : "Американский английский";
+  let h = `<section class="today">
+    <div class="ring">${ringSvg(xpToday/S.goal)}<div class="num"><div>${xpToday}<small>из ${S.goal} XP</small></div></div></div>
+    <div><div class="label">${lvTitle} · цель на сегодня</div>
+      <h1>${nt ? `Следующий урок: ${esc(nt.t)}` : "Все уроки пройдены. Пора к живой практике!"}</h1>
+      <div class="today-actions">
+        ${nt ? `<button class="btn" data-act="start" data-id="${nt.id}">Продолжить</button>`:""}
+        <button class="btn ghost" data-act="goreview">Повторить слова${due?` · ${due}`:""}</button>
+      </div></div></section>
+    <section class="games">
+      <button class="game" data-act="blitz"><span class="gi">${ICON_BOLT}</span><span><b>Молния</b><span>60 секунд, успей перевести как можно больше. Рекорд: ${L().best||0}</span></span></button>
+      <button class="game" data-act="gopron"><span class="gi">${ICON_MIC}</span><span><b>Произношение</b><span>Говори в микрофон и получай звёзды. ${pronStars(S.lang)} из ${PRON[S.lang].length*3} ★</span></span></button>
+    </section>`;
+  for(const lv of LEVELS){
+    const ts = course().filter(t=>t.lv===lv.id); const done = ts.filter(t=>t.id in L().done).length;
+    h += `<section class="level"><div class="level-head"><span class="badge">${lv.id}</span><h2>${lv.name}</h2><span class="muted">${done} из ${ts.length}</span></div><div class="topics">`;
+    for(const t of ts){
+      const best = L().done[t.id]; const isNext = nt && nt.id===t.id;
+      h += `<button class="topic" data-act="start" data-id="${t.id}">
+        ${best!=null?`<span class="flag done">${best}%</span>`: isNext?`<span class="flag next">Далее</span>`:""}
+        <span class="t">${esc(t.t)}</span><span class="s">${esc(t.s)}</span>
+        <span class="s">${t.w.length} ${t.w.length>4?"слов":"слова"} · ${t.x.length} фразы</span>
+        <span class="meter"><i style="width:${best||0}%"></i></span></button>`;
+    }
+    h += `</div></section>`;
+  }
+  return `<div class="view">${h}</div>`;
+}
+
+let rv = null; // review session
+function viewReview(){
+  const total = Object.keys(L().cards).length, due = dueCards().length;
+  if(rv && rv.lang===S.lang && rv.i < rv.list.length){
+    const w = wordByKey(rv.list[rv.i]);
+    if(!w){ rv.i++; return viewReview(); }
+    return `<div class="view" style="max-width:560px;margin:0 auto;width:100%">
+      <div class="level-head"><span class="label">Карточка ${rv.i+1} из ${rv.list.length}</span><button class="btn ghost" style="margin-left:auto;padding:8px 12px" data-act="endreview">Закончить</button></div>
+      <div class="flash"><div style="display:grid;gap:12px;justify-items:center">
+        <div class="front">${esc(w.t)}</div>
+        <button class="speak" data-act="say" data-text="${esc(w.t)}" aria-label="Озвучить">${ICON_SPK}</button>
+        ${rv.shown?`<div class="back">${esc(w.r)}</div>`:`<div class="muted">Вспомните перевод, потом откройте ответ</div>`}
+      </div></div>
+      ${rv.shown?`<div class="rate">
+        <button class="again" data-act="rate" data-q="0">Не помню<small>&lt;10 мин</small></button>
+        <button data-act="rate" data-q="3">Трудно<small>${fmtInt(rv.list[rv.i],3)}</small></button>
+        <button class="good" data-act="rate" data-q="4">Помню<small>${fmtInt(rv.list[rv.i],4)}</small></button>
+        <button data-act="rate" data-q="5">Легко<small>${fmtInt(rv.list[rv.i],5)}</small></button></div>`
+      :`<button class="btn wide" data-act="reveal">Показать ответ <span style="opacity:.7;font-weight:600">· пробел</span></button>`}
+    </div>`;
+  }
+  const finished = rv && rv.lang===S.lang && rv.i>=rv.list.length;
+  return `<div class="view">
+    <section class="panel"><div class="label">Интервальное повторение</div>
+      <h2>${finished?`Готово, ${rv.list.length} карточек повторено`: due?`Пора повторить ${due} ${plural(due,"слово","слова","слов")}`:"Сейчас повторять нечего"}</h2>
+      <p class="muted" style="margin:0">Слова из пройденных уроков возвращаются в тот момент, когда вы начинаете их забывать. Сначала через день, потом через 3, 7, 20 дней и дальше. Так они переходят в долгую память.</p>
+      <div class="today-actions">
+        <button class="btn" data-act="review" ${due?"":"disabled"}>Начать повторение</button>
+        <button class="btn ghost" data-act="practice" ${total?"":"disabled"}>Свободная тренировка</button>
+      </div>
+      ${total?"":`<p class="note">Пройдите первый урок, и его слова появятся здесь.</p>`}
+    </section>
+    <section class="stats">
+      <div class="stat"><b>${total}</b><span class="muted">слов в колоде</span></div>
+      <div class="stat"><b>${due}</b><span class="muted">ждут повторения</span></div>
+      <div class="stat"><b>${Object.values(L().cards).filter(c=>c.i>=21).length}</b><span class="muted">выучено надолго</span></div>
+    </section>
+    <section class="panel"><div class="label">Мои слова · ${L().custom.length}</div>
+      <h2>Добавляйте слова из сериалов, песен и разговоров</h2>
+      <p class="muted" style="margin:0">Всё незнакомое, что встретили в жизни, записывайте сюда. Слова сразу попадают в колоду повторения. Это самый быстрый путь к словарю носителя.</p>
+      <form class="addrow" id="add-form"><input class="field" id="my-t" required autocomplete="off" lang="${S.lang}" placeholder="${S.lang==="kk"?"Сөз немесе тіркес":"Word or phrase"}"><input class="field" id="my-r" required autocomplete="off" placeholder="Перевод"><button class="btn" type="submit">Добавить</button></form>
+      ${S.lang==="kk"?`<div class="kbd">${"әғқңөұүһі".split("").map(c=>`<button type="button" data-act="kmy" data-c="${c}">${c}</button>`).join("")}</div>`:""}
+      ${L().custom.length?`<div class="mylist">${[...L().custom].reverse().map(c=>`<div class="myrow"><button data-act="say" data-text="${esc(c.t)}" aria-label="Озвучить" style="color:var(--accent);font-size:15px">▶</button><b>${esc(c.t)}</b><span>${esc(c.r)}</span><button data-act="mydel" data-id="${c.id}" aria-label="Удалить">×</button></div>`).join("")}</div>`:""}
+    </section></div>`;
+}
+function plural(n,a,b,c){ const m10=n%10, m100=n%100; return m10===1&&m100!==11?a: m10>=2&&m10<=4&&(m100<10||m100>=20)?b:c; }
+function srs(card, q){
+  const c = {...card};
+  if(q<3){ c.r=0; c.i=0; c.d=Date.now()+10*60000; return c; }
+  c.r=(c.r||0)+1;
+  c.i = c.r===1 ? 1 : c.r===2 ? (q===3?2:q===5?4:3) : Math.max(1, Math.round((c.i||1)*(q===3?1.2:c.e)*(q===5?1.3:1)));
+  c.e = Math.max(1.3, (c.e||2.5) + 0.1 - (5-q)*(0.08+(5-q)*0.02));
+  c.d = Date.now() + c.i*DAY; return c;
+}
+function fmtInt(key,q){ const c = srs(L().cards[key]||{e:2.5,i:0,r:0}, q); return c.i<1?"<10 мин": c.i===1?"1 день": `${c.i} ${plural(c.i,"день","дня","дней")}`; }
+
+function viewGrammar(){
+  const g = GRAMMAR[S.lang];
+  return `<div class="view"><p class="muted" style="margin:0;max-width:65ch">Короткие объяснения по уровням. Прочитайте тему, потом пройдите уроки того же уровня: в упражнениях на сборку предложений эти правила встречаются на практике.</p>
+  ${g.map((x,i)=>`<details class="gram" ${i===0?"open":""}><summary><span class="badge">${x.lv}</span>${esc(x.t)}</summary><div class="gram-body">${x.b}</div></details>`).join("")}</div>`;
+}
+
+function viewPron(){
+  const lv = PRON[S.lang], P = L().pron;
+  const mic = micOk(S.lang);
+  let h = `<section class="panel"><div class="label">Уровни произношения · ${S.lang==="kk"?"казахский":"английский"}</div>
+    <h2>Слушай, повторяй, получай звёзды</h2>
+    <p class="muted" style="margin:0;max-width:65ch">${mic
+      ? "Нажмите на микрофон и произнесите слово или фразу. Приложение распознает речь и покажет, какие слова прозвучали чётко, а какие нужно подтянуть."
+      : "Микрофон здесь недоступен (он работает в Chrome на claude.ai). Пока можно тренироваться в режиме самопроверки: послушать, повторить вслух и честно оценить себя."}
+    ${S.lang==="kk"?" Распознавание казахской речи поддерживается не везде: если оно не сработает, включится самопроверка.":""}</p></section>
+    <div class="topics">`;
+  lv.forEach((p,i)=>{
+    const st = P[p.id], open = true;
+    h += `<button class="topic ${open?"":"locked"}" data-act="${open?"pron":"locked"}" data-id="${p.id}">
+      <span class="label">Уровень ${i+1}</span><span class="t">${esc(p.t)}</span><span class="s">${esc(p.s)}</span>
+      ${open? starsHtml(st||0, true) : `<span class="s">Откроется после уровня ${i}</span>`}</button>`;
+  });
+  h += `</div>`;
+  return `<div class="view">${h}${viewSounds()}</div>`;
+}
+function viewSounds(){
+  if(S.lang==="kk"){
+    return `<div class="view"><section class="panel"><div class="label">42 буквы, 9 из них особые</div><h2>Буквы, которых нет в русском</h2>
+      <p class="muted" style="margin:0;max-width:65ch">Остальные буквы казахской кириллицы читаются почти как в русском. Нажмите на карточку, чтобы услышать слово, если на устройстве есть казахский голос. На клавиатуре добавьте раскладку «Казахская», в упражнениях есть кнопки с этими буквами.</p></section>
+      <div class="letters">${LETTERS.map(l=>`<button class="letter" data-act="say" data-text="${esc(l[1])}"><span class="big">${l[0]}</span><span class="w">${l[1]} <span class="muted" style="font-weight:600">· ${l[2]}</span></span><span class="h">${l[3]}</span></button>`).join("")}</div>
+      <section class="panel"><h2>Сингармонизм на слух</h2><p style="margin:0">Казахское слово звучит либо целиком «твёрдо», либо целиком «мягко». Сравните: <b>бала</b> (ребёнок, твёрдое) и <b>бөле</b> (двоюродный брат по матери, мягкое). Если окончание звучит «не так», скорее всего нарушена гармония гласных.</p></section></div>`;
+  }
+  const S_EN = [
+    ["th","think, this","Кончик языка между зубами. Глухое в think, звонкое в this. Не заменяйте на «с» или «з»."],
+    ["w","we, window","Губы трубочкой, потом резко раскрыть. Это не русское «в»."],
+    ["æ","cat, bad","Широко откройте рот, как для «а», но скажите «э»."],
+    ["ŋ","sing, morning","Носовой звук, задняя часть языка у нёба. «Г» в конце не произносится."],
+    ["r","red, very","Язык не вибрирует и не касается нёба, кончик загнут назад."],
+    ["h","house, help","Лёгкий выдох, как будто дышите на стекло. Не «х» с хрипом."],
+    ["t → d","water, better, city","Американский flap T: t между гласными звучит как быстрое мягкое «д»."],
+    ["iː / ɪ","sheep / ship","Долгое и краткое «и» различают слова. Тянуть или не тянуть — важно."],
+    ["ə","about, banana","Безударный нейтральный звук, самый частый в английском."]
+  ];
+  return `<div class="view"><section class="panel"><div class="label">Звуки, которых нет в русском</div><h2>Американские звуки</h2><p class="muted" style="margin:0;max-width:65ch">Американский акцент складывается из этих девяти звуков. Нажмите на карточку, послушайте и повторите вслух три раза.</p></section>
+    <div class="letters">${S_EN.map(l=>`<button class="letter" data-act="say" data-text="${esc(l[1])}"><span class="big" style="font-size:28px">/${l[0]}/</span><span class="w">${l[1]}</span><span class="h">${l[2]}</span></button>`).join("")}</div></div>`;
+}
+
+function langStats(l){
+  const L2=S.langs[l]; const days=new Set([...Object.keys(L2.time).filter(k=>L2.time[k]>=30), ...Object.keys(L2.hist).filter(k=>L2.hist[k]>0)]);
+  const sec=Object.values(L2.time).reduce((a,b)=>a+b,0);
+  return {streak:streakNow(l), best:L2.maxStreak||0, days:days.size, min:Math.round(sec/60), xp:L2.xp||0, today:Math.round((L2.time[todayKey()]||0)/60)};
+}
+const MON = ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+const fmtDay = d => `${d.getDate()} ${MON[d.getMonth()]}`;
+function niceMax(v){ if(v<=5) return 5; if(v<=10) return 10; if(v<=20) return 20; if(v<=30) return 30; if(v<=60) return 60; return Math.ceil(v/30)*30; }
+function barChart(vals, labels, tips, unit){
+  const mx = niceMax(Math.max(...vals,0));
+  return `<div class="chart"><div class="yax"><span>${mx}</span><span>${mx/2}</span><span>0</span></div>
+    <div class="plot" style="grid-template-columns:repeat(${vals.length},1fr)">
+      <i class="gl" style="bottom:100%"></i><i class="gl" style="bottom:50%"></i><i class="gl base" style="bottom:0"></i>
+      ${vals.map((v,i)=>`<div class="col" data-tip="${esc(tips[i])}"><b class="${v?"":"zero"}" style="height:${v? Math.max(2, v/mx*100):0}%"></b></div>`).join("")}
+    </div>
+    <div class="xax" style="grid-template-columns:repeat(${vals.length},1fr)">${labels.map(x=>`<span>${x}</span>`).join("")}</div>
+    <div class="unit">${unit}</div></div>`;
+}
+function viewProgress(){
+  const LL=L(), st=langStats(S.lang), name = S.lang==="kk"?"Казахский":"Американский английский";
+  // 30 days
+  const d30 = [...Array(30)].map((_,i)=>new Date(Date.now()-(29-i)*DAY));
+  const v30 = d30.map(d=>Math.round((LL.time[todayKey(d)]||0)/60));
+  const l30 = d30.map((d,i)=> (i===29 ? "сег." : (29-i)%7===0 ? d.getDate() : ""));
+  const t30 = d30.map((d,i)=>`${fmtDay(d)}: ${v30[i]} мин, ${LL.hist[todayKey(d)]||0} XP`);
+  // hours
+  const vh = LL.hours.map(x=>Math.round(x/60));
+  const lh = vh.map((_,h)=> h%6===0 ? h+":00" : "");
+  const th = vh.map((v,h)=>`${h}:00–${h+1}:00: всего ${v} мин`);
+  const peak = vh.indexOf(Math.max(...vh));
+  const part = h => h<6?"ночью":h<12?"утром":h<18?"днём":"вечером";
+  // heatmap 15 weeks, Monday-first
+  const today = new Date(); const dow = (today.getDay()+6)%7;
+  const start = new Date(today.getFullYear(), today.getMonth(), today.getDate()-dow-7*14);
+  const cells=[]; let hmMax=1;
+  for(let w=0; w<15; w++) for(let d=0; d<7; d++){ const dt=new Date(start.getFullYear(), start.getMonth(), start.getDate()+w*7+d); const k=todayKey(dt); const m=Math.round((LL.time[k]||0)/60); if(dt<=today) hmMax=Math.max(hmMax,m); cells.push({dt,k,m,future:dt>today}); }
+  const lvl = m => m<=0?0 : m<hmMax*.25?1 : m<hmMax*.5?2 : m<hmMax*.75?3 : 4;
+  const other = S.lang==="kk"?"en":"kk";
+  const row = (l,n) => { const x=langStats(l); return `<tr class="${l===S.lang?"cur":""}"><td>${n}</td><td>${x.streak}</td><td>${x.days}</td><td>${x.min}</td><td>${x.xp}</td></tr>`; };
+  return `<div class="view">
+    <section class="panel"><div class="label">${name} · статистика</div>
+      <div class="hero-stats">
+        <div class="hero"><b>${st.streak}</b><span>${plural(st.streak,"день","дня","дней")} подряд</span><small>Рекорд: ${st.best}</small></div>
+        <div class="stat"><b>${st.days}</b><span class="muted">${plural(st.days,"день","дня","дней")} занятий всего</span></div>
+        <div class="stat"><b><span id="today-min">${st.today}</span></b><span class="muted">минут сегодня</span></div>
+        <div class="stat"><b>${st.min>=60? (st.min/60).toFixed(1).replace(".",",")+" ч" : st.min+" мин"}</b><span class="muted">всего времени</span></div>
+      </div></section>
+    <section class="panel"><div class="label">Сколько вы занимались · последние 30 дней</div>
+      ${barChart(v30, l30, t30, "минут в день")}
+      <p class="note" style="margin:0">Время считается, пока приложение открыто и вы им пользуетесь. Наведите или нажмите на столбик, чтобы увидеть день.</p></section>
+    <div class="grid2">
+      <section class="panel"><div class="label">Когда вы занимаетесь · по часам</div>
+        ${barChart(vh, lh, th, "минут за всё время")}
+        <p class="note" style="margin:0">${Math.max(...vh)>0 ? `Чаще всего вы занимаетесь ${part(peak)}, около ${peak}:00.` : "График заполнится после первых занятий."}</p></section>
+      <section class="panel"><div class="label">Календарь занятий · 15 недель</div>
+        <div class="heat-wrap"><div class="heat-days"><span>Пн</span><span></span><span>Ср</span><span></span><span>Пт</span><span></span><span>Вс</span></div>
+        <div class="heat">${cells.map(c=>`<i class="h${c.future?"f":lvl(c.m)}" ${c.future?"":`data-tip="${fmtDay(c.dt)}: ${c.m} мин"`}></i>`).join("")}</div></div>
+        <div class="heat-legend"><span>меньше</span><i class="h0"></i><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i><span>больше</span></div></section>
+    </div>
+    <section class="panel"><div class="label">Оба раздела</div>
+      <div class="tbl"><table class="cmp"><tr><th>Раздел</th><th>Дней подряд</th><th>Дней занятий</th><th>Минут</th><th>XP</th></tr>
+      ${row("en","English (US)")}${row("kk","Қазақша")}</table></div></section>
+    <section class="panel"><div class="label">Дневная цель, XP</div>
+      <div class="goal-sel">${[20,30,50,80].map(g=>`<button class="btn ${S.goal===g?"":"ghost"}" style="padding:8px 14px" data-act="goal" data-g="${g}">${g} XP</button>`).join("")}</div></section>
+    <section class="panel"><div class="label">Награды · ${ACH.filter(a=>a[3]()).length} из ${ACH.length}</div>
+      <div class="ach-grid">${ACH.map(a=>`<div class="ach ${a[3]()?"got":""}"><span class="medal">${a[0]}</span><span><b>${a[1]}</b><span>${a[2]}</span></span></div>`).join("")}</div></section>
+    <section class="panel"><div class="label">Честно о цели</div><h2>Как дойти до уровня носителя</h2>
+      <p style="margin:0;max-width:65ch">Приложение даёт базу: слова, грамматику, привычку заниматься каждый день. Уровень носителя появляется только из живого языка. Добавьте к урокам вот это:</p>
+      <ol class="plan">
+        <li><b>Каждый день 15–20 минут здесь</b>: один урок или повторение. Регулярность важнее длинных занятий.</li>
+        ${S.lang==="kk" ? `<li><b>Слушайте носителей</b>: Qazaq TV, мультфильмы «Балапан», казахский рэп и поп (Ninety One, Ирина Кайратовна, Dimash), подкасты на казахском. Включайте казахские субтитры.</li>` : `<li><b>Слушайте американцев</b>: сериалы «Friends», «The Office», «Brooklyn Nine-Nine» с английскими субтитрами, подкасты и YouTube на темы дизайна. Повторяйте фразы за героями.</li>`}
+        <li><b>Говорите вслух</b>: повторяйте за диктором (шэдоуинг) по 5 минут, записывайте себя на телефон.</li>
+        <li><b>Говорите каждый день</b>: вкладка «Собеседник» для ежедневной практики, плюс живые люди через языковой обмен (Tandem, HelloTalk) и разговорные клубы. Хотя бы раз в неделю с человеком.</li>
+        <li><b>Добавляйте свои слова</b>: всё незнакомое из сериалов и разговоров записывайте во вкладке «Повторение», раздел «Мои слова».</li>
+        ${S.lang==="kk" ? `<li><b>Погружение</b>: поездка в Алматы или Астану даст больше, чем месяц уроков.</li>` : `<li><b>Погружение</b>: переключите телефон и соцсети на английский, ведите заметки и портфолио на английском.</li>`}
+      </ol></section>
+    <section class="panel"><div class="label">Настройки</div><p class="note" style="margin:0">${IN_CLAUDE ? "Прогресс сохраняется в этом браузере и синхронизируется между устройствами через ваш аккаунт claude.ai." : "Прогресс хранится на этом устройстве. Время от времени делайте резервную копию: скопируйте её и сохраните, например, в Заметки."}</p>
+      <div class="goal-sel"><button class="btn ghost" style="padding:8px 14px" data-act="sound">Звуки игры: ${S.sound?"вкл":"выкл"}</button>
+      <button class="btn ghost" style="padding:8px 14px" data-act="backup">Скопировать резервную копию</button>
+      <button class="btn ghost" style="padding:8px 14px" data-act="restore">Восстановить из копии</button>
+      ${!IN_CLAUDE && getKey() ? `<button class="btn ghost" style="padding:8px 14px" data-act="forgetkey">Удалить API-ключ</button>` : ""}
+      <button class="btn ghost" style="padding:8px 14px" data-act="reset">Сбросить прогресс</button></div>
+      <div id="restore-box" hidden style="display:grid;gap:8px"><textarea class="field" id="restore-text" rows="4" placeholder="Вставьте сюда текст резервной копии"></textarea><div><button class="btn" data-act="restore-go">Восстановить</button></div></div></section>
+  </div>`;
+}
+
+/* ===================== LESSON ===================== */
+let LS = null; // lesson session
+function buildQuiz(topic){
+  const lang = S.lang, ws = words(topic);
+  const pool = course().filter(t=>t.lv===topic.lv).flatMap(words);
+  const others = w => shuffle(pool.filter(p=>p.t!==w.t && p.r!==w.r));
+  const audio = canSpeak(lang);
+  const qs = [];
+  const types = shuffle(["t2r","r2t","type","listen","t2r","r2t","type","listen"]);
+  ws.forEach((w,i)=>{
+    let ty = types[i % types.length];
+    const long = w.t.split(" ").length>3 || w.t.length>22;
+    if(ty==="listen" && !audio) ty="t2r";
+    if(ty==="type" && long) ty="r2t";
+    if(ty==="listen" && long) ty="t2r";
+    const ds = others(w).slice(0,3);
+    if(ty==="t2r") qs.push({ty, w, opts:shuffle([w.r, ...ds.map(d=>d.r)]), ans:w.r});
+    else if(ty==="r2t" || ty==="listen") qs.push({ty, w, opts:shuffle([w.t, ...ds.map(d=>d.t)]), ans:w.t});
+    else qs.push({ty, w, ans:w.t});
+  });
+  const mid = Math.floor(qs.length/2);
+  qs.splice(mid, 0, {ty:"match", items:shuffle(ws).slice(0,5)});
+  topic.x.forEach((s,i)=>{ const p=pair(s);
+    if(audio && i===topic.x.length-1 && topic.x.length>1) qs.push({ty:"dict", w:{t:p.t, r:p.r}, ans:p.t});
+    else qs.push({ty:"build", w:{t:p.t, r:p.r}, toks:shuffle(p.t.split(" ").map((x,i)=>({x,i}))), ans:p.t}); });
+  return qs;
+}
+function startLesson(id){
+  const topic = course().find(t=>t.id===id);
+  LS = {topic, lang:S.lang, phase:"study", si:0, qs:buildQuiz(topic), qi:0, total:0, right:0, wrong:new Set(), state:null, sel:null, hearts:5, combo:0, bonus:0};
+  LS.total = LS.qs.length;
+  renderOverlay();
+  const w = words(topic)[0]; setTimeout(()=>{ if(LS) speak(w.t, LS.lang); }, 250);
+}
+function closeLesson(){
+  if(BZ) clearInterval(BZ.timer);
+  if(PS && dict && PS.listening) dict.stop().catch(()=>{});
+  LS=null; PS=null; BZ=null; $("#overlay-root").innerHTML=""; document.body.style.overflow=""; render();
+}
+function shell(prog, body, foot, fb="", side=""){
+  return `<div class="overlay" role="dialog" aria-modal="true">
+    <div class="wrap" style="width:100%;max-width:680px"><div class="ov-top"><button class="close" data-act="close" aria-label="Закрыть">×</button><div class="prog"><i id="bar" style="width:${prog}%"></i></div>${side}</div></div>
+    <div class="ov-body"><div class="wrap" id="ov-body">${body}</div></div>
+    <div class="ov-foot ${fb}"><div class="wrap">${foot}</div></div></div>`;
+}
+
+function renderOverlay(){
+  const root = $("#overlay-root");
+  if(PS) return renderPron(); if(BZ) return renderBlitz();
+  if(!LS){ root.innerHTML=""; return; }
+  document.body.style.overflow="hidden";
+  const ws = words(LS.topic);
+  let prog, body, foot;
+  if(LS.phase==="study"){
+    const w = ws[LS.si];
+    prog = (LS.si+1)/ws.length*30;
+    body = `<div class="label">Новые слова · ${LS.si+1} из ${ws.length}</div>
+      <div class="study-card"><button class="speak big" data-act="say" data-text="${esc(w.t)}" aria-label="Озвучить">${ICON_SPK}</button><div class="w">${esc(w.t)}</div><div class="r">${esc(w.r)}</div></div>
+      <p class="note" style="text-align:center;margin:0">Послушайте, повторите вслух и запомните. Дальше будет проверка.</p>`;
+    foot = `<div style="display:flex;gap:10px">${LS.si>0?`<button class="btn ghost" data-act="sprev">Назад</button>`:""}<button class="btn wide" data-act="snext">${LS.si<ws.length-1?"Дальше":"Начать упражнения"}</button></div>
+      <button class="btn ghost wide" data-act="skipstudy" style="box-shadow:none;background:transparent;padding:6px">Я знаю эти слова, сразу к упражнениям</button>`;
+  } else if(LS.phase==="quiz"){
+    const q = LS.qs[LS.qi];
+    prog = 30 + LS.qi/LS.qs.length*70;
+    body = renderQ(q);
+    if(LS.state){
+      const ok = LS.state.ok;
+      const praise = ["Отлично!","Верно!","Так держать!","Супер!","Керемет!"][LS.qi%5];
+      foot = `<div class="fb-title">${ok? (LS.state.loose?"Почти верно, проверьте написание":praise) : "Неправильно"}${ok&&LS.combo>=3?`<span class="combo pop">Серия ×${LS.combo}</span>`:""}</div>
+        ${!ok || LS.state.loose ? `<div>Правильно: <b>${esc(q.ans || "")}</b>${q.w?` <span class="muted">— ${esc(q.ty==="t2r"?q.w.t:q.w.r)}</span>`:""}</div>`:""}
+        <button class="btn wide" data-act="next" id="next-btn">Дальше <span style="opacity:.7;font-weight:600">· Enter</span></button>`;
+    } else if(q.ty==="match"){
+      foot = `<button class="btn ghost wide" disabled>Соедините все пары</button>`;
+    } else {
+      foot = `<button class="btn wide" data-act="check" id="check-btn" ${hasAnswer(q)?"":"disabled"}>Проверить <span style="opacity:.7;font-weight:600">· Enter</span></button>`;
+    }
+  } else {
+    const pct = Math.round(LS.right/LS.total*100), pass = LS.pass;
+    prog = 100;
+    body = `<div class="result"><div class="label">${esc(LS.topic.t)}</div><div class="score">${pct}%</div>
+      <h2 class="q-title">${pass? (pct>=90?"Блестяще!":"Урок пройден") : "Почти! Попробуйте ещё раз"}</h2>
+      <p class="muted" style="margin:0;max-width:44ch">${LS.right} из ${LS.total} верно с первой попытки. +${LS.xp} XP${LS.bonus?` (из них ${LS.bonus} за серии)`:""}. ${pass?`Слова урока добавлены в повторение.`:`Чтобы урок засчитался и слова ушли в повторение, нужно 60%. Пройдите ещё раз, это бесплатно и без ограничений.`}</p></div>`;
+    foot = `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="restart">Пройти заново</button><button class="btn wide" data-act="close">К урокам</button></div>`;
+  }
+  const fbClass = LS.phase==="quiz" && LS.state ? (LS.state.ok?"ok":"bad") : "";
+  root.innerHTML = shell(prog, body, foot, fbClass, LS.combo>=2?`<span class="combo" title="Серия верных ответов">×${LS.combo}</span>`:"");
+  const tb = $("#typebox"); if(tb && !LS.state){ tb.focus(); }
+  if(LS.state && !LS.state.ok) $("#ov-body")?.classList.add("shake");
+}
+function hasAnswer(q){
+  if(q.ty==="type" || q.ty==="dict") return !!(LS.sel && LS.sel.trim());
+  if(q.ty==="build") return LS.sel && LS.sel.length>0;
+  return LS.sel!=null;
+}
+function renderQ(q){
+  const lang = LS.lang, st = LS.state;
+  const optList = (opts) => `<div class="options">${opts.map((o,i)=>{
+    let cls = ""; if(st){ if(o===q.ans) cls="right"; else if(o===LS.sel) cls="wrong"; } else if(o===LS.sel) cls="sel";
+    return `<button class="opt ${cls}" data-act="pick" data-v="${esc(o)}" ${st?"disabled":""}><span class="k">${i+1}</span><span>${esc(o)}</span></button>`; }).join("")}</div>`;
+  if(q.ty==="t2r") return `<h2 class="q-title">Как это переводится?</h2>
+    <div class="prompt"><button class="speak" data-act="say" data-text="${esc(q.w.t)}" aria-label="Озвучить">${ICON_SPK}</button><div class="p">${esc(q.w.t)}</div></div>${optList(q.opts)}`;
+  if(q.ty==="r2t") return `<h2 class="q-title">Выберите перевод ${langName(lang)}</h2>
+    <div class="prompt"><div class="p">${esc(q.w.r)}</div></div>${optList(q.opts)}`;
+  if(q.ty==="listen") return `<h2 class="q-title">Что вы услышали?</h2>
+    <div style="display:grid;place-items:center"><button class="speak big" data-act="say" data-text="${esc(q.w.t)}" aria-label="Прослушать ещё раз">${ICON_SPK}</button></div>${optList(q.opts)}`;
+  if(q.ty==="dict") return `<h2 class="q-title">Диктант: напишите, что услышали</h2>
+    <div class="goal-sel" style="justify-content:center"><button class="speak big" data-act="say" data-text="${esc(q.w.t)}" aria-label="Прослушать">${ICON_SPK}</button><button class="speak" style="align-self:end" data-act="sayslow" data-text="${esc(q.w.t)}" aria-label="Медленно" title="Медленно">½</button></div>
+    <input class="typebox" id="typebox" autocomplete="off" autocapitalize="off" spellcheck="false" lang="${lang}" value="${esc(LS.sel||"")}" ${st?"disabled":""} placeholder="${lang==="kk"?"Естігеніңізді жазыңыз...":"Type what you hear..."}">
+    ${lang==="kk"&&!st?`<div class="kbd">${"әғқңөұүһі".split("").map(c=>`<button data-act="kchar" data-c="${c}">${c}</button>`).join("")}</div>`:""}`;
+  if(q.ty==="type") return `<h2 class="q-title">Напишите ${langName(lang)}</h2>
+    <div class="prompt"><div class="p">${esc(q.w.r)}</div></div>
+    <input class="typebox" id="typebox" autocomplete="off" autocapitalize="off" spellcheck="false" lang="${lang}" value="${esc(LS.sel||"")}" ${st?"disabled":""} placeholder="${lang==="kk"?"Жауап...":"Your answer..."}">
+    ${lang==="kk"&&!st?`<div class="kbd">${"әғқңөұүһі".split("").map(c=>`<button data-act="kchar" data-c="${c}">${c}</button>`).join("")}</div>`:""}`;
+  if(q.ty==="build"){
+    const used = new Set(LS.sel||[]);
+    return `<h2 class="q-title">Соберите предложение</h2>
+      <div class="prompt"><div class="p" style="font-size:20px">${esc(q.w.r)}</div></div>
+      <div class="answer-line">${(LS.sel||[]).map(i=>{const t=q.toks.find(t=>t.i===i); return `<button class="tok" data-act="untok" data-i="${i}" ${st?"disabled":""}>${esc(t.x)}</button>`}).join("")}</div>
+      <div class="bank">${q.toks.map(t=>`<button class="tok ${used.has(t.i)?"used":""}" data-act="tok" data-i="${t.i}" ${st?"disabled":""}>${esc(t.x)}</button>`).join("")}</div>`;
+  }
+  if(q.ty==="match"){
+    q.m ||= {left:shuffle(q.items), right:shuffle(q.items), done:new Set(), selL:null, selR:null, err:0};
+    const m=q.m;
+    return `<h2 class="q-title">Найдите пары</h2><div class="match">
+      <div class="col">${m.left.map(w=>`<button class="opt ${m.done.has(w.key)?"gone":""} ${m.selL===w.key?"sel":""}" data-act="ml" data-k="${w.key}" ${m.done.has(w.key)?"disabled":""}>${esc(w.t)}</button>`).join("")}</div>
+      <div class="col">${m.right.map(w=>`<button class="opt ${m.done.has(w.key)?"gone":""} ${m.selR===w.key?"sel":""} ${m.flash===w.key?"wrong":""}" data-act="mr" data-k="${w.key}" ${m.done.has(w.key)?"disabled":""}>${esc(w.r)}</button>`).join("")}</div></div>`;
+  }
+}
+function checkAnswer(){
+  const q = LS.qs[LS.qi]; if(LS.state || !hasAnswer(q)) return;
+  let ok=false, lz=false;
+  if(q.ty==="type" || q.ty==="dict"){
+    const a = norm(LS.sel), t = norm(q.ans);
+    ok = a===t || a===t.replace(/^to /,"") || norm(q.ans.replace(/'/g,""))===a.replace(/'/g,"");
+    if(!ok && LS.lang==="kk" && loose(LS.sel)===loose(q.ans)){ ok=true; lz=true; }
+    if(!ok && q.ty==="dict" && lev(a.replace(/'/g,""), t.replace(/'/g,"")) <= Math.max(1, Math.floor(t.length*.06))){ ok=true; lz=true; }
+  } else if(q.ty==="build"){
+    const built = LS.sel.map(i=>q.toks.find(t=>t.i===i).x).join(" ");
+    ok = norm(built)===norm(q.ans);
+  } else ok = LS.sel===q.ans;
+  finishQ(ok, lz);
+  if(q.w && (q.ty!=="t2r" || ok) && q.ty!=="dict") speak(q.ty==="build"?q.ans:q.w.t, LS.lang);
+}
+function finishQ(ok, lz=false){
+  const q = LS.qs[LS.qi];
+  LS.state = {ok, loose:lz};
+  if(!q.retry){ if(ok) LS.right++; }
+  if(ok){ LS.combo++; if(LS.combo>=3) LS.bonus++; sfx(LS.combo>=3 && LS.combo%3===0 ? "combo" : "good"); }
+  else { LS.combo=0; sfx("bad"); }
+  if(!ok){
+    if(q.w) LS.wrong.add(q.w.key||"");
+    if(!q.retry && q.ty!=="match"){ LS.qs.push({...q, retry:true, opts:q.opts?shuffle(q.opts):undefined, toks:q.toks?shuffle(q.toks):undefined}); }
+  }
+  renderOverlay();
+}
+function nextQ(){
+  LS.qi++; LS.state=null; LS.sel=null;
+  if(LS.qi>=LS.qs.length) return finishLesson();
+  renderOverlay();
+  const q=LS.qs[LS.qi]; if(q.ty==="listen"||q.ty==="dict") setTimeout(()=>{ if(LS) speak(q.w.t, LS.lang); }, 200);
+}
+function finishLesson(){
+  const pct = Math.round(LS.right/LS.total*100), st = S.langs[LS.lang];
+  LS.pass = pct>=60;
+  LS.xp = LS.pass ? 5 + LS.right*2 + LS.bonus + (pct===100?5:0) : LS.right;
+  if(LS.pass){ sfx("win"); setTimeout(confetti, 50); }
+  if(LS.pass){
+    st.done[LS.topic.id] = Math.max(st.done[LS.topic.id]||0, pct);
+    words(LS.topic).forEach(w=>{
+      if(!st.cards[w.key]) st.cards[w.key] = {e:2.5, i:1, r:1, d:Date.now()+DAY};
+      if(LS.wrong.has(w.key)) st.cards[w.key] = {...st.cards[w.key], d:Date.now(), r:0, i:0};
+    });
+  }
+  addXp(LS.xp);
+  LS.phase="result"; renderOverlay();
+}
+
+/* ===================== PRONUNCIATION ===================== */
+let PS = null;
+function lev(a,b){ const m=a.length,n=b.length; if(!m) return n; if(!n) return m; let p=[...Array(n+1).keys()];
+  for(let i=1;i<=m;i++){ const c=[i]; for(let j=1;j<=n;j++) c[j]=Math.min(p[j]+1, c[j-1]+1, p[j-1]+(a[i-1]===b[j-1]?0:1)); p=c; } return p[n]; }
+function pronScore(target, said){
+  const f = s => loose(s).replace(/'/g,"");
+  const T=f(target), H=f(said); if(!H) return {score:0, marks:[]};
+  const hw = new Set(H.split(" "));
+  const tw = target.replace(/[—–]/g," ").split(/\s+/).filter(w=>f(w));
+  const marks = tw.map(w=>({w, ok: hw.has(f(w)) || [...hw].some(h=>f(w).length>3 && lev(h,f(w))<=1)}));
+  const wordScore = marks.filter(m=>m.ok).length/Math.max(1,marks.length);
+  const charScore = 1 - lev(T,H)/Math.max(T.length,H.length);
+  return {score:Math.max(wordScore, charScore), marks};
+}
+function startPron(id){
+  const lv = PRON[S.lang].find(p=>p.id===id);
+  PS = {lang:S.lang, lv, i:0, best:[], heard:"", partial:"", res:null, listening:false, phase:"go"};
+  renderOverlay(); setTimeout(()=>{ if(PS) speak(pair(lv.items[0]).t, PS.lang); }, 300);
+}
+function paintHeard(){
+  const el = $("#heard"); if(!el || !PS) return;
+  el.innerHTML = `${esc(PS.heard.trim())} <span class="part">${esc(PS.partial)}</span>`;
+}
+function evalPron(){
+  if(!PS || PS.res) return;
+  const it = pair(PS.lv.items[PS.i]), said = (PS.heard+" "+PS.partial).trim();
+  if(!said){ toast("Ничего не услышал. Нажмите на микрофон и говорите чуть громче."); renderOverlay(); return; }
+  const r = pronScore(it.t, said);
+  const stars = r.score>=.9?3 : r.score>=.72?2 : r.score>=.5?1 : 0;
+  PS.res = {stars, marks:r.marks, said};
+  sfx(stars>=2?"good":stars===1?"combo":"bad");
+  renderOverlay();
+}
+function renderPron(){
+  const root=$("#overlay-root"); document.body.style.overflow="hidden";
+  const n = PS.lv.items.length;
+  if(PS.phase==="done"){
+    const total = PS.best.reduce((a,b)=>a+b,0), st = Math.round(total/n);
+    root.innerHTML = shell(100, `<div class="result"><div class="label">Произношение · ${esc(PS.lv.t)}</div>${starsHtml(st)}
+      <h2 class="q-title">${st===3?"Звучит как у носителя!":st===2?"Хорошее произношение":st===1?"Неплохо, есть что подтянуть":"Попробуйте ещё раз"}</h2>
+      <p class="muted" style="margin:0;max-width:44ch">${total} из ${n*3} звёзд. +${PS.xp} XP. ${st<3?"Возвращайтесь сюда, чтобы добрать звёзды.":""}</p></div>`,
+      `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="pron" data-id="${PS.lv.id}">Ещё раз</button><button class="btn wide" data-act="close">Готово</button></div>`);
+    return;
+  }
+  const it = pair(PS.lv.items[PS.i]), mic = micOk(PS.lang), r = PS.res;
+  let body = `<div class="label">${esc(PS.lv.t)} · ${PS.i+1} из ${n}</div>
+    <div class="study-card"><div class="w">${esc(it.t)}</div><div class="r">${esc(it.r)}</div>
+      <div class="goal-sel" style="justify-content:center"><button class="btn ghost" style="padding:8px 14px" data-act="say" data-text="${esc(it.t)}">Послушать</button><button class="btn ghost" style="padding:8px 14px" data-act="sayslow" data-text="${esc(it.t)}">Медленно</button></div></div>`;
+  let foot;
+  if(r){
+    body += `<div style="display:grid;gap:10px;justify-items:center">${starsHtml(r.stars)}
+      ${r.self?"":`<div class="heard">${r.marks.map(m=>`<span class="${m.ok?"ok":"miss"}">${esc(m.w)}</span>`).join(" ")}</div><div class="note">Услышано: «${esc(r.said)}»</div>`}
+      <div class="note" style="text-align:center">${r.stars===3?"Чисто и понятно.": r.stars===2?"Почти идеально. Подчёркнутые слова прозвучали нечётко.": "Послушайте медленную версию и повторите ещё раз."}</div></div>`;
+    foot = `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="pretry">Ещё раз</button><button class="btn wide" data-act="pnext">Дальше</button></div>`;
+  } else if(mic){
+    body += `<div style="display:grid;justify-items:center;gap:10px"><button class="mic ${PS.listening?"on":""}" data-act="mic" aria-label="${PS.listening?"Закончить":"Говорить"}">${ICON_MIC}</button>
+      <div class="note">${PS.listening?"Говорите… нажмите ещё раз, когда закончите":"Нажмите и произнесите вслух"}</div><div class="heard" id="heard"></div></div>`;
+    foot = `<button class="btn ghost wide" data-act="pself">Нет микрофона? Оценить себя самому</button>`;
+  } else {
+    body += `<p class="note" style="text-align:center;margin:0">Послушайте, произнесите вслух 2–3 раза и честно оцените, насколько похоже получилось.</p>`;
+    foot = `<div class="rate" style="grid-template-columns:repeat(3,1fr)"><button data-act="prate" data-n="1">Ещё учусь<small>1 ★</small></button><button data-act="prate" data-n="2">Похоже<small>2 ★</small></button><button class="good" data-act="prate" data-n="3">Как диктор<small>3 ★</small></button></div>`;
+  }
+  root.innerHTML = shell((PS.i + (r?1:0))/n*100, body, foot, r ? (r.stars>=2?"ok":r.stars===0?"bad":"") : "");
+  paintHeard();
+}
+function pronNext(){
+  PS.best[PS.i] = Math.max(PS.best[PS.i]||0, PS.res.stars);
+  PS.i++; PS.res=null; PS.heard=""; PS.partial="";
+  if(PS.i>=PS.lv.items.length){
+    const total = PS.best.reduce((a,b)=>a+b,0), st = Math.round(total/PS.lv.items.length);
+    const P = S.langs[PS.lang].pron; P[PS.lv.id] = Math.max(P[PS.lv.id]||0, st);
+    PS.xp = total*2; addXp(PS.xp); PS.phase="done";
+    if(st>=2){ sfx("win"); setTimeout(confetti,50); }
+    renderOverlay(); return;
+  }
+  renderOverlay(); setTimeout(()=>{ if(PS) speak(pair(PS.lv.items[PS.i]).t, PS.lang); }, 250);
+}
+function micClick(){
+  if(PS.listening){ clearTimeout(PS.t); dict.stop().then(evalPron).catch(()=>{}); return; }
+  PS.heard=""; PS.partial=""; PS.res=null;
+  if(ttsCap) ttsCap.stop?.().catch?.(()=>{}); if("speechSynthesis" in window) speechSynthesis.cancel();
+  dict.start({language: PS.lang==="kk"?"kk":"en-US"}).catch(e=>{
+    if(e?.code==="unavailable" || e?.code==="not_granted"){ dictNo[PS.lang]=true; toast(PS.lang==="kk" ? "Распознавание казахской речи здесь недоступно. Включена самопроверка." : "Микрофон недоступен. Включена самопроверка."); }
+    else if(e?.code!=="stopped") toast("Не получилось включить микрофон, попробуйте ещё раз");
+    if(PS){ PS.listening=false; renderOverlay(); }
+  });
+}
+
+/* ===================== BLITZ GAME ===================== */
+let BZ = null;
+function blitzPool(lang){
+  const c = COURSE[lang], st = S.langs[lang];
+  let ts = c.filter(t=>t.id in st.done); if(ts.length<2) ts = c.slice(0,3);
+  return ts.flatMap(words).filter(w=>w.t.split(" ").length<=4);
+}
+function startBlitz(){
+  BZ = {lang:S.lang, pool:blitzPool(S.lang), score:0, combo:0, end:Date.now()+60000, phase:"play", q:null, wrong:false};
+  blitzQ(); renderOverlay();
+  BZ.timer = setInterval(()=>{
+    if(!BZ || BZ.phase!=="play") return;
+    const rem = BZ.end-Date.now();
+    if(rem<=0) return endBlitz();
+    const b=$("#bar"); if(b) b.style.width = (rem/600)+"%";
+    const t=$("#bz-time"); if(t) t.textContent = Math.ceil(rem/1000)+" с";
+  }, 100);
+}
+function blitzQ(){
+  const p = BZ.pool, w = p[Math.random()*p.length|0];
+  const ds = shuffle(p.filter(x=>x.r!==w.r)).slice(0,3);
+  BZ.q = {w, opts:shuffle([w.r, ...ds.map(d=>d.r)])};
+}
+function blitzAnswer(v){
+  if(!BZ || BZ.phase!=="play") return;
+  if(v===BZ.q.w.r){ BZ.combo++; BZ.score += BZ.combo>=5?2:1; BZ.wrong=false; sfx(BZ.combo%5===0?"combo":"good"); }
+  else { BZ.combo=0; BZ.end-=3000; BZ.wrong=true; sfx("bad"); toast(`${BZ.q.w.t} — ${BZ.q.w.r}`); }
+  blitzQ(); renderOverlay();
+}
+function endBlitz(){
+  clearInterval(BZ.timer); BZ.phase="done";
+  const st = S.langs[BZ.lang]; BZ.record = BZ.score > (st.best||0);
+  if(BZ.record){ st.best = BZ.score; sfx("win"); setTimeout(confetti,50); }
+  if(BZ.score) addXp(BZ.score); else save();
+  renderOverlay();
+}
+function renderBlitz(){
+  const root=$("#overlay-root"); document.body.style.overflow="hidden";
+  if(BZ.phase==="done"){
+    root.innerHTML = shell(0, `<div class="result"><div class="label">Молния</div><div class="score">${BZ.score}</div>
+      <h2 class="q-title">${BZ.record?"Новый рекорд!":"Время вышло"}</h2><p class="muted" style="margin:0">Рекорд: ${S.langs[BZ.lang].best}. +${BZ.score} XP.</p></div>`,
+      `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="close">Выйти</button><button class="btn wide" data-act="blitz">Ещё раунд</button></div>`);
+    return;
+  }
+  const rem = Math.max(0, BZ.end-Date.now());
+  const body = `<div class="bz-score ${BZ.wrong?"shake":"pop"}">${BZ.score}</div>
+    <div style="text-align:center" class="note">${BZ.combo>=5?`<span class="combo">Серия ×${BZ.combo} · очки ×2</span>`:"5 верных подряд дают двойные очки. Ошибка отнимает 3 секунды."}</div>
+    <div class="prompt" style="justify-content:center"><div class="p">${esc(BZ.q.w.t)}</div></div>
+    <div class="options">${BZ.q.opts.map((o,i)=>`<button class="opt" data-act="bz" data-v="${esc(o)}"><span class="k">${i+1}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
+  root.innerHTML = shell(rem/600, body, `<div class="note" style="text-align:center">Клавиши 1–4 для быстрого ответа</div>`, "", `<b id="bz-time" style="font-variant-numeric:tabular-nums;min-width:44px;text-align:right">${Math.ceil(rem/1000)} с</b>`);
+  const bar=$("#bar"); if(bar){ bar.style.background="var(--accent)"; bar.style.transition="none"; }
+}
+
+
+/* ===================== AI CONVERSATION PARTNER ===================== */
+let sampleCap; // undefined = loading, null = unavailable
+const CLAUDE_URL = "https://claude.ai/artifact/7chCMG1TyGa2GS6BzWZ8La";
+const getKey = () => { try{ return localStorage.getItem("ekitil.apikey")||""; }catch(e){ return ""; } };
+/* outside claude.ai the partner can use the person's own Anthropic API key, stored only on this device */
+function apiSample(){
+  return { json: async (prompt)=>{
+    const key = getKey(); if(!key) throw {code:"not_granted"};
+    let res;
+    try{
+      res = await fetch("https://api.anthropic.com/v1/messages", { method:"POST",
+        headers:{ "content-type":"application/json", "x-api-key":key, "anthropic-version":"2026-10-21",
+          "anthropic-beta":"server-side-fallback-2026-07-01", "anthropic-dangerous-direct-browser-access":"true" },
+        body: JSON.stringify({ model:"claude-opus-5-5", max_tokens:2000, output_config:{effort:"low"}, fallbacks:"default",
+          messages:[{role:"user", content:prompt}] }) });
+    }catch(e){ throw {code:"network"}; }
+    if(res.status===401 || res.status===403) throw {code:"bad_key"};
+    if(res.status===429) throw {code:"rate_limited"};
+    if(!res.ok) throw {code:"upstream_error"};
+    const data = await res.json();
+    if(data.stop_reason==="refusal") throw {code:"refusal"};
+    const text = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");
+    const a = text.indexOf("{"), b = text.lastIndexOf("}"); if(a<0||b<a) throw {code:"invalid_json"};
+    return JSON.parse(text.slice(a,b+1));
+  }};
+}
+(IN_CLAUDE ? claude.use("sample") : Promise.resolve(null)).then(x=>{ sampleCap = x || (!IN_CLAUDE && getKey() ? apiSample() : null); if(ui.tab==="chat") render(); }).catch(()=>{ sampleCap=null; });
+const SCEN_KK = [
+  ["free","Еркін әңгіме","Свободный разговор на любые темы","a casual chat with a new Kazakh friend about life, hobbies and plans"],
+  ["meet","Танысу","Знакомство со студентом в Алматы","a first meeting with a Kazakh student at a university in Almaty"],
+  ["bazaar","Базарда","Покупки на Зелёном базаре","you are a friendly seller at Zelyony Bazaar in Almaty and the learner is shopping and bargaining"],
+  ["guest","Қонақта","В гостях за дастарханом","you are a hospitable Kazakh host welcoming the learner as a guest at the dastarkhan"],
+  ["travel","Саяхат","Путешествие по Астане","you are a local in Astana helping a traveler with transport, sights and food"],
+  ["work","Жұмыста","Коллега в IT-компании","you are a colleague at an IT company in Astana discussing a web design project with the learner"]
+];
+const SCEN_EN = [
+  ["free","Free talk","Свободный разговор на любые темы","a casual chat with a new American friend about life, hobbies and plans"],
+  ["campus","Campus","Знакомство в американском колледже","a first meeting with an American student on a US college campus"],
+  ["coffee","Coffee shop","Заказ в кофейне Нью-Йорка","you are a barista at a busy coffee shop in New York and the learner is ordering"],
+  ["interview","Job interview","Собеседование на веб-дизайнера","you are a hiring manager at a US tech startup interviewing the learner for a junior web designer role"],
+  ["travel","Road trip","Путешествие по США","you are a friendly local in San Francisco helping a tourist with directions, transport and tips"],
+  ["tv","TV night","Обсуждаем сериалы и фильмы","you are a friend chatting about TV shows and movies you both watched"]
+];
+const scen = () => S.lang==="kk" ? SCEN_KK : SCEN_EN;
+let CH = null;
+function loadChat(){ CH=null; try{ const c = JSON.parse(localStorage.getItem("ekitil.chat."+S.lang)||"null"); if(c && c.sc) CH = {...c, busy:false, listening:false}; }catch(e){} }
+loadChat();
+function saveChat(){ try{ localStorage.setItem("ekitil.chat."+S.lang, JSON.stringify({sc:CH.sc, lv:CH.lv, turns:CH.turns.slice(-30), voice:CH.voice})); }catch(e){} }
+function myLevel(){ let lvl="A1"; for(const lv of LEVELS){ const ts=course().filter(t=>t.lv===lv.id); if(ts.filter(t=>t.id in L().done).length>=2) lvl=lv.id; } return lvl; }
+let chatLv = null;
+function viewChat(){
+  if(sampleCap===undefined) return `<div class="view"><section class="panel"><h2>Подключаю собеседника…</h2></section></div>`;
+  if(!sampleCap) return IN_CLAUDE ? `<div class="view"><section class="panel"><div class="label">ИИ-собеседник</div><h2>Собеседник недоступен</h2>
+    <p class="muted" style="margin:0;max-width:65ch">Разговорная практика работает, когда вы вошли в аккаунт claude.ai. Остальные разделы работают везде.</p></section></div>`
+  : `<div class="view"><section class="panel"><div class="label">ИИ-собеседник</div><h2>Два способа подключить собеседника</h2>
+    <p style="margin:0;max-width:65ch"><b>1. Через claude.ai.</b> Откройте эту же программу на claude.ai: там собеседник работает по вашей подписке Claude, без настроек. Прогресс там хранится отдельно.</p>
+    <div><a class="btn" style="display:inline-block;text-decoration:none" href="${CLAUDE_URL}" target="_blank" rel="noopener">Открыть на claude.ai</a></div>
+    <p style="margin:0;max-width:65ch"><b>2. Своим API-ключом.</b> Создайте ключ на console.anthropic.com и вставьте сюда. Ключ хранится только на этом устройстве и отправляется только в Anthropic. Каждое сообщение стоит долю цента и списывается с баланса консоли.</p>
+    <form class="addrow" id="key-form" style="grid-template-columns:1fr auto"><input class="field" id="api-key" type="password" autocomplete="off" placeholder="sk-ant-..." required><button class="btn" type="submit">Подключить</button></form>
+    </section></div>`;
+  if(!CH){
+    const lv = chatLv || myLevel();
+    return `<div class="view"><section class="panel"><div class="label">ИИ-собеседник</div><h2>Разговаривайте каждый день</h2>
+      <p class="muted" style="margin:0;max-width:65ch">Собеседник говорит как ${S.lang==="kk"?"носитель казахского из Казахстана":"американец"}, подстраивается под ваш уровень и после каждой вашей реплики показывает, как бы это сказал носитель. Можно писать или говорить в микрофон. Если не знаете слово, пишите по-русски: собеседник подскажет.</p>
+      <div class="label">Ваш уровень</div>
+      <div class="goal-sel">${LEVELS.map(l=>`<button class="btn ${l.id===lv?"":"ghost"}" style="padding:8px 14px" data-act="chatlv" data-lv="${l.id}">${l.id}</button>`).join("")}</div></section>
+      <div class="scen">${scen().map(x=>`<button class="topic" data-act="chatgo" data-id="${x[0]}"><span class="t">${esc(x[1])}</span><span class="s">${esc(x[2])}</span></button>`).join("")}</div></div>`;
+  }
+  const sc = scen().find(x=>x[0]===CH.sc) || scen()[0];
+  const msgs = CH.turns.map((t,i)=> t.role==="me"
+    ? `<div class="msg me"><div class="bubble">${esc(t.text)}</div></div>${t.natural||t.note?`<div class="fix">${t.natural?`<div><b>Как скажет носитель:</b> ${esc(t.natural)} <button class="linkbtn" data-act="say" data-text="${esc(t.natural)}">▶</button></div>`:""}${t.note?`<div>${esc(t.note)}</div>`:""}</div>`:""}`
+    : `<div class="msg ai"><div class="bubble" lang="${S.lang}">${esc(t.text)}</div><div class="msg-tools"><button class="linkbtn" data-act="say" data-text="${esc(t.text)}">▶ Послушать</button>${t.ru?`<button class="linkbtn" data-act="chatru" data-i="${i}">${t.showRu?"Скрыть перевод":"Перевод"}</button>`:""}</div>${t.showRu?`<div class="note">${esc(t.ru)}</div>`:""}</div>`).join("");
+  const mic = micOk(S.lang);
+  return `<div class="view"><div class="chat">
+    <div class="level-head"><span class="badge">${CH.lv}</span><h2>${esc(sc[1])}</h2><span class="muted">${esc(sc[2])}</span>
+      <span style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" style="padding:6px 12px;font-size:13px" data-act="chatvoice">Озвучка: ${CH.voice?"вкл":"выкл"}</button><button class="btn ghost" style="padding:6px 12px;font-size:13px" data-act="chatnew">Новый разговор</button></span></div>
+    <div class="msgs" id="msgs">${msgs}${CH.busy?`<div class="msg ai"><div class="bubble typing">${S.lang==="kk"?"жазып жатыр…":"typing…"}</div></div>`:""}${CH.err?`<div class="note" style="color:var(--bad)">${esc(CH.err)}</div>`:""}</div>
+    <form class="composer" id="chat-form"><textarea id="chat-in" rows="1" lang="${S.lang}" placeholder="${S.lang==="kk"?"Қазақша жазыңыз…":"Type in English…"}" ${CH.busy?"disabled":""}></textarea>
+      ${mic?`<button type="button" class="mic ${CH.listening?"on":""}" data-act="chatmic" aria-label="Сказать голосом">${ICON_MIC}</button>`:""}
+      <button class="btn" type="submit" ${CH.busy?"disabled":""}>➤</button></form>
+    ${S.lang==="kk"?`<div class="kbd">${"әғқңөұүһі".split("").map(c=>`<button type="button" data-act="kchar" data-c="${c}">${c}</button>`).join("")}</div>`:""}
+  </div></div>`;
+}
+function afterChatRender(){ const m=$("#msgs"); if(m) m.lastElementChild?.scrollIntoView({block:"end"}); }
+function chatPrompt(){
+  const sc = scen().find(x=>x[0]===CH.sc) || scen()[0];
+  const hist = CH.turns.map(t=> (t.role==="me"?"Learner: ":"Partner: ")+t.text).join("\n");
+  return `You are a conversation partner inside a language-learning app. Role-play: ${sc[3]}.
+The learner is a Russian-speaking university student (digital business major who wants to become a web designer) practicing ${langFullOf()} at CEFR level ${CH.lv}.
+Rules:
+- Stay in character and write your reply ONLY in ${langFullOf()}. ${S.lang==="kk" ? "Use natural modern Kazakh in Cyrillic, as people actually speak in Kazakhstan today." : "Use natural American English: American spelling, vocabulary and everyday expressions."}
+- 1 to 3 short sentences, like real speech. Use vocabulary for level ${CH.lv}, with a little stretch. End with a question or a prompt that keeps the conversation going.
+- Review ONLY the learner's last message. If it has grammar, word-choice or naturalness problems, put in "natural" how a native speaker would actually say it (same meaning), and in "note" a short, friendly explanation in Russian (1-2 sentences). If the learner wrote Russian words, give the ${langFullOf()} version in "natural". If the message was already natural, leave both empty strings.
+${hist ? "Conversation so far:\n"+hist : "There is no conversation yet: open it with a greeting and a first question. Leave natural and note empty."}
+Reply with only JSON: {"reply":"...","reply_ru":"Russian translation of reply","natural":"","note":""}`;
+}
+async function askChat(){
+  const ch = CH, lang = S.lang;
+  CH.busy=true; CH.err=""; render();
+  try{
+    const r = await sampleCap.json(chatPrompt(), {modelTier:"quick", cache:false});
+    if(CH!==ch){ ch.busy=false; ch.turns.push({role:"ai", text:r?.reply||"", ru:r?.reply_ru||""}); try{ localStorage.setItem("ekitil.chat."+lang, JSON.stringify({sc:ch.sc, lv:ch.lv, turns:ch.turns.slice(-30), voice:ch.voice})); }catch(_){} return; }
+    if(!r || typeof r.reply!=="string") throw {code:"invalid_json"};
+    const last = [...CH.turns].reverse().find(t=>t.role==="me");
+    if(last && CH.turns[CH.turns.length-1]===last){ last.natural = r.natural||""; last.note = r.note||""; }
+    CH.turns.push({role:"ai", text:r.reply, ru:r.reply_ru||""});
+    if(CH.voice) speak(r.reply, S.lang);
+  }catch(e){
+    CH.err = e?.code==="not_granted" ? "Чтобы говорить с собеседником, разрешите приложению обращаться к Claude." : e?.code==="rate_limited" ? "Слишком много сообщений подряд. Подождите минуту и отправьте снова." : e?.code==="bad_key" ? "API-ключ не подошёл. Проверьте его в настройках на вкладке «Прогресс»." : e?.code==="network" ? "Нет интернета. Собеседнику нужна сеть, остальные разделы работают офлайн." : "Собеседник не ответил. Отправьте сообщение ещё раз.";
+    const last = CH.turns[CH.turns.length-1]; if(last && last.role==="me"){ CH.retry = last.text; CH.turns.pop(); }
+  }
+  CH.busy=false; saveChat(); if(ui.tab==="chat") render();
+  if(CH.retry){ const el=$("#chat-in"); if(el){ el.value=CH.retry; } CH.retry=null; }
+}
+function sendChat(){
+  const el=$("#chat-in"); const text=(el?.value||"").trim(); if(!text || CH.busy) return;
+  if(dict && CH.listening) dict.stop().catch(()=>{});
+  CH.turns.push({role:"me", text}); S.chatCount=(S.chatCount||0)+1; addXp(2); askChat();
+}
+document.addEventListener("submit", e=>{
+  if(e.target.id==="chat-form"){ e.preventDefault(); sendChat(); }
+  if(e.target.id==="key-form"){ e.preventDefault(); const k=$("#api-key").value.trim(); if(!k) return; try{ localStorage.setItem("ekitil.apikey", k); }catch(_){} sampleCap = apiSample(); render(); toast("Собеседник подключён"); }
+  if(e.target.id==="add-form"){ e.preventDefault();
+    const t=$("#my-t").value.trim(), r=$("#my-r").value.trim(); if(!t||!r) return;
+    const id=Date.now(); L().custom.push({id,t,r}); L().cards["my:"+id]={e:2.5,i:0,r:0,d:Date.now()}; addXp(1); render(); toast("Слово добавлено в повторение"); $("#my-t")?.focus(); }
+});
+document.addEventListener("keydown", e=>{ if(e.target.id==="chat-in" && e.key==="Enter" && !e.shiftKey){ e.preventDefault(); sendChat(); } });
+
+
+/* chart tooltip */
+const tipEl = document.createElement("div"); tipEl.id="tip"; tipEl.hidden=true; document.body.append(tipEl);
+function showTip(e){ const t=e.target.closest?.("[data-tip]"); if(!t){ tipEl.hidden=true; return; } tipEl.textContent=t.dataset.tip; tipEl.hidden=false;
+  const r=t.getBoundingClientRect(); const w=tipEl.offsetWidth; tipEl.style.left=Math.min(innerWidth-w-8, Math.max(8, r.left+r.width/2-w/2))+"px"; tipEl.style.top=Math.max(8, r.top-34)+"px"; }
+document.addEventListener("pointerover", showTip); document.addEventListener("pointerdown", showTip);
+document.addEventListener("scroll", ()=>{ tipEl.hidden=true; }, {passive:true});
+/* ===================== EVENTS ===================== */
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-act],[data-tab],[data-lang]"); if(!b || b.disabled) return;
+  if(b.dataset.tab){ ui.tab=b.dataset.tab; try{localStorage.setItem("ekitil.tab",ui.tab)}catch(_){}; render(); window.scrollTo(0,0); return; }
+  if(b.dataset.lang && !b.dataset.act){ if(S.lang===b.dataset.lang) return; if(dict && CH?.listening) dict.stop().catch(()=>{}); S.lang=b.dataset.lang; rv=null; chatLv=null; loadChat(); save(); render(); window.scrollTo(0,0); return; }
+  const a = b.dataset.act;
+  switch(a){
+    case "start": startLesson(b.dataset.id); break;
+    case "goreview": ui.tab="review"; render(); break;
+    case "say": speak(b.dataset.text, LS?LS.lang:S.lang); break;
+    case "close": closeLesson(); break;
+    case "snext": { const n=LS.topic.w.length; if(LS.si<n-1){ LS.si++; renderOverlay(); speak(words(LS.topic)[LS.si].t, LS.lang);} else { LS.phase="quiz"; renderOverlay(); const q=LS.qs[0]; if(q.ty==="listen"||q.ty==="dict") speak(q.w.t, LS.lang);} break; }
+    case "sprev": LS.si=Math.max(0,LS.si-1); renderOverlay(); break;
+    case "skipstudy": LS.phase="quiz"; renderOverlay(); { const q=LS.qs[0]; if(q.ty==="listen"||q.ty==="dict") speak(q.w.t, LS.lang);} break;
+    case "pick": if(!LS.state){ LS.sel=b.dataset.v; renderOverlay(); } break;
+    case "check": checkAnswer(); break;
+    case "next": nextQ(); break;
+    case "restart": startLesson(LS.topic.id); break;
+    case "kchar": { const tb=$("#typebox")||$("#chat-in"); if(!tb) break; const s=tb.selectionStart??tb.value.length; tb.value=tb.value.slice(0,s)+b.dataset.c+tb.value.slice(tb.selectionEnd??s); if(LS) LS.sel=tb.value; tb.focus(); tb.setSelectionRange(s+1,s+1); const cb=$("#check-btn"); if(cb) cb.disabled=!tb.value.trim(); break; }
+    case "tok": { LS.sel=[...(LS.sel||[]), +b.dataset.i]; renderOverlay(); break; }
+    case "untok": { LS.sel=(LS.sel||[]).filter(i=>i!==+b.dataset.i); renderOverlay(); break; }
+    case "ml": case "mr": matchClick(a, b.dataset.k); break;
+    case "review": rv={lang:S.lang, list:shuffle(dueCards().map(([k])=>k)).slice(0,30), i:0, shown:false}; render(); break;
+    case "practice": rv={lang:S.lang, list:shuffle(Object.keys(L().cards)).slice(0,20), i:0, shown:false}; render(); break;
+    case "reveal": rv.shown=true; render(); speak(wordByKey(rv.list[rv.i]).t); break;
+    case "rate": { const k=rv.list[rv.i]; L().cards[k]=srs(L().cards[k]||{e:2.5,i:0,r:0}, +b.dataset.q); addXp(1); rv.i++; rv.shown=false; render(); break; }
+    case "endreview": rv=null; render(); break;
+    case "goal": S.goal=+b.dataset.g; save(); render(); break;
+    case "sound": S.sound=!S.sound; save(); render(); break;
+    case "blitz": if(BZ) clearInterval(BZ.timer); BZ=null; startBlitz(); break;
+    case "bz": blitzAnswer(b.dataset.v); break;
+    case "gopron": ui.tab="pron"; render(); window.scrollTo(0,0); break;
+    case "pron": PS=null; startPron(b.dataset.id); break;
+    case "locked": toast("Сначала пройдите предыдущий уровень"); break;
+    case "sayslow": speak(b.dataset.text, PS?PS.lang:S.lang, .6); break;
+    case "mic": micClick(); break;
+    case "pself": dictNo[PS.lang]=true; renderOverlay(); break;
+    case "prate": PS.res={stars:+b.dataset.n, self:true}; sfx("good"); renderOverlay(); break;
+    case "pretry": PS.best[PS.i]=Math.max(PS.best[PS.i]||0, PS.res.stars); PS.res=null; PS.heard=""; PS.partial=""; renderOverlay(); break;
+    case "pnext": pronNext(); break;
+    case "chatlv": chatLv=b.dataset.lv; render(); break;
+    case "chatgo": if(CH?.busy) break; CH={sc:b.dataset.id, lv:chatLv||myLevel(), turns:[], voice:true, busy:false, listening:false}; askChat(); break;
+    case "chatnew": if(dict && CH?.listening) dict.stop().catch(()=>{}); CH=null; try{localStorage.removeItem("ekitil.chat."+S.lang)}catch(_){}; render(); break;
+    case "chatvoice": CH.voice=!CH.voice; saveChat(); render(); break;
+    case "chatru": { const t=CH.turns[+b.dataset.i]; t.showRu=!t.showRu; render(); break; }
+    case "chatmic": if(CH.listening){ dict.stop().catch(()=>{}); } else { dict.start({language: S.lang==="kk"?"kk":"en-US"}).catch(err=>{ if(err?.code==="unavailable"||err?.code==="not_granted"){ dictNo[S.lang]=true; toast("Голосовой ввод здесь недоступен, пишите текстом"); render(); } }); } break;
+    case "backup": { const txt = JSON.stringify(S);
+      const done = ()=>toast("Копия скопирована. Сохраните её в Заметки или отправьте себе.");
+      try{ navigator.clipboard.writeText(txt).then(done, ()=>{ const ta=$("#restore-text"); $("#restore-box").hidden=false; ta.value=txt; ta.select(); toast("Выделите текст и скопируйте его вручную"); }); }catch(_){ toast("Не удалось скопировать"); } break; }
+    case "restore": { const bx=$("#restore-box"); bx.hidden=!bx.hidden; if(!bx.hidden) $("#restore-text").focus(); break; }
+    case "restore-go": { try{ const o=JSON.parse($("#restore-text").value); if(!o||!o.langs) throw 0; S=Object.assign(freshState(), o); fixState(); save(); render(); toast("Прогресс восстановлен"); }catch(_){ toast("Это не похоже на резервную копию Екі тіл"); } break; }
+    case "forgetkey": try{ localStorage.removeItem("ekitil.apikey"); }catch(_){}; sampleCap=null; render(); toast("Ключ удалён с устройства"); break;
+    case "kmy": { const tb=$("#my-t"); tb.value+=b.dataset.c; tb.focus(); break; }
+    case "mydel": { const id=b.dataset.id; L().custom=L().custom.filter(c=>String(c.id)!==id); delete L().cards["my:"+id]; save(); render(); break; }
+    case "reset": if(b.dataset.armed){ const lang=S.lang; S=freshState(); S.lang=lang; save(); render(); toast("Прогресс сброшен"); } else { b.dataset.armed="1"; b.textContent="Нажмите ещё раз, чтобы удалить весь прогресс"; b.style.color="var(--bad)"; } break;
+  }
+});
+function matchClick(side, key){
+  const q = LS.qs[LS.qi], m = q.m; m.flash=null;
+  if(side==="ml") m.selL = key; else m.selR = key;
+  if(side==="ml"){ const w=q.items.find(w=>w.key===key); speak(w.t, LS.lang); }
+  if(m.selL && m.selR){
+    if(m.selL===m.selR){ m.done.add(m.selL); }
+    else { m.err++; m.flash=m.selR; const w=q.items.find(w=>w.key===m.selL); if(w) LS.wrong.add(w.key); }
+    m.selL=null; m.selR=null;
+  }
+  if(m.done.size===q.items.length){ finishQ(m.err<=1); return; }
+  renderOverlay();
+}
+document.addEventListener("input", e=>{ if(e.target.id==="typebox" && LS){ LS.sel=e.target.value; const c=$("#check-btn"); if(c) c.disabled=!e.target.value.trim(); }});
+document.addEventListener("keydown", e=>{
+  if(BZ && BZ.phase==="play" && /^[1-4]$/.test(e.key)){ blitzAnswer(BZ.q.opts[+e.key-1]); return; }
+  if((BZ||PS) && e.key==="Escape"){ closeLesson(); return; }
+  if(LS && LS.phase==="quiz"){
+    const q=LS.qs[LS.qi];
+    if(e.key==="Enter"){ e.preventDefault(); if(LS.state) nextQ(); else checkAnswer(); return; }
+    if(!LS.state && q.opts && /^[1-4]$/.test(e.key) && e.target.id!=="typebox"){ LS.sel=q.opts[+e.key-1]; renderOverlay(); }
+    return;
+  }
+  if(LS && LS.phase==="study" && (e.key==="Enter"||e.key==="ArrowRight")){ e.preventDefault(); $('[data-act="snext"]')?.click(); return; }
+  if(LS && e.key==="Escape"){ closeLesson(); return; }
+  if(!LS && ui.tab==="review" && rv && rv.i<rv.list.length){
+    if(e.key===" " && !rv.shown){ e.preventDefault(); $('[data-act="reveal"]')?.click(); }
+    else if(rv.shown && /^[1-4]$/.test(e.key)){ $$rate(+e.key)?.click(); }
+  }
+});
+const $$rate = n => document.querySelectorAll('[data-act="rate"]')[n-1];
+
+render();
+initCloud();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Екі тіл: английский и казахский",
+  "short_name": "Екі тіл",
+  "description": "Американский английский и казахский язык: уроки, произношение, собеседник и повторение.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EDF1F3",
+  "theme_color": "#0B7BA6",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
