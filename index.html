@@ -347,6 +347,9 @@ table.cmp tr.cur td{font-weight:800}
 .talk .options{gap:8px}
 .talk .opt{padding:10px 12px; font-size:15px}
 .ov-foot .wrap{max-height:62vh; overflow-y:auto}
+.newword{justify-self:start; background:var(--gold); color:#1b1300; font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; padding:4px 10px; border-radius:999px}
+.hintbubble{background:color-mix(in srgb, var(--gold) 18%, var(--surface)); border:1px dashed var(--gold); border-radius:10px; padding:6px 12px; font-weight:700}
+.hint-btn{justify-self:start; border:0; background:none; color:var(--accent); font-weight:800; font-size:14px; padding:4px 0; text-decoration:underline; text-underline-offset:3px}
 </style>
 
 <header class="top">
@@ -1714,9 +1717,47 @@ function startLS(topic, o){
   if(LS.phase!=="intro"){ LS.qs = LS.build(topic, LS.hard); LS.total = LS.qs.length; }
   renderOverlay(); afterPhase();
 }
+/* Duolingo-style lesson: new words come in pairs inside the exercises, with the hint already open,
+   then move from recognition (choose, picture, listen) to production (type, build). Options only use words already met. */
+function buildDuo(topic){
+  const lang = S.lang, ws = words(topic), audio = canSpeak(lang), pp = picPool(lang);
+  const xpool = course().filter(t=>t.lv===topic.lv).flatMap(t=>t.x.map(pair));
+  const qs = [], seen = [];
+  const long = w => w.t.split(" ").length>3 || w.t.length>22;
+  const dis = (w, n, f) => shuffle(seen.filter(s=>s.t!==w.t && s[f]!==w[f])).concat(shuffle(ws.filter(s=>s.t!==w.t && !seen.includes(s) && s[f]!==w[f]))).slice(0,n).map(s=>s[f]);
+  const recog = w => { const pk = picKey(w.r);
+    if(pk && pp.length>=4){ const pw = {...w, pic:pk}; const others = shuffle(pp.filter(p=>p.pic!==pk && p.t!==w.t));
+      const known = others.filter(p=>seen.some(s=>s.t===p.t)); const popts = shuffle([pw, ...known.concat(others.filter(o=>!known.includes(o))).slice(0,3)]);
+      return {ty:"pic2", w:pw, popts, opts:popts.map(p=>p.t), ans:w.t}; }
+    if(audio && !long(w)) return {ty:"listen", w, opts:shuffle([w.t, ...dis(w,3,"t")]), ans:w.t};
+    return {ty:"r2t", w, opts:shuffle([w.t, ...dis(w,3,"t")]), ans:w.t};
+  };
+  const produce = w => long(w) ? {ty:"t2r", w, opts:shuffle([w.r, ...dis(w,3,"r")]), ans:w.r} : {ty:"type", w, ans:w.t};
+  const chunks = []; for(let i=0;i<ws.length;i+=2) chunks.push(ws.slice(i,i+2));
+  chunks.forEach((ch,k)=>{
+    ch.forEach(w=>{ seen.push(w); qs.push({ty:"intro", w:{...w, pic:picKey(w.r)}, opts:shuffle([w.r, ...dis(w,2,"r")]), ans:w.r}); });
+    qs.push(recog(ch[k%ch.length]));
+    if(k>0) qs.push(produce(chunks[k-1][k%chunks[k-1].length]));
+    if(k===1 && seen.length>=4) qs.push({ty:"match", items:shuffle(seen).slice(0,4)});
+  });
+  const lastCh = chunks[chunks.length-1]||[]; if(lastCh.length) qs.push(produce(lastCh[0]));
+  const mws = ws.filter(w=>w.t.length<=26); if(mws.length>=3) qs.push({ty:"match", items:shuffle(mws).slice(0,5)});
+  shuffle(gqOf(lang, topic.lv)).slice(0,1).forEach(g=>qs.push({ty:"gq", g, opts:shuffle([g.a, ...g.w]), ans:g.a}));
+  const xs = topic.x.map(pair);
+  xs.forEach((p,i)=>{
+    const ds = shuffle(xpool.filter(q=>q.r!==p.r)).slice(0,3).map(q=>q.r);
+    if(i===0 && ds.length>=2) qs.push({ty:"tr", w:p, opts:shuffle([p.r, ...ds]), ans:p.r});
+    if(i===1 && audio && ds.length>=2) qs.push({ty:"lr", w:p, opts:shuffle([p.r, ...ds]), ans:p.r});
+    if(audio && i===xs.length-1 && xs.length>2) qs.push({ty:"dict", w:p, ans:p.t});
+    else qs.push({ty:"build", w:p, toks:shuffle(p.t.split(" ").map((x,j)=>({x,i:j}))), ans:p.t});
+  });
+  const sayItem = xs.length ? xs.reduce((a,b)=>a.t.length<=b.t.length?a:b) : ws[0];
+  if(sayItem) qs.push({ty:"say", w:sayItem, ans:sayItem.t});
+  return qs;
+}
 function startLesson(id, hard){
   const topic = course().find(t=>t.id===id); if(!topic) return;
-  startLS(topic, {study:true, hard, again:h=>startLesson(id, h)});
+  startLS(topic, {build:(t,h)=> h ? buildQuiz(t, true) : buildDuo(t), hard, again:h=>startLesson(id, h)});
 }
 function reviewGroups(lang){
   const out = [];
@@ -1746,7 +1787,7 @@ function afterPhase(){
   else if(LS.phase==="quiz") cueQ();
   else if(LS.phase==="dlisten") setTimeout(()=>{ if(LS && LS.phase==="dlisten") playDialog(.9); }, 400);
 }
-function cueQ(){ const q=LS.qs[LS.qi]; if(q && (q.ty==="listen"||q.ty==="dict"||q.ty==="lr")) setTimeout(()=>{ if(LS && LS.qs[LS.qi]===q) speak(q.w.t, LS.lang); }, 220); }
+function cueQ(){ const q=LS.qs[LS.qi]; if(q && (q.ty==="listen"||q.ty==="dict"||q.ty==="lr"||q.ty==="intro")) setTimeout(()=>{ if(LS && LS.qs[LS.qi]===q) speak(q.w.t, LS.lang); }, 220); }
 function goPhase(ph){
   LS.phase = ph;
   if(ph===LS.first && !LS.qs.length){ LS.qs = LS.build(LS.topic, LS.hard); LS.total = LS.qs.length; }
@@ -1885,8 +1926,13 @@ function renderQ(q){
   if(q.ty==="dict") return `<h2 class="q-title">Диктант: напишите, что услышали</h2>
     <div class="goal-sel" style="justify-content:center"><button class="speak big" data-act="say" data-text="${esc(q.w.t)}" aria-label="Прослушать">${ICON_SPK}</button><button class="speak" style="align-self:end" data-act="sayslow" data-text="${esc(q.w.t)}" aria-label="Медленно" title="Медленно">½</button></div>
     ${typeBox(lang, st, lang==="kk"?"Естігеніңізді жазыңыз...":"Type what you hear...")}`;
+  if(q.ty==="intro") return `<span class="newword">Новое слово</span>
+    <div class="study-card">${q.w.pic?picSvg(q.w.pic):""}<button class="speak big" data-act="say" data-text="${esc(q.w.t)}" aria-label="Озвучить">${ICON_SPK}</button><div class="w">${q.w.t.includes(" ")?gl(q.w.t, lang):esc(q.w.t)}</div>
+      ${st?"":`<div class="hintbubble">Подсказка: ${esc(q.w.r)}</div>`}</div>
+    <h2 class="q-title">Что это значит?</h2>${optList(q.opts)}`;
   if(q.ty==="type") return `<h2 class="q-title">Напишите ${langName(lang)}</h2>
-    <div class="prompt"><div class="p">${esc(q.w.r)}</div></div>${typeBox(lang, st, lang==="kk"?"Жауап...":"Your answer...")}`;
+    <div class="prompt"><div class="p">${esc(q.w.r)}</div></div>${typeBox(lang, st, lang==="kk"?"Жауап...":"Your answer...")}
+    ${!st && !LS.hard ? `<button class="hint-btn" data-act="hint">Не помню. Подсказать букву</button>` : ""}`;
   if(q.ty==="pic") return `<h2 class="q-title">${q.typed?`Что на картинке? Напишите ${langName(lang)}`:"Что на картинке?"}</h2>
     <div class="pic">${picSvg(q.w.pic)}</div>${q.typed ? typeBox(lang, st, lang==="kk"?"Жауап...":"Your answer...") : optList(q.opts)}${st?`<div class="note" style="text-align:center">${esc(q.w.t)} — ${esc(q.w.r)}</div>`:""}`;
   if(q.ty==="pic2") return `<h2 class="q-title">Найдите картинку</h2>
@@ -1925,7 +1971,9 @@ function renderQ(q){
     return `<h2 class="q-title">Соберите предложение</h2>
       <div class="prompt"><div class="p" style="font-size:20px">${esc(q.w.r)}</div></div>
       <div class="answer-line">${(LS.sel||[]).map(i=>{const t=q.toks.find(t=>t.i===i); return `<button class="tok" data-act="untok" data-i="${i}" ${st?"disabled":""}>${esc(t.x)}</button>`}).join("")}</div>
-      <div class="bank">${q.toks.map(t=>`<button class="tok ${used.has(t.i)?"used":""}" data-act="tok" data-i="${t.i}" ${st?"disabled":""}>${esc(t.x)}</button>`).join("")}</div>`;
+      <div class="bank">${q.toks.map(t=>{ const tip = LS.hard ? null : glLookup(t.x.replace(/[.,!?;:«»"]/g,""), lang, glossary(lang));
+        return `<button class="tok ${used.has(t.i)?"used":""}" data-act="tok" data-i="${t.i}" ${tip?`data-tip="${esc(tip)}"`:""} ${st?"disabled":""}>${esc(t.x)}</button>`; }).join("")}</div>
+      ${!st && !LS.hard ? `<p class="note" style="margin:0">Не знаете слово? Наведите или нажмите на плитку, появится перевод.</p>` : ""}`;
   }
   if(q.ty==="match"){
     q.m ||= {left:shuffle(q.items), right:shuffle(q.items), done:new Set(), selL:null, selR:null, err:0};
@@ -2524,6 +2572,8 @@ document.addEventListener("click", e=>{
     case "dqgo": stopSpeech(); LS.playing=-1; goPhase("quiz"); break;
     case "dfinish": finishLesson(); break;
     case "lmic": lessonMic(); break;
+    case "hint": { const q=LS.qs[LS.qi], a=q.ans, cur=LS.sel||""; let n=0; while(n<cur.length && n<a.length && cur[n].toLowerCase()===a[n].toLowerCase()) n++;
+      LS.sel=a.slice(0, Math.min(a.length, n+1)); renderOverlay(); const tb=$("#typebox"); if(tb){ tb.focus(); tb.setSelectionRange(tb.value.length, tb.value.length); } break; }
     case "sayskip": skipSay(); break;
     case "sayself": LS.sayRes=null; finishQ(true); break;
     case "quest": startQuest(b.dataset.id); break;
