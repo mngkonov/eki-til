@@ -198,7 +198,7 @@ details.gram[open] summary::after{content:"–"}
 .result .score{font-family:var(--f-display); font-size:56px; color:var(--accent)}
 .toast{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:10px 16px; border-radius:10px; font-weight:600; font-size:14px; z-index:80; max-width:calc(100% - 32px)}
 .note{font-size:13px; color:var(--muted)}
-body:has(.overlay) .toast{bottom:calc(130px + env(safe-area-inset-bottom,0px))}
+body:has(.overlay) .toast{bottom:auto; top:calc(64px + env(safe-area-inset-top,0px))}
 .plan{display:grid; gap:10px; margin:0; padding-left:20px}
 .plan li{padding-left:4px}
 .goal-sel{display:flex; gap:8px; flex-wrap:wrap}
@@ -297,6 +297,56 @@ table.cmp tr.cur td{font-weight:800}
   .rate button{font-size:12px}
 }
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
+/* tap-to-translate, pictures, dialogues, quests */
+.gw{text-decoration:underline dotted; text-decoration-color:color-mix(in srgb, var(--accent) 75%, transparent); text-decoration-thickness:2px; text-underline-offset:5px; cursor:help}
+.gw:hover{color:var(--accent)}
+.pic-svg{display:block}
+.pic{display:grid; place-items:center; background:#FFF6E6; border:1px solid var(--line); border-radius:20px; padding:16px}
+.pic .pic-svg{width:min(150px,42vw); height:auto}
+.study-card .pic-svg{width:104px; height:104px; background:#FFF6E6; border-radius:18px; padding:10px}
+.pics{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.opt.picopt{flex-direction:column; justify-content:center; position:relative; padding:12px 8px; gap:6px}
+.opt.picopt .k{position:absolute; top:8px; left:8px}
+.opt.picopt .pic-svg{width:min(92px,28vw); height:auto; aspect-ratio:1; background:#FFF6E6; border-radius:12px; padding:6px}
+.opt.picopt .cap{font-size:14px; overflow-wrap:anywhere}
+.gap{display:inline-block; min-width:2.4em; padding:0 4px; border-bottom:3px solid var(--accent); color:var(--accent); text-align:center}
+.link-row{display:flex; justify-content:space-between; gap:8px}
+.link-row > button:not(.btn){border:0; background:none; color:var(--muted); font-weight:700; font-size:13px; padding:6px 2px; text-decoration:underline; text-underline-offset:3px}
+.res-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.res-actions .btn.wide{grid-column:1/-1}
+.intro{display:grid; gap:12px}
+.topic .kick{font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.topic.rev{background:color-mix(in srgb, var(--accent-2) 10%, var(--surface)); border-style:dashed; border-color:color-mix(in srgb, var(--accent-2) 55%, var(--line))}
+.topic.rev .kick{color:var(--accent-2)}
+.hard-ok{color:var(--gold); font-weight:800}
+.speak.sm{width:34px; height:34px} .speak.sm svg{width:17px; height:17px}
+.dlg{display:grid; gap:12px}
+.dl{display:grid; gap:4px; max-width:90%; justify-self:start}
+.dl.b{justify-self:end}
+.dl .who{font-size:12px; font-weight:800; color:var(--muted)}
+.dl.b .who{text-align:right}
+.dl .bubble{display:flex; gap:10px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:10px 12px; transition:box-shadow .2s, border-color .2s}
+.dl.b .bubble{background:color-mix(in srgb, var(--accent) 9%, var(--surface))}
+.dl.on .bubble{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent)}
+.dl .lt{font-weight:700; font-size:16px; overflow-wrap:anywhere}
+.dl .ru{font-size:13px; color:var(--muted); margin-top:2px}
+.hidden-line{display:flex; flex-wrap:wrap; gap:5px; padding-top:10px}
+.hidden-line i{display:block; height:10px; border-radius:5px; background:var(--surface-2)}
+.notes{display:grid; gap:8px}
+.qhud{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px; display:grid; gap:2px}
+.qgoal{font-weight:800; font-size:17px}
+.qmap{width:100%; height:auto; display:block; border-radius:16px; border:1px solid var(--line); cursor:pointer; touch-action:manipulation; -webkit-tap-highlight-color:transparent; user-select:none}
+#me{transition:transform .16s linear}
+.bang{animation:bob 1s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion: reduce){ .bang{animation:none} #me{transition:none} }
+.talk{display:grid; gap:10px}
+.talk .who{display:flex; align-items:center; gap:8px; font-weight:800}
+.talk .dot{width:12px; height:12px; border-radius:50%; border:1.5px solid var(--ink)}
+.talk .tl{display:flex; gap:10px; align-items:flex-start; font-weight:700; font-size:16px}
+.talk .options{gap:8px}
+.talk .opt{padding:10px 12px; font-size:15px}
+.ov-foot .wrap{max-height:62vh; overflow-y:auto}
 </style>
 
 <header class="top">
@@ -817,12 +867,322 @@ kk: [
  {id:"p7", t:"Мақалдар вслух", s:"Пословицы с ритмом", items:["Жеті рет өлшеп, бір рет кес|Семь раз отмерь, один раз отрежь","Бірлік бар жерде тірлік бар|Где единство, там и жизнь","Отан — отбасынан басталады|Родина начинается с семьи","Көп сөз — көмір, аз сөз — алтын|Много слов — уголь, мало слов — золото","Еңбектің наны тәтті|Хлеб, добытый трудом, сладок","Ақыл — жастан, асыл — тастан|Ум — от молодых, драгоценность — из камня"]}
 ]};
 
+/* ===================== PICTURES (vector) ===================== */
+const SWATCH = c => `<path d="M14 18c8-10 32-10 40 2 6 10 0 18-8 18-6 0-6 6-2 10s0 10-8 10c-14 0-30-14-22-40z" fill="${c}"/>`;
+const SKIN = "#f6d2b0";
+const ICONS = {
+ "вода":`<path d="M20 12h24l-3 42H23z" fill="#eef7fc"/><path d="M21.5 28h21l-1.9 24H23.4z" fill="#5aaee0"/>`,
+ "хлеб":`<path d="M8 42c0-13 11-22 24-22s24 9 24 22v6H8z" fill="#d99a4e"/><path d="M21 28l-3 9M32 26v10M43 28l3 9"/>`,
+ "яблоко":`<path d="M32 22c-6-5-20-4-20 12 0 12 9 20 15 20 3 0 3-1 5-1s2 1 5 1c6 0 15-8 15-20 0-16-14-17-20-12z" fill="#e2483d"/><path d="M32 22c0-6 2-10 5-12"/><path d="M34 16c4-5 10-5 12-3-3 4-8 5-12 3z" fill="#5bb36a"/>`,
+ "молоко":`<path d="M20 22l6-10h12l6 10v32H20z" fill="#ffffff"/><path d="M20 22h24"/><rect x="24" y="31" width="16" height="13" fill="#5aaee0"/>`,
+ "дом":`<path d="M16 28v26h32V28L32 15z" fill="#f3d9a4"/><rect x="27" y="38" width="10" height="16" fill="#8b5a3c"/><path d="M10 31L32 11l22 20" stroke="#c0392b" stroke-width="4.5"/>`,
+ "магазин":`<rect x="12" y="26" width="40" height="28" fill="#ffffff"/><path d="M10 14h44l-2 12H12z" fill="#e2483d"/><path d="M21 14l-2 12M32 14v12M43 14l2 12"/><rect x="18" y="34" width="12" height="20" fill="#5aaee0"/><rect x="36" y="34" width="10" height="10" fill="#5aaee0"/>`,
+ "билет":`<path d="M8 22h48v6a4 4 0 0 0 0 8v6H8v-6a4 4 0 0 0 0-8z" fill="#f2b632"/><path d="M22 23v18" stroke-dasharray="3 3"/><path d="M28 30h20M28 35h14" stroke-width="2"/>`,
+ "паспорт":`<rect x="16" y="8" width="32" height="48" rx="3" fill="#2f5d8a"/><circle cx="32" cy="28" r="8" stroke="#f2b632"/><path d="M24 28h16M32 20c-3 3-3 13 0 16M32 20c3 3 3 13 0 16" stroke="#f2b632" stroke-width="1.5"/><path d="M24 45h16" stroke="#f2b632"/>`,
+ "врач":`<path d="M14 56c0-10 8-16 18-16s18 6 18 16z" fill="#ffffff"/><circle cx="32" cy="27" r="10" fill="${SKIN}"/><path d="M21 21c0-6 5-10 11-10s11 4 11 10z" fill="#ffffff"/><path d="M32 13v6M29 16h6" stroke="#e2483d"/><path d="M26 42c0 7 2 9 6 9s5-3 5-6" /><circle cx="37" cy="44" r="2.5" fill="#9aa5ab"/>`,
+ "лекарство":`<g transform="rotate(-35 32 32)"><rect x="12" y="24" width="40" height="16" rx="8" fill="#ffffff"/><path d="M32 24h12a8 8 0 0 1 0 16H32z" fill="#e2483d"/></g>`,
+ "солнце":`<circle cx="32" cy="32" r="11" fill="#f2b632"/><path d="M32 8v8M32 48v8M8 32h8M48 32h8M15 15l6 6M43 43l6 6M15 49l6-6M43 21l6-6" stroke="#e09a12"/>`,
+ "дождь":`<path d="M18 38a9 9 0 0 1 1-18 13 13 0 0 1 25-2 9 9 0 0 1 2 20z" fill="#cfd8dc"/><path d="M22 44l-3 8M32 44l-3 8M42 44l-3 8" stroke="#3b8fd0"/>`,
+ "облако":`<path d="M16 46a11 11 0 0 1 1-22 15 15 0 0 1 29-3 12 12 0 0 1 2 25z" fill="#e3e9ec"/>`,
+ "снег":`<path d="M32 8v48M11 20l42 24M11 44l42-24" stroke="#3b8fd0"/><path d="M26 12l6 5 6-5M26 52l6-5 6 5M10 27l8-1-3-7M54 37l-8 1 3 7M10 37l8 1-3 7M54 27l-8-1 3-7" stroke="#3b8fd0" stroke-width="2"/>`,
+ "ветер":`<path d="M8 24h30a7 7 0 1 0-7-7M8 34h40a7 7 0 1 1-7 7M8 44h20" stroke="#5aaee0" stroke-width="3.5"/>`,
+ "голова":`<circle cx="32" cy="33" r="20" fill="${SKIN}"/><path d="M12 31c0-12 9-19 20-19s20 7 20 19c-6-6-14-8-20-8s-14 2-20 8z" fill="#5a3b28"/><circle cx="25" cy="35" r="2" fill="#22313a"/><circle cx="39" cy="35" r="2" fill="#22313a"/><path d="M26 43c4 3 8 3 12 0"/>`,
+ "глаз":`<path d="M6 32c8-12 18-16 26-16s18 4 26 16c-8 12-18 16-26 16S14 44 6 32z" fill="#ffffff"/><circle cx="32" cy="32" r="9" fill="#4a8bc9"/><circle cx="32" cy="32" r="4" fill="#22313a"/>`,
+ "ухо":`<path d="M26 54c-5 0-8-4-8-8 0-5 4-7 4-16 0-11 6-18 14-18s14 6 14 15c0 11-10 13-10 20 0 4-6 7-14 7z" fill="${SKIN}"/><path d="M30 30c0-6 3-9 6-9s6 3 6 7c0 4-4 5-4 9"/>`,
+ "рука":`<rect x="17" y="12" width="7" height="26" rx="3.5" fill="${SKIN}"/><rect x="24.5" y="8" width="7" height="28" rx="3.5" fill="${SKIN}"/><rect x="32" y="10" width="7" height="26" rx="3.5" fill="${SKIN}"/><rect x="39.5" y="16" width="6.5" height="22" rx="3.25" fill="${SKIN}"/><path d="M45 38l6-8c2-3 6-1 5 2l-6 12" fill="${SKIN}"/><path d="M17 30h29v14c0 7-5 12-12 12h-5c-7 0-12-5-12-12z" fill="${SKIN}"/>`,
+ "нога":`<path d="M24 6h13v34l15 7c5 2 4 9-2 9H24c-3 0-4-2-4-4l4-12z" fill="${SKIN}"/>`,
+ "рот":`<path d="M10 32c6-8 12-10 16-8 3 1 4 2 6 2s3-1 6-2c4-2 10 0 16 8-6 8-14 12-22 12s-16-4-22-12z" fill="#e2483d"/><path d="M10 32c8 3 15 4 22 4s14-1 22-4"/>`,
+ "сердце":`<path d="M32 54S8 40 8 24c0-8 6-13 12-13 5 0 9 3 12 7 3-4 7-7 12-7 6 0 12 5 12 13 0 16-24 30-24 30z" fill="#e2483d"/>`,
+ "зуб":`<path d="M16 16c0-6 6-8 10-6 3 1 4 2 6 2s3-1 6-2c4-2 10 0 10 6 0 10-4 12-4 22 0 8-2 14-5 14s-3-10-7-10-4 10-7 10-5-6-5-14c0-10-4-12-4-22z" fill="#ffffff"/>`,
+ "собака":`<circle cx="32" cy="34" r="16" fill="#d9a066"/><path d="M17 20c-6 2-8 15-4 19 3-2 7-8 7-15zM47 20c6 2 8 15 4 19-3-2-7-8-7-15z" fill="#8b5a3c"/><circle cx="26" cy="31" r="2" fill="#22313a"/><circle cx="38" cy="31" r="2" fill="#22313a"/><ellipse cx="32" cy="39" rx="4" ry="3" fill="#22313a"/><path d="M32 42v3M28 46c2 2 6 2 8 0"/>`,
+ "кошка":`<path d="M14 14l12 10h12l12-10v24c0 10-8 16-18 16s-18-6-18-16z" fill="#f0a35a"/><circle cx="25" cy="34" r="2.5" fill="#22313a"/><circle cx="39" cy="34" r="2.5" fill="#22313a"/><path d="M30 40h4l-2 2z" fill="#e2483d"/><path d="M8 39l13 1M8 45l13-2M56 39l-13 1M56 45l-13-2" stroke-width="1.5"/>`,
+ "лошадь":`<path d="M20 58V38c0-11 5-23 15-27l2-5 3 6c8 4 12 12 12 20 0 4-3 6-6 5l-8-3-4 10v14z" fill="#a0673a"/><path d="M35 12c-7 3-13 12-15 22" stroke="#4a2e1a" stroke-width="4"/><circle cx="42" cy="22" r="2" fill="#22313a"/>`,
+ "птица":`<path d="M12 36c0-10 8-18 18-18 6 0 10 3 12 7l10 1-8 5c0 12-10 19-20 19-6 0-12-4-12-14z" fill="#5aaee0"/><path d="M20 36c6 0 12 4 14 10-8 2-14-2-14-10z" fill="#3b7fb0"/><circle cx="38" cy="26" r="2" fill="#22313a"/><path d="M28 54l-2 5M34 54l2 5"/>`,
+ "дерево":`<rect x="28" y="38" width="8" height="18" fill="#8b5a3c"/><circle cx="32" cy="26" r="17" fill="#5bb36a"/>`,
+ "гора":`<path d="M4 54L24 16l10 17 6-9 20 30z" fill="#8a9aa6"/><path d="M24 16l-6 12 4 3 4-3 4 2z" fill="#ffffff"/>`,
+ "река":`<path d="M4 20c10-6 18 6 28 0s18-6 28 0M4 33c10-6 18 6 28 0s18-6 28 0M4 46c10-6 18 6 28 0s18-6 28 0" stroke="#3b8fd0" stroke-width="4"/>`,
+ "рыба":`<path d="M52 32l9-10v20z" fill="#5aaee0"/><path d="M6 32c8-10 18-14 28-14 9 0 15 6 18 14-3 8-9 14-18 14-10 0-20-4-28-14z" fill="#5aaee0"/><circle cx="18" cy="29" r="2" fill="#22313a"/><path d="M30 22c3 6 3 14 0 20"/>`,
+ "корова":`<path d="M18 18l-6-8M46 18l6-8"/><rect x="16" y="15" width="32" height="36" rx="14" fill="#ffffff"/><path d="M20 22c5 0 9 4 7 9-5 0-9-3-7-9z" fill="#22313a"/><ellipse cx="32" cy="45" rx="13" ry="8" fill="#f2a6a6"/><circle cx="27" cy="45" r="1.8" fill="#22313a"/><circle cx="37" cy="45" r="1.8" fill="#22313a"/><circle cx="25" cy="32" r="2" fill="#22313a"/><circle cx="39" cy="32" r="2" fill="#22313a"/>`,
+ "овца":`<path d="M27 48v9M37 48v9"/><circle cx="21" cy="28" r="8" fill="#ffffff"/><circle cx="32" cy="23" r="9" fill="#ffffff"/><circle cx="43" cy="28" r="8" fill="#ffffff"/><circle cx="25" cy="39" r="9" fill="#ffffff"/><circle cx="39" cy="39" r="9" fill="#ffffff"/><ellipse cx="32" cy="34" rx="7" ry="9" fill="#3a3a3a"/><circle cx="29" cy="32" r="1.5" fill="#ffffff" stroke="none"/><circle cx="35" cy="32" r="1.5" fill="#ffffff" stroke="none"/>`,
+ "верблюд":`<path d="M14 48v10M22 48v10M38 48v10M46 48v10" stroke-width="3"/><path d="M8 46c0-6 2-10 6-10 2-9 6-13 10-13s6 4 8 8c2-6 6-8 9-8s6 4 7 13h3l2-12c0-4 3-6 6-4l3 4-5 2-2 12c0 5-2 8-6 8H8z" fill="#d9a066"/><circle cx="56" cy="17" r="1.3" fill="#22313a"/>`,
+ "медведь":`<circle cx="18" cy="18" r="7" fill="#8b5a3c"/><circle cx="46" cy="18" r="7" fill="#8b5a3c"/><circle cx="32" cy="34" r="18" fill="#8b5a3c"/><ellipse cx="32" cy="41" rx="8" ry="6" fill="#d9a066"/><circle cx="32" cy="38" r="2.5" fill="#22313a"/><circle cx="25" cy="30" r="2" fill="#22313a"/><circle cx="39" cy="30" r="2" fill="#22313a"/>`,
+ "автобус":`<rect x="10" y="10" width="44" height="38" rx="6" fill="#f2b632"/><rect x="15" y="16" width="34" height="14" rx="2" fill="#cfe8f6"/><path d="M32 16v14M14 40h6M44 40h6"/><circle cx="20" cy="50" r="5" fill="#22313a"/><circle cx="44" cy="50" r="5" fill="#22313a"/>`,
+ "машина":`<path d="M6 42v-8l7-2 7-11h22l8 11 8 2v8z" fill="#e2483d"/><path d="M22 24h9v8H16zM35 24h6l6 8H35z" fill="#cfe8f6" stroke-width="2"/><circle cx="19" cy="44" r="6" fill="#22313a"/><circle cx="45" cy="44" r="6" fill="#22313a"/>`,
+ "поезд":`<path d="M18 57l6-9M46 57l-6-9"/><rect x="14" y="8" width="36" height="40" rx="8" fill="#2f7bbf"/><rect x="19" y="14" width="26" height="14" rx="2" fill="#cfe8f6"/><circle cx="22" cy="38" r="3" fill="#f2b632"/><circle cx="42" cy="38" r="3" fill="#f2b632"/>`,
+ "велосипед":`<circle cx="16" cy="42" r="10"/><circle cx="48" cy="42" r="10"/><path d="M16 42l10-16h16l6 16M26 26l8 16H16M34 42l8-16M40 20h6M22 22h8" stroke="#e2483d"/>`,
+ "самолёт":`<path d="M32 5c3 0 4 4 4 8v12l20 12v6l-20-6v10l6 5v4l-10-3-10 3v-4l6-5V37L8 43v-6l20-12V13c0-4 1-8 4-8z" fill="#cfd8dc"/>`,
+ "рубашка":`<path d="M22 10l-14 8 6 12 6-3v27h24V27l6 3 6-12-14-8c-2 4-6 6-10 6s-8-2-10-6z" fill="#5aaee0"/><path d="M32 18v34" stroke-dasharray="1 6"/>`,
+ "брюки":`<path d="M18 8h28l4 48H38l-6-30-6 30H14z" fill="#2f5d8a"/><path d="M18 14h28"/>`,
+ "обувь":`<path d="M6 46V31c0-4 4-6 8-4 6 4 14 4 18 2l4 4 14 4c6 2 8 6 8 9v4H6z" fill="#8b5a3c"/><path d="M6 46h52"/>`,
+ "куртка":`<path d="M24 8l-12 6-6 40h12l2-26v28h24V28l2 26h12l-6-40-12-6-8 10z" fill="#5bb36a"/><path d="M32 18v36"/>`,
+ "платье":`<path d="M24 6h4l4 6 4-6h4l-2 14 4 6 12 30H10l12-30 4-6z" fill="#e26aa0"/>`,
+ "сумка":`<path d="M22 24c0-9 4-13 10-13s10 4 10 13"/><path d="M10 24h44l-4 32H14z" fill="#d9a066"/>`,
+ "головной убор":`<path d="M14 40c0-14 8-24 18-24s18 10 18 24z" fill="#e2483d"/><rect x="6" y="40" width="52" height="7" rx="3" fill="#e2483d"/>`,
+ "стол":`<path d="M12 29v25M52 29v25" stroke-width="4" stroke="#8b5a3c"/><rect x="6" y="22" width="52" height="7" fill="#b27a4b"/>`,
+ "стул":`<path d="M20 8v48M44 34v22M20 56" stroke-width="4" stroke="#8b5a3c"/><rect x="18" y="30" width="28" height="6" fill="#b27a4b"/>`,
+ "кровать":`<path d="M6 18v38M58 34v22" stroke-width="4" stroke="#8b5a3c"/><rect x="6" y="38" width="52" height="10" fill="#b27a4b"/><rect x="10" y="29" width="14" height="9" rx="3" fill="#ffffff"/><path d="M24 38c0-6 4-8 10-8h20c4 0 4 4 4 8z" fill="#5aaee0"/>`,
+ "окно":`<rect x="12" y="10" width="40" height="44" rx="2" fill="#cfe8f6"/><path d="M32 10v44M12 32h40"/>`,
+ "дверь":`<rect x="18" y="6" width="28" height="52" rx="2" fill="#a0673a"/><circle cx="40" cy="34" r="2.5" fill="#f2b632"/>`,
+ "чай":`<path d="M24 6c-3 4 3 6 0 10M34 6c-3 4 3 6 0 10"/><path d="M46 28h4a6 6 0 0 1 0 12h-5"/><path d="M12 22h34v16c0 10-8 16-17 16S12 48 12 38z" fill="#ffffff"/><path d="M15 27h28" stroke="#c0732e" stroke-width="5"/>`,
+ "мясо":`<path d="M30 10c10-2 22 6 22 18s-14 18-24 12l-8 8c2 4-2 8-6 6-2-4-6-2-6-6s6-2 6-6l8-8c-6-10 0-22 8-24z" fill="#c0603b"/>`,
+ "яйцо":`<path d="M32 8c-10 0-18 18-18 30 0 10 8 18 18 18s18-8 18-18C50 26 42 8 32 8z" fill="#fff6e0"/>`,
+ "мёд":`<rect x="16" y="20" width="32" height="34" rx="8" fill="#f2b632"/><rect x="18" y="11" width="28" height="9" rx="2" fill="#8b5a3c"/><path d="M24 34h16" stroke="#b07a0e"/>`,
+ "рис":`<path d="M12 32c0-7 8-13 20-13s20 6 20 13z" fill="#ffffff"/><path d="M8 32h48c0 12-10 20-24 20S8 44 8 32z" fill="#5aaee0"/>`,
+ "картофель":`<path d="M14 26c4-10 20-12 30-8 10 4 10 14 6 22-4 10-18 12-28 8-8-4-12-12-8-22z" fill="#c9965a"/><circle cx="26" cy="28" r="1.5" fill="#22313a"/><circle cx="38" cy="36" r="1.5" fill="#22313a"/><circle cx="30" cy="41" r="1.5" fill="#22313a"/>`,
+ "лук":`<path d="M32 14c-2-4-2-8 0-10M32 14c2-4 4-6 6-6"/><path d="M32 14c-2 6-18 12-18 26 0 10 8 16 18 16s18-6 18-16c0-14-16-20-18-26z" fill="#c77dbb"/><path d="M26 30c-2 6-2 14 2 22M38 30c2 6 2 14-2 22"/>`,
+ "деньги":`<rect x="6" y="18" width="52" height="28" rx="3" fill="#7cc48a"/><circle cx="32" cy="32" r="8"/><path d="M32 27v10"/><circle cx="14" cy="32" r="2" fill="#22313a"/><circle cx="50" cy="32" r="2" fill="#22313a"/>`,
+ "час":`<circle cx="32" cy="32" r="22" fill="#ffffff"/><path d="M32 17v15l10 6"/><circle cx="32" cy="32" r="2" fill="#22313a"/>`,
+ "мост":`<path d="M4 50c8-4 14 4 22 0s14-4 22 0 10 4 12 0" stroke="#3b8fd0"/><path d="M8 40c6-16 18-24 24-24s18 8 24 24" stroke="#c0392b" stroke-width="3"/><path d="M16 40V29M24 40V21M32 40V16M40 40V21M48 40V29" stroke-width="2"/><path d="M4 40h56" stroke-width="4"/>`,
+ "фильм":`<rect x="10" y="26" width="44" height="28" rx="2" fill="#22313a"/><path d="M10 16l42-8 2 10-42 8z" fill="#ffffff"/><path d="M18 14l6 9M30 12l6 9M42 10l6 9"/>`,
+ "музыка":`<path d="M24 46V14l26-6v32" stroke-width="4"/><ellipse cx="18" cy="46" rx="7" ry="5" fill="#22313a"/><ellipse cx="44" cy="40" rx="7" ry="5" fill="#22313a"/>`,
+ "больница":`<rect x="10" y="16" width="44" height="40" fill="#ffffff"/><path d="M32 22v14M25 29h14" stroke="#e2483d" stroke-width="4.5"/><rect x="27" y="42" width="10" height="14" fill="#5aaee0"/>`,
+ "аптека":`<rect x="12" y="12" width="40" height="40" rx="8" fill="#5bb36a"/><path d="M32 20v24M20 32h24" stroke="#ffffff" stroke-width="7"/>`,
+ "компьютерная мышь":`<rect x="18" y="10" width="28" height="44" rx="14" fill="#cfd8dc"/><path d="M32 10v16M18 26h28"/>`,
+ "экран":`<rect x="8" y="10" width="48" height="32" rx="3" fill="#cfe8f6"/><path d="M26 52h12M32 42v10"/>`,
+ "мобильный телефон":`<rect x="20" y="6" width="24" height="52" rx="5" fill="#22313a"/><rect x="23.5" y="12" width="17" height="36" fill="#cfe8f6" stroke="none"/>`,
+ "банк":`<path d="M8 22L32 8l24 14z" fill="#cfd8dc"/><path d="M15 25v22M25 25v22M39 25v22M49 25v22" stroke-width="4"/><rect x="8" y="47" width="48" height="7" fill="#cfd8dc"/>`,
+ "почта":`<rect x="8" y="16" width="48" height="32" rx="3" fill="#ffffff"/><path d="M8 18l24 18 24-18"/>`,
+ "весна":`<path d="M32 36v22" stroke="#3a8a4a"/><path d="M32 50c-6 0-10-4-10-8 6 0 10 4 10 8z" fill="#5bb36a"/><circle cx="32" cy="13" r="7" fill="#f28cb8"/><circle cx="23" cy="21" r="7" fill="#f28cb8"/><circle cx="41" cy="21" r="7" fill="#f28cb8"/><circle cx="26" cy="31" r="7" fill="#f28cb8"/><circle cx="38" cy="31" r="7" fill="#f28cb8"/><circle cx="32" cy="23" r="6" fill="#f2b632"/>`,
+ "осень":`<path d="M32 6c14 8 20 22 12 34-6 8-18 8-24 0-8-12-2-26 12-34z" fill="#e0822e"/><path d="M32 12v46"/>`,
+ "белый":SWATCH("#ffffff"), "чёрный":SWATCH("#22313a"), "красный":SWATCH("#e2483d"), "синий":SWATCH("#2f6fd0"),
+ "зелёный":SWATCH("#4caf50"), "жёлтый":SWATCH("#f5c518"), "коричневый":SWATCH("#8b5a3c"), "серый":SWATCH("#9aa5ab")
+};
+const PIC_ALIAS = {"солнечно":"солнце","дождливо":"дождь","облачно":"облако","кисть руки":"рука","наличные":"деньги","сообщение":"почта","парк":"дерево","зима":"снег","лето":"солнце","время":"час","кино":"фильм","поликлиника":"больница","самолет":"самолёт","мед":"мёд","черный":"чёрный","желтый":"жёлтый","зеленый":"зелёный"};
+const picKey = r => { const k = String(r).toLowerCase().split(/[;(]/)[0].split(",")[0].trim(); const a = PIC_ALIAS[k]||k; return ICONS[a] ? a : null; };
+const picSvg = k => `<svg class="pic-svg" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#22313a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">${ICONS[k]||""}</g></svg>`;
+function picPool(lang){
+  const seen = new Set(), out = [];
+  for(const t of COURSE[lang]) for(const w of words(t)){ const k = picKey(w.r); if(k && !seen.has(k) && w.t.split(" ").length<=2){ seen.add(k); out.push({...w, pic:k}); } }
+  return out;
+}
+
+/* ===================== TAP-TO-TRANSLATE ===================== */
+const FN = {
+en: {"i":"я","you":"ты, вы","he":"он","she":"она","it":"это, оно","we":"мы","they":"они","me":"меня, мне","him":"его, ему","them":"их, им","us":"нас, нам",
+ "my":"мой","your":"твой, ваш","his":"его","her":"её","our":"наш","their":"их","its":"его (о предмете)","mine":"мой","yours":"твой",
+ "is":"есть (to be: он/она/оно)","am":"есть (to be: я)","are":"есть (to be: мы/вы/они)","was":"был, была","were":"были","be":"быть","been":"был (V3 от be)",
+ "a":"артикль: какой-то, один","an":"артикль перед гласной","the":"артикль: тот самый","to":"к, в; частица перед глаголом","of":"родительный падеж: «чего, кого»","in":"в","on":"на","at":"в, у (место, время)","for":"для, на (срок)","with":"с","from":"из, от","by":"к (сроку), у","about":"о, про; примерно","into":"в (внутрь)","up":"вверх","out":"наружу","off":"прочь, с","over":"над, через","after":"после","before":"до, перед","until":"до (пока не)","since":"с (момента)",
+ "and":"и","or":"или","but":"но","so":"так, поэтому","if":"если","because":"потому что","than":"чем","when":"когда","where":"где, куда","what":"что, какой","why":"почему","how":"как","who":"кто","which":"который","that":"тот, что, который","this":"это, этот","these":"эти","those":"те","there":"там","here":"здесь",
+ "not":"не","no":"нет","yes":"да","yeah":"ага, да","don't":"не (do not)","doesn't":"не (does not)","didn't":"не (прош. время)","can't":"не могу (cannot)","won't":"не буду (will not)","isn't":"не является","aren't":"не являются","wasn't":"не был","i'm":"я есть (I am)","it's":"это (it is)","you're":"ты есть (you are)","that's":"это (that is)","let's":"давай(те)","i'll":"я буду, я сделаю","i'd":"я бы","i've":"у меня есть / я (сделал)","we're":"мы (we are)","there's":"есть, имеется",
+ "do":"делать; вспом. глагол","does":"вспом. глагол (он/она)","did":"сделал; вспом. глагол прош.","can":"мочь, уметь","could":"мог бы","would":"бы","will":"будет (будущее)","should":"следует","must":"должен","might":"может быть","have":"иметь","has":"имеет","had":"имел","get":"получать","got":"получил","go":"идти","going":"иду, собираюсь","want":"хотеть","need":"нуждаться","know":"знать","think":"думать","like":"нравиться; как","make":"делать, создавать","take":"брать","see":"видеть","say":"сказать","tell":"рассказать","come":"приходить","give":"давать","work":"работать; работа","help":"помогать","try":"пытаться","look":"смотреть","feel":"чувствовать","let":"позволять","put":"класть","keep":"держать, продолжать","buy":"покупать","pay":"платить",
+ "very":"очень","too":"тоже; слишком","really":"правда, очень","just":"просто, только что","also":"также","still":"всё ещё","already":"уже","yet":"ещё (не), уже (?)","again":"снова","now":"сейчас","then":"потом, тогда","today":"сегодня","tomorrow":"завтра","yesterday":"вчера","tonight":"сегодня вечером","always":"всегда","never":"никогда","often":"часто","all":"все, всё","some":"немного, некоторые","any":"любой, какой-нибудь","every":"каждый","much":"много","many":"много","more":"больше","most":"самый, больше всего","little":"маленький, немного","lot":"много (a lot)","one":"один","two":"два","three":"три","four":"четыре","five":"пять","ten":"десять","new":"новый","good":"хороший","great":"отличный","nice":"приятный","big":"большой","small":"маленький","right":"правильный; направо","okay":"хорошо, ладно","sure":"конечно","well":"хорошо; ну","please":"пожалуйста","thanks":"спасибо","hi":"привет","hey":"эй, привет","oh":"о, ой","time":"время","day":"день","way":"путь, способ","thing":"вещь","people":"люди","man":"мужчина; чувак","something":"что-то","anything":"что-нибудь","everything":"всё","nothing":"ничего","someone":"кто-то","here's":"вот (here is)","what's":"что (what is)","where's":"где (where is)",
+ "coffee":"кофе","latte":"латте","muffin":"маффин, кекс","size":"размер","medium":"средний","large":"большой","card":"карта","cash":"наличные","dollars":"доллары","mom":"мама","honey":"милый, дорогой (обращение)","sweetie":"солнышко (обращение)","grandma":"бабушка","train":"поезд","track":"путь (на вокзале)","round-trip":"туда и обратно","headed":"направляетесь","book":"книга","library":"библиотека","park":"парк","café":"кафе","cafe":"кафе","bag":"сумка","bags":"сумки","pack":"собирать (вещи)","owe":"быть должным","best":"лучший","tired":"уставший","forgot":"забыл (forget)","left":"оставил (leave); налево","returned":"вернул","borrowed":"взял на время","found":"нашёл (find)","hangs":"проводит время (hang out)","major":"основная специальность","roommate":"сосед по комнате","band":"музыкальная группа","logo":"логотип","texas":"Техас","russia":"Россия","subway":"метро (США)","block":"квартал","blocks":"кварталы","straight":"прямо","across":"напротив, через","walk":"прогулка; идти пешком","minute":"минута","website":"сайт","redesign":"редизайн","client":"клиент","launch":"запуск","friday":"пятница","thursday":"четверг","homepage":"главная страница","mobile":"мобильный","version":"версия","mockups":"макеты","tight":"сжатый (о сроках)","office":"кабинет, офис","appointment":"запись, приём","sore":"больной (sore throat — болит горло)","throat":"горло","fever":"температура, жар","degrees":"градусы","opening":"свободное окно","insurance":"страховка","movie":"фильм","visuals":"визуальная часть","stunning":"потрясающий","plot":"сюжет","ending":"концовка","honestly":"честно","exactly":"именно","still":"всё же; всё ещё","cinematography":"операторская работа","shorter":"короче","thirty":"тридцать","fifteen":"пятнадцать","seven":"семь","fifty":"пятьдесят","hundred":"сто","boston":"Бостон"},
+kk: {"мен":"я; также «и, с» (мен = с/и)","сен":"ты","сіз":"Вы (вежл.)","ол":"он, она, оно; тот","біз":"мы","сендер":"вы (мн.)","сіздер":"Вы (мн., вежл.)","олар":"они",
+ "менің":"мой","сенің":"твой","сіздің":"Ваш","оның":"его, её","біздің":"наш","олардың":"их","маған":"мне","саған":"тебе","сізге":"Вам","оған":"ему, ей","мені":"меня","сені":"тебя","оны":"его, её (вин.)",
+ "және":"и","бірақ":"но","немесе":"или","да":"тоже, и","де":"тоже, и","та":"тоже, и","те":"тоже, и","ал":"а; бери","егер":"если","өйткені":"потому что","сондықтан":"поэтому","сосын":"потом","кейін":"после, потом","дейін":"до","үшін":"для, чтобы","туралы":"о, про","сияқты":"как, похоже","арқылы":"через","бойы":"в течение","қасында":"рядом с","қарсысында":"напротив",
+ "бұл":"это, этот","осы":"этот (самый)","сол":"тот; левый","мына":"вот этот","мынау":"вот это","міне":"вот","мінеки":"вот, держите","не":"что","кім":"кто","қайда":"где, куда","қашан":"когда","неге":"почему","қалай":"как","қандай":"какой","қанша":"сколько","қайдан":"откуда",
+ "иә":"да","жоқ":"нет; нету","емес":"не (является)","бар":"есть, имеется; иди","өте":"очень","тым":"слишком","ғана":"только","әлі":"ещё","енді":"теперь","қазір":"сейчас","бүгін":"сегодня","ертең":"завтра","кеше":"вчера","әрине":"конечно","жақсы":"хороший, хорошо","рахмет":"спасибо","сәлем":"привет","ой":"ой","шын":"правда","ма":"вопросительная частица","ме":"вопросительная частица","ба":"вопросительная частица","бе":"вопросительная частица","па":"вопросительная частица","пе":"вопросительная частица","ше":"а …? (частица)","ғой":"же, ведь","екен":"оказывается","еді":"был (вспом.)","болады":"будет; можно","болсын":"пусть будет","керек":"нужно","бір":"один","екі":"два","үш":"три","бес":"пять","он":"десять","тағы":"ещё","басқа":"другой","барлығы":"все, всего","бәрі":"всё, все","ештеңе":"ничего","біреу":"кто-то","әр":"каждый","көп":"много","аз":"мало","сәл":"чуть-чуть",
+ "кітап":"книга","кафе":"кафе","дүкен":"магазин","вокзал":"вокзал","пойыз":"поезд","нан":"хлеб","сүт":"молоко","кофе":"кофе","шай":"чай","ана":"мама","анам":"моя мама","апа":"мама; тётя (уважительное обращение)","әже":"бабушка","дос":"друг","досым":"мой друг","кітапхана":"библиотека","кітапханашы":"библиотекарь","саябақ":"парк","жол":"дорога, путь","сағат":"час, часы","бала":"ребёнок","балам":"дитя моё, сынок","ат":"имя; лошадь","төр":"почётное место в доме","бауырсақ":"баурсак (жареный пончик)","жаңа":"новый; только что","дәмді":"вкусный","қол":"рука","береке":"благодать, достаток","ас":"еда","кило":"килограмм","теңге":"тенге","алма":"яблоко","метро":"метро","банк":"банк","минут":"минута","жаяу":"пешком","тура":"прямо","алыс":"далеко","жақын":"близко","кешіріңіз":"извините","фильм":"фильм","сюжет":"сюжет","жоба":"проект","компания":"компания","университет":"университет","дизайн":"дизайн","дизайнер":"дизайнер","портфолио":"портфолио","түйіндеме":"резюме","керемет":"замечательный, отлично","жарайды":"хорошо, ладно","жарайсың":"молодец","мүмкін":"возможно","керісінше":"наоборот","дегенмен":"тем не менее","әрі":"и, к тому же","сыйлық":"подарок","үлкен":"большой","кішкентай":"маленький","карта":"карта","сөмке":"сумка","біреу":"кто-то","кеш":"вечер","кешке":"вечером","қатты":"сильно; твёрдый","нағыз":"настоящий","мүлдем":"совсем","әдетте":"обычно","өткен":"прошлый","ай":"месяц; луна",
+ "шығу":"выходить; проходить","пісіру":"печь, готовить","ішу":"пить","қосу":"добавлять","алу":"брать, покупать","беру":"давать","келу":"приходить, приезжать","бару":"идти, ехать","айту":"сказать","көру":"видеть","білу":"знать","жүру":"ходить; ехать","жасау":"делать","жіберу":"отправлять","үйрену":"учиться, изучать","оқу":"читать, учиться","істеу":"делать","тұру":"стоять; стоить; жить","төлеу":"платить","күту":"ждать","табу":"найти","сұрау":"спросить","қалдыру":"оставить","ұмыту":"забыть","қайтару":"вернуть","көмектесу":"помогать","әкелу":"принести","апару":"отнести","жинау":"собирать","ұнау":"нравиться","түсіну":"понимать","бұрылу":"поворачивать","сөйлеу":"говорить","ойнау":"играть","шаршау":"уставать","қуану":"радоваться","таныс":"знакомый","қуаныштымын":"я рад","ұйықтау":"спать","ұшу":"летать","жек көру":"ненавидеть","күту":"ждать"}
+};
+let GL = {};
+function glossary(lang){
+  const sig = (S.langs[lang].gen||[]).length;
+  if(GL[lang] && GL[lang].sig===sig) return GL[lang].m;
+  const m = new Map();
+  const add = (t,r) => { const k = String(t).toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?;:«»"()]/g,"").trim(); if(k && !m.has(k)) m.set(k, r); };
+  for(const [k,v] of Object.entries(FN[lang])) add(k,v);
+  for(const t of allTopics(lang)) for(const s of t.w){ const p = pair(s); add(p.t, p.r); if(lang==="en" && /^to /i.test(p.t)) add(p.t.slice(3), p.r); }
+  for(const p of PRON[lang]) for(const s of p.items){ const q = pair(s); if(!q.t.includes(" ")) add(q.t, q.r); }
+  /* Kazakh verbs are stored as infinitives (келу): keep their stems (кел-) for matching inflected forms */
+  const stems = new Map();
+  if(lang==="kk") for(const [k,v] of m) if(!k.includes(" ") && /[^аеыі]у$/.test(k) && k.length>=3){ const st = k.slice(0,-1); if(!stems.has(st)) stems.set(st, {k, v}); }
+  m.stems = stems;
+  GL[lang] = {sig, m}; return m;
+}
+function glLookup(word, lang, m){
+  const w = word.toLowerCase().replace(/[’`]/g,"'");
+  if(m.has(w)) return m.get(w);
+  if(lang==="en"){
+    for(const [suf,rep] of [["'s",""],["ies","y"],["es",""],["s",""],["ed",""],["ed","e"],["d",""],["ing",""],["ing","e"],["ly",""]]){
+      if(w.endsWith(suf)){ const b = w.slice(0,-suf.length)+rep; if(b.length>1 && m.has(b)) return `${m.get(b)} (${b})`; } }
+    return null;
+  }
+  let best = null;
+  for(const [s,o] of m.stems||[]) if(w.startsWith(s) && w.length>s.length && (!best || s.length>best.s.length)) best = {s, k:o.k, v:o.v};
+  for(const [k,v] of m){
+    if(k.includes(" ") || k.length<3) continue;
+    const alt = {"п":"б","қ":"ғ","к":"г"}[k.slice(-1)];
+    for(const s of alt ? [k, k.slice(0,-1)+alt] : [k]) if(w.startsWith(s) && w.length>s.length && (!best || s.length>best.s.length)) best = {s,k,v};
+  }
+  return best ? `${best.v} (${best.k} + окончание)` : null;
+}
+const hintsOff = () => !!((LS && LS.hard) || (QS && QS.hard));
+/* wraps every known word in a tappable span with its translation */
+function gl(text, lang, force){
+  if(!force && hintsOff()) return esc(text);
+  const m = glossary(lang), parts = String(text).split(/([\p{L}\p{N}'’\-]+)/u);
+  let out = "";
+  for(let i=0;i<parts.length;i++){
+    if(i%2===0){ out += esc(parts[i]); continue; }
+    let hit = false;
+    for(let n=3; n>=2 && !hit; n--){
+      const end = i+2*(n-1); if(end>=parts.length) continue;
+      let ok = true; for(let j=i+1;j<end;j+=2) if(parts[j]!==" ") ok=false; if(!ok) continue;
+      const ph = parts.slice(i,end+1).join(""), k = ph.toLowerCase().replace(/[’`]/g,"'");
+      if(m.has(k)){ out += `<span class="gw" data-l="${lang}" data-tip="${esc(m.get(k))}">${esc(ph)}</span>`; i = end; hit = true; }
+    }
+    if(hit) continue;
+    const r = glLookup(parts[i], lang, m);
+    out += r ? `<span class="gw" data-l="${lang}" data-tip="${esc(r)}">${esc(parts[i])}</span>` : esc(parts[i]);
+  }
+  return out;
+}
+
+/* ===================== GRAMMAR QUESTIONS (for lessons and reviews) ===================== */
+/* "sentence with ___|перевод|correct|wrong|wrong" */
+const GQ = {
+en: {
+ A1:["She ___ a student.|Она студентка.|is|am|are","They ___ from Texas.|Они из Техаса.|are|is|am","He ___ coffee every morning.|Он пьёт кофе каждое утро.|drinks|drink|drinking","___ you have a car?|У тебя есть машина?|Do|Does|Are","I have ___ apple.|У меня есть яблоко.|an|a|the","She ___ like milk.|Она не любит молоко.|doesn't|don't|isn't"],
+ A2:["Yesterday I ___ to the store.|Вчера я ходил в магазин.|went|go|goes","Did you ___ the movie?|Ты видел фильм?|see|saw|seen","This phone is ___ than that one.|Этот телефон дешевле того.|cheaper|more cheap|cheapest","I'm ___ study design next year.|Я собираюсь изучать дизайн в следующем году.|going to|will to|go to","It's the ___ expensive hotel in town.|Это самый дорогой отель в городе.|most|more|much","We ___ watching TV when you called.|Мы смотрели телевизор, когда ты позвонил.|were|was|are"],
+ B1:["I have ___ finished my project.|Я уже закончил свой проект.|already|yet|ago","If it rains, we ___ stay home.|Если пойдёт дождь, мы останемся дома.|will|would|are","If I ___ more time, I would travel.|Если бы у меня было больше времени, я бы путешествовал.|had|have|will have","You ___ see a doctor.|Тебе стоит сходить к врачу.|should|must to|would","I've lived here ___ 2020.|Я живу здесь с 2020 года.|since|for|from","Have you finished ___?|Ты уже закончил?|yet|already|still"],
+ B2:["The website ___ designed last year.|Сайт сделали в прошлом году.|was|is|has","If I had left earlier, I ___ missed the train.|Если бы я вышел раньше, я бы не опоздал на поезд.|wouldn't have|won't have|didn't","She said she ___ tired.|Она сказала, что устала.|was|is|be","The report is being ___ right now.|Отчёт пишут прямо сейчас.|written|wrote|write","I wish I ___ speak Kazakh.|Жаль, что я не говорю по-казахски.|could|can|will","He asked me where I ___.|Он спросил меня, где я живу.|lived|live|do live"],
+ C1:["Never ___ I seen such a clean layout.|Никогда я не видел такого чистого макета.|have|did|was","If I had studied harder, I ___ fluent now.|Если бы я учился усерднее, сейчас я говорил бы свободно.|would be|would have been|will be","What I really need ___ practice.|Что мне действительно нужно, так это практика.|is|are|be","Not only ___ he come, but he also helped.|Он не только пришёл, но и помог.|did|has|was","I'd rather you ___ tell anyone.|Я бы предпочёл, чтобы ты никому не говорил.|didn't|don't|won't","Hardly ___ we arrived when it started raining.|Едва мы приехали, как пошёл дождь.|had|have|did"]
+},
+kk: {
+ A1:["Мен студент___.|Я студент.|пін|мын|сің","Сен студент___.|Ты студент.|сің|пін|мын","Ол дәрігер ___.|Он не врач.|емес|жоқ|ма","Сен студентсің ___?|Ты студент?|бе|ма|пе","Менің ___ Никита.|Меня зовут Никита.|атым|атың|аты","Біз кітап ___.|Мы читаем книгу.|оқимыз|оқимын|оқисың"],
+ A2:["Бала___ ойнап жүр.|Дети играют.|лар|дар|тар","Гүл___ әдемі.|Цветы красивые.|дер|лер|тер","Кітап___ қызық.|Книги интересные.|тар|лар|дар","Мен ертең бар___.|Я завтра не пойду.|маймын|мамын|емеспін","Сенің кітаб___ қайда?|Где твоя книга?|ың|ым|ы","Менің үй___ үлкен.|Мой дом большой.|ім|ің|і"],
+ B1:["Мен қала___ барамын.|Я еду в город.|ға|да|дан","Ол үй___ отыр.|Он сидит дома.|де|ге|ден","Мен Самара___ келдім.|Я приехал из Самары.|дан|да|ға","Біз пойыз___ бардық.|Мы поехали на поезде.|бен|мен|пен","Мен кітап___ оқыдым.|Я прочитал эту книгу.|ты|ды|ны","Қала___ көшелері кең.|Улицы города широкие.|ның|дың|тың"],
+ B2:["Мен кеше Астанаға бар___.|Я вчера съездил в Астану.|дым|амын|мақпын","Ертең мен жұмысқа бар___.|Завтра я пойду на работу.|амын|дым|ғанмын","Мен қазір кітап оқып жатыр___.|Я сейчас читаю книгу.|мын|мін|сың","Мен Алматыда бол___мын.|Я бывал в Алматы.|ған|ды|а","Ол жұмыс істеп ___.|Он (в последнее время) работает.|жүр|жүрмін|барамын","Мен дизайнер бол___пын.|Я намерен стать дизайнером.|мақ|ған|а"],
+ C1:["Уақытым бол___, көмектесемін.|Если будет время, помогу.|са|ды|ған","Менің қазақша сөйле___ келеді.|Я хочу говорить по-казахски.|гім|ймін|ген","Мен оқы___ кітап қызық.|Книга, которую я прочитал, интересная.|ған|ды|са","Ақшам болса, үй сатып ал___ едім.|Будь у меня деньги, я купил бы дом.|ар|ды|са","Ерте тұр___, сабаққа үлгересің.|Если встанешь рано, успеешь на занятие.|саң|сам|са","Ол келмей___, біз бастамаймыз.|Пока он не придёт, мы не начнём.|інше|ді|ген"]
+}};
+const gqOf = (lang, lv) => (GQ[lang][lv]||[]).map(s=>{ const [g,r,a,...w] = s.split("|"); return {s:g, r, a, w}; });
+
+/* ===================== LISTENING DIALOGUES ===================== */
+/* lines: [speaker 0|1, text, перевод]; qs: [вопрос, правильный, неверный, неверный]; notes: [фраза, разбор] */
+const DIALOGS = {
+en: [
+ {id:"d1", lv:"A1", t:"В кофейне", s:"Заказ кофе по-американски", who:["Barista","Nikita"],
+  lines:[[0,"Hi there! What can I get for you?","Привет! Что вам предложить?"],[1,"Hi! Can I get a large latte, please?","Привет! Можно мне большой латте?"],[0,"Sure. Hot or iced?","Конечно. Горячий или со льдом?"],[1,"Iced, please. And a blueberry muffin.","Со льдом, пожалуйста. И черничный маффин."],[0,"Okay, that'll be seven fifty. For here or to go?","Хорошо, с вас семь пятьдесят. Здесь или с собой?"],[1,"To go, thanks.","С собой, спасибо."]],
+  qs:[["Какой напиток заказал Никита?","Большой латте со льдом","Маленький горячий латте","Чёрный кофе"],["Сколько стоит заказ?","7,50 $","5,70 $","17,50 $"],["Где Никита будет есть?","Возьмёт с собой","Останется в кафе","Он ничего не ест"]],
+  notes:[["Can I get…?","Самый частый американский способ что-то заказать. Звучит вежливо и естественно, в отличие от прямого I want."],["Hot or iced?","В США кофе со льдом пьют круглый год, поэтому бариста почти всегда уточняет."],["that'll be…","«С вас…». Так кассир называет сумму."],["For here or to go?","Классический вопрос: будете есть здесь или возьмёте с собой."]]},
+ {id:"d2", lv:"A1", t:"Сосед по общежитию", s:"Знакомство в колледже", who:["Jake","Nikita"],
+  lines:[[0,"Hey, are you my new roommate?","Привет, ты мой новый сосед по комнате?"],[1,"Yeah, I think so. I'm Nikita.","Да, похоже на то. Я Никита."],[0,"Nice to meet you, man. I'm Jake. Where are you from?","Рад познакомиться. Я Джейк. Ты откуда?"],[1,"I'm from Russia, from Samara. What about you?","Я из России, из Самары. А ты?"],[0,"I'm from Texas. What's your major?","Я из Техаса. Какая у тебя специальность?"],[1,"Digital business. But I really want to be a web designer.","Цифровой бизнес. Но я очень хочу стать веб-дизайнером."],[0,"Cool! You can design a logo for my band.","Круто! Сделаешь логотип для моей группы."]],
+  qs:[["Откуда Джейк?","Из Техаса","Из Самары","Из Нью-Йорка"],["Кем хочет стать Никита?","Веб-дизайнером","Музыкантом","Учителем"],["Что предлагает Джейк?","Сделать логотип для его группы","Пойти в кафе","Поменяться комнатами"]],
+  notes:[["roommate","Сосед по комнате. В американских колледжах первокурсники обычно живут в общежитии (dorm) по двое."],["What's your major?","Major — основная специальность. Один из первых вопросов студенту в США."],["man","Между друзьями man звучит как «чувак», дружелюбно и неформально."],["What about you?","«А ты?» Простой способ вернуть вопрос собеседнику."]]},
+ {id:"d3", lv:"A2", t:"Как пройти к метро", s:"Спрашиваем дорогу", who:["Nikita","Woman"],
+  lines:[[0,"Excuse me, how do I get to the subway?","Извините, как пройти к метро?"],[1,"Go straight for two blocks, then turn right.","Идите прямо два квартала, потом поверните направо."],[0,"Two blocks and then right?","Два квартала, а потом направо?"],[1,"Exactly. It's right across from the bank.","Именно. Оно прямо напротив банка."],[0,"Is it far? Should I take a bus?","Это далеко? Мне сесть на автобус?"],[1,"No, it's like a five-minute walk.","Нет, минут пять пешком."],[0,"Great, thank you so much!","Отлично, большое спасибо!"],[1,"No problem. Have a good one!","Не за что. Хорошего дня!"]],
+  qs:[["Сколько кварталов нужно пройти прямо?","Два","Пять","Один"],["Где находится метро?","Напротив банка","Рядом с автобусной остановкой","За парком"],["Сколько идти пешком?","Около пяти минут","Полчаса","Две минуты"]],
+  notes:[["block","Квартал. В американских городах расстояние меряют кварталами: two blocks away."],["subway","Метро по-американски. В Британии говорят underground или tube."],["it's like…","Like здесь значит «примерно, где-то». Так говорят в живой речи."],["Have a good one!","Очень американское прощание: «Хорошего (дня)!»"]]},
+ {id:"d4", lv:"B1", t:"Срочный дедлайн", s:"Разговор с менеджером", who:["Sarah","Nikita"],
+  lines:[[0,"Hey, do you have a minute? It's about the website redesign.","Привет, есть минутка? Это насчёт редизайна сайта."],[1,"Sure, what's up?","Конечно, что случилось?"],[0,"The client wants to move the launch up to Friday.","Клиент хочет перенести запуск на пятницу, то есть раньше."],[1,"Friday? That's tight. The mobile version isn't ready yet.","В пятницу? Сроки сжатые. Мобильная версия ещё не готова."],[0,"I know. Could you focus on the homepage first?","Знаю. Можешь сначала заняться главной страницей?"],[1,"Okay, I'll get the homepage done by Thursday and send you the mockups tonight.","Хорошо, сделаю главную к четвергу, а макеты пришлю сегодня вечером."],[0,"You're a lifesaver. Thanks!","Ты меня спасаешь. Спасибо!"]],
+  qs:[["Чего хочет клиент?","Перенести запуск на пятницу","Отменить проект","Новый логотип"],["Что ещё не готово?","Мобильная версия","Главная страница","Логотип"],["Когда Никита пришлёт макеты?","Сегодня вечером","В пятницу","В четверг"]],
+  notes:[["move up","Перенести на более ранний срок. Move back, наоборот, значит отложить."],["That's tight","«Сроки сжатые». Вежливый способ сказать, что времени мало."],["get … done","Разговорное «сделать, закончить»: I'll get it done."],["You're a lifesaver","«Ты меня спас». Благодарность за помощь в трудный момент."]]},
+ {id:"d5", lv:"B1", t:"Запись к врачу", s:"Телефонный звонок", who:["Receptionist","Nikita"],
+  lines:[[0,"Dr. Miller's office, how can I help you?","Кабинет доктора Миллер, чем могу помочь?"],[1,"Hi, I'd like to make an appointment. I've had a sore throat for three days.","Здравствуйте, я хотел бы записаться. У меня уже три дня болит горло."],[0,"Do you have a fever?","У вас есть температура?"],[1,"A little, about a hundred degrees.","Небольшая, около ста градусов."],[0,"Okay. We have an opening tomorrow at ten thirty. Does that work for you?","Хорошо. Есть свободное время завтра в десять тридцать. Вам подходит?"],[1,"That works. Do I need to bring anything?","Подходит. Нужно что-нибудь взять с собой?"],[0,"Just your ID and insurance card.","Только удостоверение личности и страховую карту."]],
+  qs:[["Что беспокоит Никиту?","Болит горло","Болит спина","Болит зуб"],["Когда приём?","Завтра в 10:30","Сегодня в 3:00","В пятницу утром"],["Что нужно взять с собой?","Документ и страховую карту","Анализы","Ничего"]],
+  notes:[["a hundred degrees","В США температуру меряют по Фаренгейту. 100 °F — это примерно 37,8 °C."],["I've had … for three days","Present Perfect: горло болит уже три дня и до сих пор."],["opening","Здесь это «свободное окно» в расписании."],["Does that work for you?","«Вам удобно?» Очень частый американский вопрос, когда о чём-то договариваются."]]},
+ {id:"d6", lv:"B2", t:"Спор о фильме", s:"Делимся мнением", who:["Emma","Nikita"],
+  lines:[[0,"So, what did you think of the movie?","Ну, как тебе фильм?"],[1,"Honestly? The visuals were stunning, but the plot was kind of all over the place.","Честно? Картинка потрясающая, но сюжет какой-то сумбурный."],[0,"Really? I thought the ending tied everything together.","Правда? Мне показалось, концовка всё связала."],[1,"Maybe, but it took way too long to get there.","Может быть, но до неё слишком долго добираться."],[0,"Fair enough. It could've been thirty minutes shorter.","Справедливо. Его можно было сделать на полчаса короче."],[1,"Exactly. Still, I'd watch it again just for the cinematography.","Именно. И всё же я бы пересмотрел его ради операторской работы."]],
+  qs:[["Что понравилось Никите?","Визуальная часть","Сюжет","Длительность"],["Что Эмма думает о концовке?","Она всё связала","Она скучная","Её как будто не было"],["В чём они согласились?","Фильм мог быть короче","Фильм ужасный","Лучше читать книгу"]],
+  notes:[["all over the place","«Сумбурный, без структуры». Так говорят о сюжете, тексте и даже о человеке."],["way too long","Way усиливает: «уж слишком долго»."],["Fair enough","«Справедливо, принимаю». Признаём аргумент собеседника."],["could've been","Could have been: «мог бы быть». В речи звучит как «кудэв бин»."]]}
+],
+kk: [
+ {id:"d1", lv:"A1", t:"Танысу", s:"Знакомимся по-казахски", who:["Айгерім","Никита"],
+  lines:[[0,"Сәлем! Сенің атың кім?","Привет! Как тебя зовут?"],[1,"Сәлем! Менің атым Никита. Ал сенің атың кім?","Привет! Меня зовут Никита. А тебя?"],[0,"Менің атым Айгерім. Сен қайдансың?","Меня зовут Айгерим. Ты откуда?"],[1,"Мен Самарадан келдім. Ал сен?","Я приехал из Самары. А ты?"],[0,"Мен Алматыданмын. Танысқаныма қуаныштымын!","Я из Алматы. Рада познакомиться!"],[1,"Мен де қуаныштымын!","Я тоже рад!"]],
+  qs:[["Как зовут девушку?","Айгерім","Әсел","Мадина"],["Откуда Никита?","Из Самары","Из Алматы","Из Астаны"],["Откуда Айгерім?","Из Алматы","Из Самары","Из Шымкента"]],
+  notes:[["Сенің атың кім?","«Как тебя зовут?» Дословно «Твоё имя кто?». Вежливо: Сіздің атыңыз кім?"],["Ал сен?","«А ты?» Ал здесь значит «а», чтобы вернуть вопрос."],["Самарадан, Алматыдан","Исходный падеж -дан/-ден: «из Самары, из Алматы»."],["Мен де","«Я тоже». Частица да/де значит «тоже, и»."]]},
+ {id:"d2", lv:"A1", t:"На базаре", s:"Покупаем яблоки", who:["Сатушы","Никита"],
+  lines:[[0,"Келіңіз, келіңіз! Не аласыз?","Подходите, подходите! Что возьмёте?"],[1,"Алма қанша тұрады?","Сколько стоят яблоки?"],[0,"Бір килосы бес жүз теңге.","Килограмм — пятьсот тенге."],[1,"Екі кило беріңізші.","Дайте, пожалуйста, два килограмма."],[0,"Міне, мың теңге болады. Тағы не керек?","Вот, с вас тысяча тенге. Что-нибудь ещё?"],[1,"Басқа ештеңе керек емес. Рахмет!","Больше ничего не нужно. Спасибо!"],[0,"Сау болыңыз! Тағы келіңіз!","До свидания! Приходите ещё!"]],
+  qs:[["Что покупает Никита?","Яблоки","Хлеб","Мясо"],["Сколько стоит килограмм?","500 тенге","1000 тенге","200 тенге"],["Сколько он заплатил?","1000 тенге","500 тенге","1500 тенге"]],
+  notes:[["Қанша тұрады?","«Сколько стоит?» Самый нужный вопрос на базаре."],["беріңізші","Беріңіз (дайте) + -шы/-ші смягчает просьбу: «дайте, пожалуйста»."],["Тағы не керек?","«Что ещё нужно?» Тағы — ещё, керек — нужно."],["Тағы келіңіз!","«Приходите ещё!» Так продавцы прощаются с покупателями."]]},
+ {id:"d3", lv:"A2", t:"Как пройти к метро", s:"Спрашиваем дорогу", who:["Никита","Әйел"],
+  lines:[[0,"Кешіріңіз, метроға қалай баруға болады?","Извините, как добраться до метро?"],[1,"Тура жүріңіз, сосын солға бұрылыңыз.","Идите прямо, потом поверните налево."],[0,"Алыс па?","Далеко?"],[1,"Жоқ, жақын. Жаяу бес минут.","Нет, близко. Пять минут пешком."],[0,"Метро банктің қасында ма?","Метро рядом с банком?"],[1,"Иә, дәл банктің қарсысында.","Да, прямо напротив банка."],[0,"Көп рахмет!","Большое спасибо!"],[1,"Оқасы жоқ. Жолыңыз болсын!","Не за что. Счастливого пути!"]],
+  qs:[["Куда нужно повернуть?","Налево","Направо","Назад"],["Сколько идти?","Пять минут пешком","Полчаса","Нужно ехать на автобусе"],["Где метро?","Напротив банка","Рядом с базаром","За парком"]],
+  notes:[["қалай баруға болады?","«Как можно добраться?» Универсальный вопрос о дороге."],["солға / оңға","«налево / направо». Это сол (левый) и оң (правый) в направительном падеже."],["Оқасы жоқ","«Ничего страшного, не за что». Ответ на благодарность или извинение."],["Жолыңыз болсын!","Пожелание удачной дороги, очень частое в Казахстане."]]},
+ {id:"d4", lv:"B1", t:"В гостях", s:"Чай и баурсаки", who:["Апа","Никита"],
+  lines:[[0,"Төрге шығыңыз! Шай ішесіз бе?","Проходите на почётное место! Будете чай?"],[1,"Рахмет, апа. Иә, ішемін.","Спасибо, апа. Да, буду."],[0,"Сүт қосайын ба?","Добавить молока?"],[1,"Иә, сәл ғана қосыңызшы.","Да, добавьте совсем немного."],[0,"Бауырсақ алыңыз, жаңа ғана пісірдім.","Берите баурсаки, я только что их испекла."],[1,"Өте дәмді екен! Қолыңызға береке!","Очень вкусно! Благодати вашим рукам!"],[0,"Ас болсын, балам!","На здоровье, сынок!"]],
+  qs:[["Что предлагает апа?","Чай","Кофе","Сок"],["Что Никита просит добавить в чай?","Немного молока","Сахар","Лимон"],["Что апа только что испекла?","Баурсаки","Хлеб","Торт"]],
+  notes:[["Төрге шығыңыз","Төр — почётное место в доме, дальше всего от двери. Гостя всегда приглашают туда."],["қосайын ба?","Форма -айын/-ейін ба: «мне сделать…?» Так вежливо предлагают."],["Қолыңызға береке!","Традиционная благодарность хозяйке за еду: «Благодати вашим рукам!»"],["Ас болсын!","«Приятного аппетита» или «на здоровье» в ответ на благодарность."]]},
+ {id:"d5", lv:"B1", t:"Работа мечты", s:"Разговор о будущем", who:["Дана","Никита"],
+  lines:[[0,"Сәлем, Никита! Қазір не істеп жүрсің?","Привет, Никита! Чем сейчас занимаешься?"],[1,"Университетте оқимын, сонымен қатар веб-дизайн үйреніп жүрмін.","Учусь в университете, а ещё изучаю веб-дизайн."],[0,"Керемет! Портфолио жасадың ба?","Здорово! Портфолио сделал?"],[1,"Әлі жоқ, бірақ үш жоба дайын.","Ещё нет, но три проекта готовы."],[0,"Біздің компанияға дизайнер керек. Түйіндемеңді жібер.","Нашей компании нужен дизайнер. Пришли резюме."],[1,"Шын ба? Бүгін кешке жіберемін!","Правда? Сегодня вечером отправлю!"]],
+  qs:[["Что Никита изучает помимо университета?","Веб-дизайн","Музыку","Программирование"],["Сколько проектов уже готово?","Три","Пять","Ни одного"],["Что просит прислать Дана?","Резюме","Фотографию","Билет"]],
+  notes:[["не істеп жүрсің?","Конструкция с жүр — действие, которое длится в последнее время: «чем сейчас занимаешься по жизни»."],["сонымен қатар","«кроме того, вместе с тем»."],["түйіндеме","«резюме». Түйіндемеңді — твоё резюме (винительный падеж)."],["Шын ба?","«Правда?» Удивление, как английское Really?"]]},
+ {id:"d6", lv:"B2", t:"Спор о фильме", s:"Делимся мнением", who:["Әсел","Никита"],
+  lines:[[0,"Кеше көрген фильм саған ұнады ма?","Тебе понравился фильм, который мы вчера смотрели?"],[1,"Шынымды айтсам, суреті керемет, бірақ сюжеті шатасып кетті.","Если честно, картинка потрясающая, но сюжет запутался."],[0,"Маған керісінше, соңы бәрін түсіндіріп берді.","А мне наоборот, концовка всё объяснила."],[1,"Мүмкін, бірақ фильм тым ұзақ болды.","Возможно, но фильм был слишком длинным."],[0,"Келісемін, жарты сағатқа қысқа болса жақсы еді.","Согласна, было бы хорошо, будь он на полчаса короче."],[1,"Дегенмен операторлық жұмысы үшін тағы көрер едім.","И всё же ради операторской работы я бы посмотрел его ещё раз."]],
+  qs:[["Что понравилось Никите?","Картинка, визуальная часть","Сюжет","Длительность"],["Что Әсел думает о концовке?","Она всё объяснила","Она скучная","Её как будто не было"],["В чём они согласились?","Фильм мог быть короче","Фильм ужасный","Лучше читать книгу"]],
+  notes:[["кеше көрген фильм","Причастие -ған/-ген вместо «который»: фильм, который смотрели вчера."],["Шынымды айтсам","«Если честно сказать». Условная форма -са: айтсам — если скажу."],["керісінше","«наоборот»."],["…болса жақсы еді","«было бы хорошо, если бы…». Вежливое сожаление."],["көрер едім","«посмотрел бы». Сослагательное наклонение -ар/-ер едім."]]}
+]};
+
+/* ===================== QUEST GAME: CITY MAP ===================== */
+const QMAP = ["HHgSSgCCgT","HHgSSgCCgT","==========","Tgg~~ggggT","RRg~~gLLgT","RRggggLLgg","==========","TgTggTggTg"];
+const QW = 10, QH = 8, TS = 32;
+const QPLACE = {
+ home:{b:[0,0], n:[1,2], roof:"#c0392b", wall:"#f3d9a4", c:"#e26aa0"},
+ shop:{b:[3,0], n:[4,2], roof:"#2f8f5b", wall:"#fff3dc", c:"#5aaee0"},
+ cafe:{b:[6,0], n:[7,2], roof:"#8b5a3c", wall:"#ffe9d6", c:"#f2b632"},
+ station:{b:[0,4], n:[1,6], roof:"#2f5d8a", wall:"#e6edf2", c:"#7c5cbf"},
+ lib:{b:[6,4], n:[7,6], roof:"#7c5cbf", wall:"#efe6ff", c:"#2f8f5b"},
+ park:{n:[8,4], c:"#e0822e"}
+};
+/* place: [sign, NPC, idle line|перевод] */
+const PLACES = {
+en: {home:["Home","Mom","Hi sweetie! Don't forget what you have to do.|Привет, солнышко! Не забудь, что тебе нужно сделать."],
+     shop:["Store","Cashier","Hi! Let me know if you need anything.|Привет! Скажите, если что-то понадобится."],
+     cafe:["Café","Barista","Hey! We're a little busy right now.|Привет! У нас сейчас многовато народу."],
+     station:["Station","Ticket agent","Next train leaves in an hour.|Следующий поезд через час."],
+     lib:["Library","Librarian","Shh! This is a library.|Тсс! Это библиотека."],
+     park:["Park","Alex","Hey, what's up? Nice day, huh?|Привет, как дела? Хороший денёк, да?"]},
+kk: {home:["Үй","Анам","Балам, не істеу керегін ұмытпа.|Сынок, не забудь, что нужно сделать."],
+     shop:["Дүкен","Сатушы","Сәлеметсіз бе! Бірдеңе керек болса, айтыңыз.|Здравствуйте! Если что-то понадобится, скажите."],
+     cafe:["Кафе","Бариста","Сәлем! Қазір бізде адам көп.|Привет! У нас сейчас много людей."],
+     station:["Вокзал","Кассир","Келесі пойыз бір сағаттан кейін жүреді.|Следующий поезд отправляется через час."],
+     lib:["Кітапхана","Кітапханашы","Тыныш! Бұл кітапхана.|Тише! Это библиотека."],
+     park:["Саябақ","Арман","Сәлем! Бүгін ауа райы керемет, иә?|Привет! Сегодня отличная погода, да?"]}
+};
+/* steps: [place, NPC says|перевод, [correct reply, wrong, wrong], NPC reaction|перевод, next goal|перевод or ""] */
+const QUESTS = {
+en: [
+ {id:"q1", lv:"A1", t:"Хлеб и молоко", s:"Мама просит сходить в магазин", g0:"Talk to Mom at home|Поговори с мамой у дома", st:[
+  ["home","Hi honey! Can you buy some bread and milk?|Привет, милый! Можешь купить хлеба и молока?",["Sure, no problem!","I am a station.","Goodbye, bread."],"Thanks! The store is right next to our house.|Спасибо! Магазин прямо рядом с нашим домом.","Go to the store|Иди в магазин"],
+  ["shop","Hi! What can I get you?|Привет! Что вам дать?",["Bread and milk, please.","I'm fine, thank you.","Where is my mom?"],"Sure. That's five dollars.|Конечно. С вас пять долларов.",""],
+  ["shop","Cash or card?|Наличными или картой?",["Card, please.","Bread, please.","At five o'clock."],"Here you go. Have a nice day!|Держите. Хорошего дня!","Go back home|Вернись домой"],
+  ["home","Did you get everything?|Ты всё купил?",["Yes, here's the bread and milk.","No, I'm a student.","Yes, I'm very hungry."],"Great job! Thank you, sweetie!|Отлично! Спасибо, солнышко!",""]]},
+ {id:"q2", lv:"A1", t:"Кофе для друга", s:"Алекс в парке хочет кофе", g0:"Find Alex in the park|Найди Алекса в парке", st:[
+  ["park","Hey! I'm so tired. Can you get me a coffee?|Привет! Я так устал. Можешь взять мне кофе?",["Sure! I'll be right back.","I'm a coffee.","The park is green."],"Thanks, man! The café is across the street.|Спасибо, друг! Кафе через дорогу.","Go to the café|Иди в кафе"],
+  ["cafe","Hi there! What can I get for you?|Привет! Что вам предложить?",["Can I get two coffees, please?","I'm from Russia.","Two blocks, then right."],"Sure. What size?|Конечно. Какой размер?",""],
+  ["cafe","Small, medium or large?|Маленький, средний или большой?",["Medium, please.","Monday, please.","Very tired, thanks."],"Here you go. Two medium coffees!|Пожалуйста. Два средних кофе!","Bring the coffee to Alex|Отнеси кофе Алексу"],
+  ["park","Oh, you're the best! How much do I owe you?|О, ты лучший! Сколько я тебе должен?",["Don't worry about it. It's on me.","It's in the park.","I'm a barista."],"Thanks, man. You're a real friend!|Спасибо, друг. Ты настоящий друг!",""]]},
+ {id:"q3", lv:"A2", t:"Билет на поезд", s:"Поездка к бабушке", g0:"Talk to Mom at home|Поговори с мамой у дома", st:[
+  ["home","Grandma is waiting for us. Can you buy a train ticket to Boston?|Бабушка нас ждёт. Купишь билет на поезд до Бостона?",["Of course. I'll go to the station now.","Grandma is a ticket.","I don't like bread."],"Thanks! And find out when the train leaves.|Спасибо! И узнай, когда отправляется поезд.","Go to the station|Иди на вокзал"],
+  ["station","Hi, where are you headed?|Здравствуйте, куда направляетесь?",["One round-trip ticket to Boston, please.","I'm headed, thank you.","A large latte, please."],"Okay. The train leaves at three fifteen from track two.|Хорошо. Поезд отправляется в три пятнадцать со второго пути.",""],
+  ["station","Anything else I can help you with?|Чем-нибудь ещё помочь?",["No, that's all. Thanks!","Yes, I'm a train.","At the library."],"Have a safe trip!|Счастливого пути!","Go home and tell Mom about the train|Вернись домой и расскажи маме о поезде"],
+  ["home","So, when does the train leave?|Ну, когда отправляется поезд?",["At three fifteen, from track two.","At five o'clock, from track nine.","Tomorrow morning."],"Perfect! Let's pack our bags.|Отлично! Давай собирать сумки.",""]]},
+ {id:"q4", lv:"B1", t:"Потерянная книга", s:"Помоги библиотеке вернуть книгу", g0:"Visit the library|Зайди в библиотеку", st:[
+  ["lib","Excuse me, could you help me? Alex borrowed a book last month and hasn't returned it.|Простите, не поможете? Алекс взял книгу в прошлом месяце и до сих пор не вернул.",["Sure, I'll find him and ask about it.","No, I hate reading books.","I'm the library."],"Thank you! He usually hangs out in the park.|Спасибо! Он обычно проводит время в парке.","Find Alex in the park|Найди Алекса в парке"],
+  ["park","A book? Oh no, I totally forgot about it!|Книга? Ой, я совсем про неё забыл!",["Do you know where it is now?","The book is sleeping in the park.","Are you a librarian?"],"I think I left it at the café yesterday.|Кажется, я вчера оставил её в кафе.","Ask about the book at the café|Спроси про книгу в кафе"],
+  ["cafe","Yeah, someone left a book here yesterday.|Да, кто-то вчера оставил здесь книгу.",["It's my friend's book. Can I take it?","I'd like two books to go.","The book is like a coffee."],"Of course, here you go!|Конечно, держите!","Return the book to the library|Верни книгу в библиотеку"],
+  ["lib","Oh, you found the book?|О, вы нашли книгу?",["Yes, it was at the café.","No, I'm the café.","Yes, the book flew away."],"Thank you so much! You saved the day.|Огромное спасибо! Вы нас выручили.",""]]}
+],
+kk: [
+ {id:"q1", lv:"A1", t:"Нан мен сүт", s:"Мама просит сходить в магазин", g0:"Үйдің жанында анаңмен сөйлес|Поговори с мамой у дома", st:[
+  ["home","Балам, дүкенге барып, нан мен сүт алып келші.|Сынок, сходи в магазин, купи хлеба и молока.",["Жарайды, апа!","Мен вокзалмын.","Сау болыңыз, нан."],"Рахмет! Дүкен біздің үйдің қасында.|Спасибо! Магазин рядом с нашим домом.","Дүкенге бар|Иди в магазин"],
+  ["shop","Сәлеметсіз бе! Сізге не керек?|Здравствуйте! Что вам нужно?",["Нан мен сүт беріңізші.","Мен жақсымын, рахмет.","Анам қайда?"],"Міне. Барлығы бес жүз теңге.|Вот. Всего пятьсот тенге.",""],
+  ["shop","Қолма-қол ма, әлде картамен бе?|Наличными или картой?",["Картамен төлеймін.","Нан беріңізші.","Сағат бесте."],"Рахмет! Сау болыңыз!|Спасибо! До свидания!","Үйге қайт|Вернись домой"],
+  ["home","Бәрін алдың ба?|Ты всё купил?",["Иә, міне нан мен сүт.","Жоқ, мен студентпін.","Иә, мен өте ашпын."],"Рахмет, балам! Жарайсың!|Спасибо, сынок! Молодец!",""]]},
+ {id:"q2", lv:"A1", t:"Кофе для друга", s:"Арман в парке хочет кофе", g0:"Арманды саябақтан тап|Найди Армана в парке", st:[
+  ["park","Сәлем! Қатты шаршадым. Маған кофе әкеліп бересің бе?|Привет! Я очень устал. Принесёшь мне кофе?",["Әрине, қазір әкелемін!","Мен кофемін.","Саябақ жасыл."],"Рахмет, досым! Кафе жолдың арғы жағында.|Спасибо, друг! Кафе на той стороне дороги.","Кафеге бар|Иди в кафе"],
+  ["cafe","Қош келдіңіз! Не ішесіз?|Добро пожаловать! Что будете пить?",["Екі кофе беріңізші.","Мен Ресейденмін.","Тура жүріп, оңға бұрылыңыз."],"Жарайды. Үлкен бе, кішкентай ма?|Хорошо. Большой или маленький?",""],
+  ["cafe","Қандай кофе? Үлкен бе, кішкентай ма?|Какой кофе? Большой или маленький?",["Үлкен болсын.","Дүйсенбі болсын.","Мен қатты шаршадым."],"Міне, екі үлкен кофе!|Вот, два больших кофе!","Кофені Арманға апар|Отнеси кофе Арману"],
+  ["park","Ой, рахмет! Қанша тұрады?|Ой, спасибо! Сколько стоит?",["Ештеңе емес, бұл менен сыйлық.","Ол саябақта тұрады.","Мен баристамын."],"Сен нағыз доссың!|Ты настоящий друг!",""]]},
+ {id:"q3", lv:"A2", t:"Билет на поезд", s:"Поездка к бабушке", g0:"Үйдің жанында анаңмен сөйлес|Поговори с мамой у дома", st:[
+  ["home","Әжең бізді күтіп отыр. Алматыға пойыз билетін алып келесің бе?|Бабушка нас ждёт. Купишь билет на поезд до Алматы?",["Әрине, қазір вокзалға барамын.","Әжем билет.","Мен нанды жақсы көрмеймін."],"Рахмет! Пойыз қашан жүретінін де біліп кел.|Спасибо! И узнай, когда отправляется поезд.","Вокзалға бар|Иди на вокзал"],
+  ["station","Сәлеметсіз бе! Қайда барасыз?|Здравствуйте! Куда едете?",["Алматыға бір билет беріңізші.","Мен Алматымын.","Үлкен кофе беріңізші."],"Жарайды. Пойыз сағат үште екінші жолдан жүреді.|Хорошо. Поезд отправляется в три часа со второго пути.",""],
+  ["station","Тағы бірдеңе керек пе?|Ещё что-нибудь нужно?",["Жоқ, рахмет. Сау болыңыз!","Иә, мен пойызбын.","Кітапханада."],"Жолыңыз болсын!|Счастливого пути!","Үйге қайтып, анаңа пойыз туралы айт|Вернись домой и расскажи маме о поезде"],
+  ["home","Ал, пойыз қашан жүреді?|Ну, когда отправляется поезд?",["Сағат үште, екінші жолдан.","Сағат бесте, тоғызыншы жолдан.","Ертең таңертең."],"Керемет! Сөмкелерді жинайық.|Отлично! Давай собирать сумки.",""]]},
+ {id:"q4", lv:"B1", t:"Потерянная книга", s:"Помоги библиотеке вернуть книгу", g0:"Кітапханаға бар|Зайди в библиотеку", st:[
+  ["lib","Кешіріңіз, көмектесе аласыз ба? Арман өткен айда кітап алып, әлі қайтарған жоқ.|Простите, не поможете? Арман в прошлом месяце взял книгу и до сих пор не вернул.",["Әрине, оны тауып, сұрап көремін.","Жоқ, мен кітап оқуды жек көремін.","Мен кітапханамын."],"Рахмет! Ол әдетте саябақта жүреді.|Спасибо! Он обычно бывает в парке.","Арманды саябақтан тап|Найди Армана в парке"],
+  ["park","Кітап па? Ой, мүлдем ұмытып кетіппін!|Книга? Ой, я совсем про неё забыл!",["Ол қазір қайда екенін білесің бе?","Кітап саябақта ұйықтап жатыр.","Сен кітапханашысың ба?"],"Кеше кафеде қалдырып кеткен сияқтымын.|Кажется, я вчера оставил её в кафе.","Кафеден кітапты сұра|Спроси про книгу в кафе"],
+  ["cafe","Иә, кеше біреу осы жерде кітап қалдырды.|Да, вчера кто-то оставил здесь книгу.",["Бұл досымның кітабы. Алуға бола ма?","Екі кітап беріңізші, өзіммен бірге.","Кітап кофе сияқты."],"Әрине, мінеки!|Конечно, вот!","Кітапты кітапханаға апар|Отнеси книгу в библиотеку"],
+  ["lib","О, кітапты таптыңыз ба?|О, вы нашли книгу?",["Иә, ол кафеде екен.","Жоқ, мен кафемін.","Иә, кітап ұшып кетті."],"Көп рахмет! Сіз бізге үлкен көмек көрсеттіңіз.|Большое спасибо! Вы нам очень помогли.",""]]}
+]};
+
 /* ===================== STATE ===================== */
 const LS_KEY = "ekitil.v2";
 const DAY = 86400000;
 const todayKey = (d=new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 function freshState(){ return {v:1, updatedAt:0, lang:"en", goal:30, sound:true, totalXp:0, maxStreak:0, hist:{}, streak:{count:0,last:""}, langs:{en:{done:{},cards:{},pron:{},best:0}, kk:{done:{},cards:{},pron:{},best:0}}}; }
-function fixState(){ for(const l of ["en","kk"]){ const x = S.langs[l] = Object.assign({done:{},cards:{},pron:{},best:0,custom:[],gen:[],hist:{},time:{},hours:Array(24).fill(0),streak:{count:0,last:""},maxStreak:0,xp:0}, S.langs[l]||{}); if(!Array.isArray(x.hours)||x.hours.length!==24) x.hours=Array(24).fill(0); } if(S.lang!=="en"&&S.lang!=="kk") S.lang="en"; S.chatCount ||= 0; }
+function fixState(){ for(const l of ["en","kk"]){ const x = S.langs[l] = Object.assign({done:{},cards:{},pron:{},best:0,custom:[],gen:[],hard:{},hist:{},time:{},hours:Array(24).fill(0),streak:{count:0,last:""},maxStreak:0,xp:0}, S.langs[l]||{}); if(!Array.isArray(x.hours)||x.hours.length!==24) x.hours=Array(24).fill(0); } if(S.lang!=="en"&&S.lang!=="kk") S.lang="en"; S.chatCount ||= 0; }
 let S = freshState();
 try{ const raw = localStorage.getItem(LS_KEY) || localStorage.getItem("ekitil.en.v1") || localStorage.getItem("ekitil.v1"); if(raw){ S = Object.assign(freshState(), JSON.parse(raw)); } }catch(e){}
 fixState();
@@ -949,14 +1309,15 @@ const IN_CLAUDE = !!window.claude?.use;
 (IN_CLAUDE ? claude.use("dictation") : Promise.resolve(null)).then(d=>{
   d = d || (IN_CLAUDE ? null : webSpeechDict());
   if(!d) return; dict = d;
-  d.onPartial(({text})=>{ if(PS){ PS.partial=text; paintHeard(); } else if(CH && CH.listening){ const el=$("#chat-in"); if(el) el.placeholder = text || "…"; } });
-  d.onFinal(({text})=>{ if(!PS && CH && CH.listening){ const el=$("#chat-in"); if(el){ el.value = (el.value + text).replace(/^\s+/,""); } return; }
-    if(PS){ PS.heard += text; PS.partial=""; paintHeard(); clearTimeout(PS.t); PS.t=setTimeout(()=>{ if(PS && PS.listening) dict.stop().then(evalPron).catch(()=>{}); }, 1400); } });
+  d.onPartial(({text})=>{ const M=micTarget(); if(M){ M.partial=text; paintHeard(); } else if(CH && CH.listening){ const el=$("#chat-in"); if(el) el.placeholder = text || "…"; } });
+  d.onFinal(({text})=>{ const M=micTarget(); if(!M && CH && CH.listening){ const el=$("#chat-in"); if(el){ el.value = (el.value + text).replace(/^\s+/,""); } return; }
+    if(M){ M.heard += text; M.partial=""; paintHeard(); clearTimeout(M.t); M.t=setTimeout(()=>{ if(micTarget()===M && M.listening) dict.stop().then(micDone).catch(()=>{}); }, 1400); } });
   d.onState(({state, reason})=>{
-    if(!PS){ if(CH){ CH.listening = state!=="idle"; const m=$('[data-act="chatmic"]'); if(m) m.classList.toggle("on", CH.listening); if(state==="idle"){ const el=$("#chat-in"); if(el) el.placeholder = S.lang==="kk"?"Қазақша жазыңыз…":"Type in English…"; } } return; }
-    const was = PS.listening; PS.listening = state!=="idle";
-    if(state==="idle" && (reason==="not_granted"||reason==="unavailable")){ dictNo[PS.lang]=true; }
-    if(was!==PS.listening) renderOverlay();
+    const M = micTarget();
+    if(!M){ if(CH){ CH.listening = state!=="idle"; const m=$('[data-act="chatmic"]'); if(m) m.classList.toggle("on", CH.listening); if(state==="idle"){ const el=$("#chat-in"); if(el) el.placeholder = S.lang==="kk"?"Қазақша жазыңыз…":"Type in English…"; } } return; }
+    const was = M.listening; M.listening = state!=="idle";
+    if(state==="idle" && (reason==="not_granted"||reason==="unavailable")){ dictNo[M.lang]=true; }
+    if(was!==M.listening) renderOverlay();
   });
   if(ui.tab==="pron") render();
 }).catch(()=>{});
@@ -974,7 +1335,7 @@ const $ = (s,el=document)=>el.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]];} return a; };
 const pair = s => { const [t,r]=s.split("|"); return {t,r}; };
-const words = topic => topic.w.map((s,i)=>({...pair(s), key:topic.id+":"+i, topic:topic.id}));
+const words = topic => topic.ws || topic.w.map((s,i)=>({...pair(s), key:topic.id+":"+i, topic:topic.id}));
 const norm = s => s.toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?;:—–\-"«»()]/g," ").replace(/\s+/g," ").trim();
 const KK_LOOSE = {"ә":"а","ғ":"г","қ":"к","ң":"н","ө":"о","ұ":"у","ү":"у","һ":"х","і":"и"};
 const loose = s => norm(s).replace(/[әғқңөұүһі]/g, c=>KK_LOOSE[c]);
@@ -1026,9 +1387,28 @@ function ringSvg(frac){
   return `<svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="9"/><circle cx="48" cy="48" r="${r}" fill="none" stroke="${f>=1?"var(--ok)":"var(--accent)"}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c*f} ${c}"/></svg>`;
 }
 
+const ICON_PIC = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>`;
+const ICON_MAP = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>`;
+function topicCard(t, nt){
+  const best = L().done[t.id], hd = L().hard[t.id], isNext = nt && nt.id===t.id;
+  return `<button class="topic" data-act="start" data-id="${t.id}">
+    ${t.gen?`<span class="flag" style="left:auto;right:${best!=null?"58px":"12px"};background:var(--gold);color:#1b1300">ИИ</span>`:""}
+    ${best!=null?`<span class="flag done">${best}%</span>`: isNext?`<span class="flag next">Далее</span>`:""}
+    <span class="t">${esc(t.t)}</span><span class="s">${esc(t.s)}</span>
+    <span class="s">${t.w.length} ${t.w.length>4?"слов":"слова"} · ${t.x.length} фразы${hd!=null?` · <b class="hard-ok">сложный ✓</b>`:""}</span>
+    <span class="meter"><i style="width:${best||0}%"></i></span></button>`;
+}
+function extraCard(act, id, key, kicker, t, s, cls=""){
+  const best = L().done[key], hd = L().hard[key];
+  return `<button class="topic ${cls}" data-act="${act}" data-id="${id}">${best!=null?`<span class="flag done">${best}%</span>`:""}
+    <span class="kick">${kicker}${hd!=null?` · <b class="hard-ok">сложный ✓</b>`:""}</span><span class="t">${esc(t)}</span><span class="s">${esc(s)}</span>
+    <span class="meter"><i style="width:${best||0}%"></i></span></button>`;
+}
 function viewLearn(){
   const xpToday = L().hist[todayKey()]||0, nt = nextTopic(), due = dueCards().length;
   const lvTitle = S.lang==="kk" ? "Казахский" : "Американский английский";
+  const D = DIALOGS[S.lang], Q = QUESTS[S.lang];
+  const dn = D.filter(d=>("dl-"+d.id) in L().done).length, qn = Q.filter(q=>("qs-"+q.id) in L().done).length;
   let h = `<section class="today">
     <div class="ring">${ringSvg(xpToday/S.goal)}<div class="num"><div>${xpToday}<small>из ${S.goal} XP</small></div></div></div>
     <div><div class="label">${lvTitle} · цель на сегодня</div>
@@ -1040,20 +1420,24 @@ function viewLearn(){
     <section class="games">
       <button class="game" data-act="blitz"><span class="gi">${ICON_BOLT}</span><span><b>Молния</b><span>60 секунд, успей перевести как можно больше. Рекорд: ${L().best||0}</span></span></button>
       <button class="game" data-act="gopron"><span class="gi">${ICON_MIC}</span><span><b>Произношение</b><span>Говори в микрофон и получай звёзды. ${pronStars(S.lang)} из ${PRON[S.lang].length*3} ★</span></span></button>
+      <button class="game" data-act="pics"><span class="gi">${ICON_PIC}</span><span><b>Угадай по картинке</b><span>${picPool(S.lang).length} рисунков из всего курса, каждый раунд новые</span></span></button>
     </section>
+    <section class="level"><div class="level-head"><span class="badge">Игра</span><h2>Квесты в городе</h2><span class="muted">${qn} из ${Q.length}</span></div>
+      <p class="note" style="margin:0 0 10px">Гуляете по карте, получаете задание у жителей и выполняете его, отвечая ${langName()}.</p>
+      <div class="topics">${Q.map(q=>extraCard("quest", q.id, "qs-"+q.id, `${q.lv} · квест`, q.t, q.s, "quest")).join("")}</div></section>
+    <section class="level"><div class="level-head"><span class="badge">Аудио</span><h2>Диалоги на слух</h2><span class="muted">${dn} из ${D.length}</span></div>
+      <p class="note" style="margin:0 0 10px">Слушаете живой разговор, отвечаете на вопросы и разбираете каждую реплику.</p>
+      <div class="topics">${D.map(d=>extraCard("dlg", d.id, "dl-"+d.id, `${d.lv} · диалог`, d.t, d.s, "dlgc")).join("")}</div></section>
     ${genPanel()}`;
+  const groups = reviewGroups(S.lang);
   for(const lv of LEVELS){
     const ts = course().filter(t=>t.lv===lv.id); const done = ts.filter(t=>t.id in L().done).length;
     h += `<section class="level"><div class="level-head"><span class="badge">${lv.id}</span><h2>${lv.name}</h2><span class="muted">${done} из ${ts.length}</span></div><div class="topics">`;
-    for(const t of ts){
-      const best = L().done[t.id]; const isNext = nt && nt.id===t.id;
-      h += `<button class="topic" data-act="start" data-id="${t.id}">
-        ${t.gen?`<span class="flag" style="left:auto;right:${best!=null?"58px":"12px"};background:var(--gold);color:#1b1300">ИИ</span>`:""}
-        ${best!=null?`<span class="flag done">${best}%</span>`: isNext?`<span class="flag next">Далее</span>`:""}
-        <span class="t">${esc(t.t)}</span><span class="s">${esc(t.s)}</span>
-        <span class="s">${t.w.length} ${t.w.length>4?"слов":"слова"} · ${t.x.length} фразы</span>
-        <span class="meter"><i style="width:${best||0}%"></i></span></button>`;
+    for(const g of groups.filter(g=>g.lv===lv.id)){
+      h += g.ts.map(t=>topicCard(t, nt)).join("");
+      h += extraCard("startrev", g.id, g.id, "Повторение", `Повторение ${g.n}`, `Слова и грамматика: ${g.ts.map(t=>t.t).join(", ")}`, "rev");
     }
+    h += ts.filter(t=>t.gen).map(t=>topicCard(t, nt)).join("");
     h += `</div></section>`;
   }
   return `<div class="view">${h}</div>`;
@@ -1250,42 +1634,131 @@ function viewProgress(){
 
 /* ===================== LESSON ===================== */
 let LS = null; // lesson session
-function buildQuiz(topic){
+const isTyped = q => q.ty==="type" || q.ty==="dict" || !!q.typed;
+function buildQuiz(topic, hard){
   const lang = S.lang, ws = words(topic);
-  const pool = course().filter(t=>t.lv===topic.lv).flatMap(words);
+  const lvTopics = course().filter(t=>t.lv===topic.lv);
+  const pool = lvTopics.flatMap(words);
   const others = w => shuffle(pool.filter(p=>p.t!==w.t && p.r!==w.r));
-  const audio = canSpeak(lang);
+  const xpool = lvTopics.flatMap(t=>t.x.map(pair));
+  const audio = canSpeak(lang), pp = picPool(lang);
   const qs = [];
   const types = shuffle(["t2r","r2t","type","listen","t2r","r2t","type","listen"]);
+  let pics = 0;
   ws.forEach((w,i)=>{
     let ty = types[i % types.length];
     const long = w.t.split(" ").length>3 || w.t.length>22;
+    const pk = picKey(w.r);
+    if(pk && pics<2 && pp.length>=4){
+      const pw = {...w, pic:pk}, ds = shuffle(pp.filter(p=>p.pic!==pk && p.t!==w.t)).slice(0,3);
+      if(hard) qs.push({ty:"pic", w:pw, typed:true, ans:w.t});
+      else if(pics===0) qs.push({ty:"pic", w:pw, opts:shuffle([w.t, ...ds.map(d=>d.t)]), ans:w.t});
+      else { const popts = shuffle([pw, ...ds]); qs.push({ty:"pic2", w:pw, popts, opts:popts.map(p=>p.t), ans:w.t}); }
+      pics++; return;
+    }
     if(ty==="listen" && !audio) ty="t2r";
     if(ty==="type" && long) ty="r2t";
     if(ty==="listen" && long) ty="t2r";
+    if(hard){ if((ty==="t2r"||ty==="r2t") && !long) ty="type"; if(ty==="listen") ty="dict"; }
     const ds = others(w).slice(0,3);
     if(ty==="t2r") qs.push({ty, w, opts:shuffle([w.r, ...ds.map(d=>d.r)]), ans:w.r});
     else if(ty==="r2t" || ty==="listen") qs.push({ty, w, opts:shuffle([w.t, ...ds.map(d=>d.t)]), ans:w.t});
     else qs.push({ty, w, ans:w.t});
   });
-  const mid = Math.floor(qs.length/2);
-  qs.splice(mid, 0, {ty:"match", items:shuffle(ws).slice(0,5)});
-  topic.x.forEach((s,i)=>{ const p=pair(s);
-    if(audio && i===topic.x.length-1 && topic.x.length>1) qs.push({ty:"dict", w:{t:p.t, r:p.r}, ans:p.t});
-    else qs.push({ty:"build", w:{t:p.t, r:p.r}, toks:shuffle(p.t.split(" ").map((x,i)=>({x,i}))), ans:p.t}); });
+  const mws = ws.filter(w=>w.t.length<=26);
+  if(mws.length>=3) qs.splice(Math.floor(qs.length/2), 0, {ty:"match", items:shuffle(mws).slice(0,5)});
+  const gqs = topic.gq || shuffle(gqOf(lang, topic.lv)).slice(0,1);
+  gqs.forEach(g=>qs.push({ty:"gq", g, opts:shuffle([g.a, ...g.w]), ans:g.a}));
+  const xs = topic.x.map(pair);
+  if(xs.length){
+    const p0 = xs[0], ds = shuffle(xpool.filter(p=>p.r!==p0.r)).slice(0,3).map(p=>p.r);
+    if(ds.length>=2) qs.push({ty:"tr", w:p0, opts:shuffle([p0.r, ...ds]), ans:p0.r});
+  }
+  if(audio && xs.length>1){
+    const p1 = xs[1], ds = shuffle(xpool.filter(p=>p.r!==p1.r)).slice(0,3).map(p=>p.r);
+    if(ds.length>=2) qs.push({ty:"lr", w:p1, opts:shuffle([p1.r, ...ds]), ans:p1.r});
+  }
+  xs.forEach((p,i)=>{
+    if(audio && i===xs.length-1 && xs.length>1) qs.push({ty:"dict", w:p, ans:p.t});
+    else qs.push({ty:"build", w:p, toks:shuffle(p.t.split(" ").map((x,i)=>({x,i}))), ans:p.t});
+  });
+  const sayItem = xs.length ? xs.reduce((a,b)=>a.t.length<=b.t.length?a:b) : ws[0];
+  if(sayItem) qs.push({ty:"say", w:sayItem, ans:sayItem.t});
   return qs;
 }
-function startLesson(id){
-  const topic = course().find(t=>t.id===id);
-  LS = {topic, lang:S.lang, phase:"study", si:0, qs:buildQuiz(topic), qi:0, total:0, right:0, wrong:new Set(), state:null, sel:null, hearts:5, combo:0, bonus:0};
-  LS.total = LS.qs.length;
-  renderOverlay();
-  const w = words(topic)[0]; setTimeout(()=>{ if(LS) speak(w.t, LS.lang); }, 250);
+function buildPics(topic, hard){
+  const pp = picPool(S.lang);
+  return topic.ws.map((w,i)=>{
+    const ds = shuffle(pp.filter(p=>p.pic!==w.pic)).slice(0,3);
+    if(hard) return {ty:"pic", w, typed:true, ans:w.t};
+    if(i%2){ const popts = shuffle([w, ...ds]); return {ty:"pic2", w, popts, opts:popts.map(p=>p.t), ans:w.t}; }
+    return {ty:"pic", w, opts:shuffle([w.t, ...ds.map(d=>d.t)]), ans:w.t};
+  });
 }
+function buildDlg(topic, hard){
+  const d = topic.d, audio = canSpeak(S.lang);
+  const qs = d.qs.map(a=>({ty:"dq", text:a[0], opts:shuffle(a.slice(1)), ans:a[1]}));
+  const pick = shuffle(d.lines.filter(l=>{ const n=l[1].split(" ").length; return n>=3 && n<=9; }));
+  if(pick[0]){ const w={t:pick[0][1], r:pick[0][2]};
+    qs.push(hard && audio ? {ty:"dict", w, ans:w.t} : {ty:"build", w, toks:shuffle(w.t.split(" ").map((x,i)=>({x,i}))), ans:w.t}); }
+  if(pick[1] && audio){ const l=pick[1], ds=shuffle(d.lines.filter(x=>x!==l)).slice(0,3).map(x=>x[2]);
+    qs.push({ty:"lr", w:{t:l[1], r:l[2]}, opts:shuffle([l[2], ...ds]), ans:l[2]}); }
+  if(pick[2]) qs.push({ty:"say", w:{t:pick[2][1], r:pick[2][2]}, ans:pick[2][1]});
+  return qs;
+}
+/* o: {study, intro, first, build, hard, again} — hard undefined means "let the person choose" */
+function startLS(topic, o){
+  LS = {topic, lang:S.lang, si:0, qs:[], qi:0, total:0, right:0, wrong:new Set(), state:null, sel:null, combo:0, bonus:0,
+        hard:!!o.hard, mic:null, sayRes:null, build:o.build||buildQuiz, first:o.first||"quiz", again:o.again, playing:-1, showText:false};
+  LS.phase = o.hard ? LS.first : (o.intro && o.hard===undefined) ? "intro" : o.study ? "study" : LS.first;
+  if(LS.phase!=="intro"){ LS.qs = LS.build(topic, LS.hard); LS.total = LS.qs.length; }
+  renderOverlay(); afterPhase();
+}
+function startLesson(id, hard){
+  const topic = course().find(t=>t.id===id); if(!topic) return;
+  startLS(topic, {study:true, hard, again:h=>startLesson(id, h)});
+}
+function reviewGroups(lang){
+  const out = [];
+  for(const lv of LEVELS){ const ts = COURSE[lang].filter(t=>t.lv===lv.id);
+    for(let i=0;i<ts.length;i+=4) out.push({id:`rv-${lv.id}-${i/4+1}`, lv:lv.id, n:i/4+1, ts:ts.slice(i,i+4)}); }
+  return out;
+}
+function startReview(id, hard){
+  const g = reviewGroups(S.lang).find(g=>g.id===id); if(!g) return;
+  const ws = shuffle(g.ts.flatMap(words)).slice(0,10);
+  const topic = {id, lv:g.lv, review:true, t:`Повторение ${g.n} · ${g.lv}`, s:g.ts.map(t=>t.t).join(", "),
+    ws, w:ws.map(w=>w.t+"|"+w.r), x:shuffle(g.ts.flatMap(t=>t.x)).slice(0,3), gq:shuffle(gqOf(S.lang, g.lv)).slice(0,3)};
+  startLS(topic, {intro:true, hard, again:h=>startReview(id, h)});
+}
+function startPics(hard){
+  const ws = shuffle(picPool(S.lang)).slice(0,12);
+  startLS({id:"pics", game:true, lv:"", t:"Угадай по картинке", s:"12 случайных рисунков из всего курса", ws, x:[]},
+    {intro:true, build:buildPics, hard, again:h=>startPics(h)});
+}
+function startDlg(id, hard){
+  const d = DIALOGS[S.lang].find(x=>x.id===id); if(!d) return;
+  startLS({id:"dl-"+id, dlg:true, d, lv:d.lv, t:d.t, s:d.s, ws:[], x:[]}, {intro:true, first:"dlisten", build:buildDlg, hard, again:h=>startDlg(id, h)});
+}
+function afterPhase(){
+  if(!LS) return;
+  if(LS.phase==="study"){ const w=words(LS.topic)[LS.si]; setTimeout(()=>{ if(LS && LS.phase==="study") speak(w.t, LS.lang); }, 250); }
+  else if(LS.phase==="quiz") cueQ();
+  else if(LS.phase==="dlisten") setTimeout(()=>{ if(LS && LS.phase==="dlisten") playDialog(.9); }, 400);
+}
+function cueQ(){ const q=LS.qs[LS.qi]; if(q && (q.ty==="listen"||q.ty==="dict"||q.ty==="lr")) setTimeout(()=>{ if(LS && LS.qs[LS.qi]===q) speak(q.w.t, LS.lang); }, 220); }
+function goPhase(ph){
+  LS.phase = ph;
+  if(ph===LS.first && !LS.qs.length){ LS.qs = LS.build(LS.topic, LS.hard); LS.total = LS.qs.length; }
+  renderOverlay(); afterPhase();
+}
+function stopSpeech(){ try{ ttsCap?.stop?.()?.catch?.(()=>{}); }catch(_){} if("speechSynthesis" in window) speechSynthesis.cancel(); }
 function closeLesson(){
   if(BZ) clearInterval(BZ.timer);
-  if(PS && dict && PS.listening) dict.stop().catch(()=>{});
-  LS=null; PS=null; BZ=null; $("#overlay-root").innerHTML=""; document.body.style.overflow=""; render();
+  if(QS) clearInterval(QS.timer);
+  if(dict && ((PS && PS.listening) || (LS && LS.mic && LS.mic.listening))) dict.stop().catch(()=>{});
+  if(LS && LS.topic.dlg) stopSpeech();
+  LS=null; PS=null; BZ=null; QS=null; $("#overlay-root").innerHTML=""; document.body.style.overflow=""; render();
 }
 function shell(prog, body, foot, fb="", side=""){
   return `<div class="overlay" role="dialog" aria-modal="true">
@@ -1293,74 +1766,160 @@ function shell(prog, body, foot, fb="", side=""){
     <div class="ov-body"><div class="wrap" id="ov-body">${body}</div></div>
     <div class="ov-foot ${fb}"><div class="wrap">${foot}</div></div></div>`;
 }
+/* dialogue bubbles; full = after the quiz, with translations and word hints */
+function dlgHtml(full){
+  const d = LS.topic.d, show = full || LS.showText;
+  return `<div class="dlg">${d.lines.map((l,i)=>`<div class="dl ${l[0]?"b":"a"} ${LS.playing===i?"on":""}" data-li="${i}"><div class="who">${esc(d.who[l[0]])}</div>
+    <div class="bubble"><button class="speak sm" data-act="dline" data-i="${i}" aria-label="Прослушать реплику">${ICON_SPK}</button>
+    <div style="min-width:0">${show ? `<div class="lt">${gl(l[1], LS.lang, full)}</div>${full?`<div class="ru">${esc(l[2])}</div>`:""}`
+      : `<div class="hidden-line" aria-label="Текст скрыт">${l[1].split(" ").map(w=>`<i style="width:${Math.min(64,10+w.length*6)}px"></i>`).join("")}</div>`}</div></div></div>`).join("")}</div>`;
+}
+function playDialog(r){
+  if(!LS || !LS.topic.dlg) return;
+  const d = LS.topic.d, lang = LS.lang;
+  if(ttsCap){ ttsCap.speak(d.lines.map(l=>l[1]).join(" "), {language: lang==="kk"?"kk":"en-US", rate:Math.max(.7,r)}).catch(e=>{ if(e?.code==="not_granted"){ ttsCap=null; playDialog(r); } }); return; }
+  if(!("speechSynthesis" in window)) return;
+  const vs = speechSynthesis.getVoices().filter(v=> lang==="kk" ? /^kk/i.test(v.lang) : /^en[-_]US/i.test(v.lang));
+  if(!vs.length){ speakLocal(d.lines[0][1], lang); return; }
+  speechSynthesis.cancel();
+  const mark = i => { if(!LS) return; LS.playing = i; document.querySelectorAll(".dl").forEach(e=>e.classList.toggle("on", +e.dataset.li===i)); };
+  d.lines.forEach((l,i)=>{
+    const u = new SpeechSynthesisUtterance(l[1]), v = vs[l[0] % vs.length];
+    u.voice = v; u.lang = v.lang; u.rate = r; u.pitch = vs.length>1 ? 1 : (l[0] ? 1.25 : .85);
+    u.onstart = ()=>mark(i); if(i===d.lines.length-1) u.onend = ()=>mark(-1);
+    speechSynthesis.speak(u);
+  });
+}
 
 function renderOverlay(){
   const root = $("#overlay-root");
-  if(PS) return renderPron(); if(BZ) return renderBlitz();
+  if(PS) return renderPron(); if(BZ) return renderBlitz(); if(QS) return renderQuest();
   if(!LS){ root.innerHTML=""; return; }
   document.body.style.overflow="hidden";
-  const ws = words(LS.topic);
-  let prog, body, foot;
-  if(LS.phase==="study"){
-    const w = ws[LS.si];
+  const T = LS.topic;
+  let prog=0, body="", foot="", fbClass="";
+  if(LS.phase==="intro"){
+    const kind = T.dlg ? "Диалог на слух" : T.review ? "Повторение" : "Игра";
+    const how = T.dlg ? "Сначала послушайте разговор без текста, потом ответьте на вопросы, соберите фразу, скажите реплику вслух и разберите каждую строчку."
+      : T.review ? "Слова, фразы и грамматика из прошлых тем вперемешку. Ошибки вернутся в карточки на повторение."
+      : "Смотрите на рисунок и выбирайте подходящее слово или картинку.";
+    body = `<div class="intro"><div class="label">${kind}${T.lv?` · ${esc(T.lv)}`:""}</div><h2 class="q-title" style="font-size:26px">${esc(T.t)}</h2>
+      <p class="muted" style="margin:0">${esc(T.s)}</p><p style="margin:0">${how}</p>
+      <div class="ex"><b>Сложный режим</b><span>Без подсказок по нажатию на слово${T.dlg?", без текста во время прослушивания":""}, больше заданий с вводом. XP в полтора раза больше.</span></div></div>`;
+    foot = `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="lsgo" data-h="1">Сложный режим</button><button class="btn wide" data-act="lsgo" data-h="0">Начать</button></div>`;
+  } else if(LS.phase==="study"){
+    const ws = words(T), w = ws[LS.si], pk = picKey(w.r);
     prog = (LS.si+1)/ws.length*30;
     body = `<div class="label">Новые слова · ${LS.si+1} из ${ws.length}</div>
-      <div class="study-card"><button class="speak big" data-act="say" data-text="${esc(w.t)}" aria-label="Озвучить">${ICON_SPK}</button><div class="w">${esc(w.t)}</div><div class="r">${esc(w.r)}</div></div>
+      <div class="study-card">${pk?picSvg(pk):""}<button class="speak big" data-act="say" data-text="${esc(w.t)}" aria-label="Озвучить">${ICON_SPK}</button><div class="w">${w.t.includes(" ")?gl(w.t, LS.lang):esc(w.t)}</div><div class="r">${esc(w.r)}</div></div>
       <p class="note" style="text-align:center;margin:0">Послушайте, повторите вслух и запомните. Дальше будет проверка.</p>`;
     foot = `<div style="display:flex;gap:10px">${LS.si>0?`<button class="btn ghost" data-act="sprev">Назад</button>`:""}<button class="btn wide" data-act="snext">${LS.si<ws.length-1?"Дальше":"Начать упражнения"}</button></div>
-      <button class="btn ghost wide" data-act="skipstudy" style="box-shadow:none;background:transparent;padding:6px">Я знаю эти слова, сразу к упражнениям</button>`;
+      <div class="link-row"><button data-act="skipstudy">Я знаю эти слова</button><button data-act="hardnow">Сложный режим без подсказок</button></div>`;
+  } else if(LS.phase==="dlisten"){
+    prog = 10;
+    body = `<div class="label">Диалог · ${esc(T.lv)}${LS.hard?" · сложный режим":""}</div><h2 class="q-title">${esc(T.t)}</h2>
+      <p class="note" style="margin:0">${LS.hard?"Слушайте внимательно: текста не будет.":"Сначала попробуйте понять на слух, текст можно открыть кнопкой внизу."} Нажмите на динамик у реплики, чтобы послушать её отдельно.</p>${dlgHtml(false)}`;
+    foot = `<div class="link-row" style="justify-content:flex-start;gap:8px;flex-wrap:wrap"><button class="btn ghost" data-act="dplay">Слушать всё</button><button class="btn ghost" data-act="dslow">Медленно</button>${LS.hard?"":`<button class="btn ghost" data-act="dtext">${LS.showText?"Скрыть текст":"Показать текст"}</button>`}</div>
+      <button class="btn wide" data-act="dqgo">К вопросам</button>`;
   } else if(LS.phase==="quiz"){
     const q = LS.qs[LS.qi];
-    prog = 30 + LS.qi/LS.qs.length*70;
+    prog = T.dlg ? 20 + LS.qi/LS.qs.length*65 : 30 + LS.qi/LS.qs.length*70;
     body = renderQ(q);
     if(LS.state){
       const ok = LS.state.ok;
       const praise = ["Отлично!","Верно!","Так держать!","Супер!","Керемет!"][LS.qi%5];
-      foot = `<div class="fb-title">${ok? (LS.state.loose?"Почти верно, проверьте написание":praise) : "Неправильно"}${ok&&LS.combo>=3?`<span class="combo pop">Серия ×${LS.combo}</span>`:""}</div>
-        ${!ok || LS.state.loose ? `<div>Правильно: <b>${esc(q.ans || "")}</b>${q.w?` <span class="muted">— ${esc(q.ty==="t2r"?q.w.t:q.w.r)}</span>`:""}</div>`:""}
+      const extra = q.g ? q.g.r : q.w ? ((q.ty==="t2r"||q.ty==="tr"||q.ty==="lr") ? q.w.t : q.w.r) : "";
+      foot = `<div class="fb-title">${ok? (LS.state.loose?"Почти верно, проверьте написание":praise) : q.ty==="say" ? "Пока не очень похоже" : "Неправильно"}${ok&&LS.combo>=3?`<span class="combo pop">Серия ×${LS.combo}</span>`:""}</div>
+        ${!ok || LS.state.loose ? `<div>${q.ty==="say"?"Послушайте ещё раз:":"Правильно:"} <b>${esc(q.ans || "")}</b>${extra?` <span class="muted">— ${esc(extra)}</span>`:""}</div>`:""}
         <button class="btn wide" data-act="next" id="next-btn">Дальше <span style="opacity:.7;font-weight:600">· Enter</span></button>`;
+      fbClass = ok ? "ok" : "bad";
     } else if(q.ty==="match"){
       foot = `<button class="btn ghost wide" disabled>Соедините все пары</button>`;
+    } else if(q.ty==="say"){
+      foot = micOk(LS.lang) ? `<button class="btn ghost wide" data-act="sayskip">Не могу говорить сейчас, пропустить</button>`
+        : `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="sayskip">Пропустить</button><button class="btn wide" data-act="sayself">Я сказал вслух</button></div>`;
     } else {
       foot = `<button class="btn wide" data-act="check" id="check-btn" ${hasAnswer(q)?"":"disabled"}>Проверить <span style="opacity:.7;font-weight:600">· Enter</span></button>`;
     }
+  } else if(LS.phase==="dbreak"){
+    prog = 92;
+    body = `<div class="label">Разбор диалога</div><h2 class="q-title">${esc(T.t)}</h2>
+      <p class="note" style="margin:0">Нажимайте на слова, чтобы увидеть перевод, и на динамик, чтобы ещё раз послушать реплику.</p>${dlgHtml(true)}
+      <div class="notes"><h3 style="font-size:16px">Что важно запомнить</h3>${T.d.notes.map(n=>`<div class="ex"><b>${esc(n[0])}</b><span>${esc(n[1])}</span></div>`).join("")}</div>`;
+    foot = `<button class="btn wide" data-act="dfinish">Завершить урок</button>`;
   } else {
-    const pct = Math.round(LS.right/LS.total*100), pass = LS.pass;
+    const pct = Math.round(LS.right/Math.max(1,LS.total)*100), pass = LS.pass;
+    const toCards = !T.game && words(T).some(w=>w.key);
     prog = 100;
-    body = `<div class="result"><div class="label">${esc(LS.topic.t)}</div><div class="score">${pct}%</div>
-      <h2 class="q-title">${pass? (pct>=90?"Блестяще!":"Урок пройден") : "Почти! Попробуйте ещё раз"}</h2>
-      <p class="muted" style="margin:0;max-width:44ch">${LS.right} из ${LS.total} верно с первой попытки. +${LS.xp} XP${LS.bonus?` (из них ${LS.bonus} за серии)`:""}. ${pass?`Слова урока добавлены в повторение.`:`Чтобы урок засчитался и слова ушли в повторение, нужно 60%. Пройдите ещё раз, это бесплатно и без ограничений.`}</p></div>`;
-    foot = `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="restart">Пройти заново</button><button class="btn wide" data-act="close">К урокам</button></div>`;
+    body = `<div class="result"><div class="label">${esc(T.t)}${LS.hard?" · сложный режим":""}</div><div class="score">${pct}%</div>
+      <h2 class="q-title">${pass? (pct>=90?"Блестяще!":T.game?"Отличная игра":"Урок пройден") : "Почти! Попробуйте ещё раз"}</h2>
+      <p class="muted" style="margin:0;max-width:44ch">${LS.right} из ${LS.total} верно с первой попытки. +${LS.xp} XP${LS.bonus?` (из них ${LS.bonus} за серии)`:""}. ${pass ? (toCards?"Слова урока добавлены в повторение.":"") : `Чтобы урок засчитался, нужно 60%. Пройдите ещё раз, это бесплатно и без ограничений.`}</p></div>`;
+    foot = `<div class="res-actions"><button class="btn ghost" data-act="restart">${T.game?"Ещё раунд":"Пройти заново"}</button>${LS.hard?`<button class="btn ghost" data-act="restartnorm">Обычный режим</button>`:`<button class="btn ghost" data-act="hardgo">Сложный режим</button>`}<button class="btn wide" data-act="close">К урокам</button></div>`;
   }
-  const fbClass = LS.phase==="quiz" && LS.state ? (LS.state.ok?"ok":"bad") : "";
   root.innerHTML = shell(prog, body, foot, fbClass, LS.combo>=2?`<span class="combo" title="Серия верных ответов">×${LS.combo}</span>`:"");
   const tb = $("#typebox"); if(tb && !LS.state){ tb.focus(); }
   if(LS.state && !LS.state.ok) $("#ov-body")?.classList.add("shake");
+  paintHeard();
 }
 function hasAnswer(q){
-  if(q.ty==="type" || q.ty==="dict") return !!(LS.sel && LS.sel.trim());
+  if(isTyped(q)) return !!(LS.sel && LS.sel.trim());
   if(q.ty==="build") return LS.sel && LS.sel.length>0;
   return LS.sel!=null;
+}
+function typeBox(lang, st, ph){
+  return `<input class="typebox" id="typebox" autocomplete="off" autocapitalize="off" spellcheck="false" lang="${lang}" value="${esc(LS.sel||"")}" ${st?"disabled":""} placeholder="${ph}">
+    ${lang==="kk"&&!st?`<div class="kbd">${"әғқңөұүһі".split("").map(c=>`<button data-act="kchar" data-c="${c}">${c}</button>`).join("")}</div>`:""}`;
 }
 function renderQ(q){
   const lang = LS.lang, st = LS.state;
   const optList = (opts) => `<div class="options">${opts.map((o,i)=>{
     let cls = ""; if(st){ if(o===q.ans) cls="right"; else if(o===LS.sel) cls="wrong"; } else if(o===LS.sel) cls="sel";
     return `<button class="opt ${cls}" data-act="pick" data-v="${esc(o)}" ${st?"disabled":""}><span class="k">${i+1}</span><span>${esc(o)}</span></button>`; }).join("")}</div>`;
+  const spk = t => `<button class="speak" data-act="say" data-text="${esc(t)}" aria-label="Озвучить">${ICON_SPK}</button>`;
   if(q.ty==="t2r") return `<h2 class="q-title">Как это переводится?</h2>
-    <div class="prompt"><button class="speak" data-act="say" data-text="${esc(q.w.t)}" aria-label="Озвучить">${ICON_SPK}</button><div class="p">${esc(q.w.t)}</div></div>${optList(q.opts)}`;
+    <div class="prompt">${spk(q.w.t)}<div class="p">${q.w.t.includes(" ")?gl(q.w.t, lang):esc(q.w.t)}</div></div>${optList(q.opts)}`;
   if(q.ty==="r2t") return `<h2 class="q-title">Выберите перевод ${langName(lang)}</h2>
     <div class="prompt"><div class="p">${esc(q.w.r)}</div></div>${optList(q.opts)}`;
   if(q.ty==="listen") return `<h2 class="q-title">Что вы услышали?</h2>
     <div style="display:grid;place-items:center"><button class="speak big" data-act="say" data-text="${esc(q.w.t)}" aria-label="Прослушать ещё раз">${ICON_SPK}</button></div>${optList(q.opts)}`;
   if(q.ty==="dict") return `<h2 class="q-title">Диктант: напишите, что услышали</h2>
     <div class="goal-sel" style="justify-content:center"><button class="speak big" data-act="say" data-text="${esc(q.w.t)}" aria-label="Прослушать">${ICON_SPK}</button><button class="speak" style="align-self:end" data-act="sayslow" data-text="${esc(q.w.t)}" aria-label="Медленно" title="Медленно">½</button></div>
-    <input class="typebox" id="typebox" autocomplete="off" autocapitalize="off" spellcheck="false" lang="${lang}" value="${esc(LS.sel||"")}" ${st?"disabled":""} placeholder="${lang==="kk"?"Естігеніңізді жазыңыз...":"Type what you hear..."}">
-    ${lang==="kk"&&!st?`<div class="kbd">${"әғқңөұүһі".split("").map(c=>`<button data-act="kchar" data-c="${c}">${c}</button>`).join("")}</div>`:""}`;
+    ${typeBox(lang, st, lang==="kk"?"Естігеніңізді жазыңыз...":"Type what you hear...")}`;
   if(q.ty==="type") return `<h2 class="q-title">Напишите ${langName(lang)}</h2>
-    <div class="prompt"><div class="p">${esc(q.w.r)}</div></div>
-    <input class="typebox" id="typebox" autocomplete="off" autocapitalize="off" spellcheck="false" lang="${lang}" value="${esc(LS.sel||"")}" ${st?"disabled":""} placeholder="${lang==="kk"?"Жауап...":"Your answer..."}">
-    ${lang==="kk"&&!st?`<div class="kbd">${"әғқңөұүһі".split("").map(c=>`<button data-act="kchar" data-c="${c}">${c}</button>`).join("")}</div>`:""}`;
+    <div class="prompt"><div class="p">${esc(q.w.r)}</div></div>${typeBox(lang, st, lang==="kk"?"Жауап...":"Your answer...")}`;
+  if(q.ty==="pic") return `<h2 class="q-title">${q.typed?`Что на картинке? Напишите ${langName(lang)}`:"Что на картинке?"}</h2>
+    <div class="pic">${picSvg(q.w.pic)}</div>${q.typed ? typeBox(lang, st, lang==="kk"?"Жауап...":"Your answer...") : optList(q.opts)}${st?`<div class="note" style="text-align:center">${esc(q.w.t)} — ${esc(q.w.r)}</div>`:""}`;
+  if(q.ty==="pic2") return `<h2 class="q-title">Найдите картинку</h2>
+    <div class="prompt">${spk(q.w.t)}<div class="p">${esc(q.w.t)}</div></div>
+    <div class="pics">${q.popts.map((p,i)=>{ let cls=""; if(st){ if(p.t===q.ans) cls="right"; else if(p.t===LS.sel) cls="wrong"; } else if(p.t===LS.sel) cls="sel";
+      return `<button class="opt picopt ${cls}" data-act="pick" data-v="${esc(p.t)}" ${st?"disabled":""} aria-label="Вариант ${i+1}"><span class="k">${i+1}</span>${picSvg(p.pic)}${st?`<span class="cap">${esc(p.t)}</span>`:""}</button>`; }).join("")}</div>`;
+  if(q.ty==="tr") return `<h2 class="q-title">Переведите фразу</h2>
+    <div class="prompt">${spk(q.w.t)}<div class="p" style="font-size:22px">${gl(q.w.t, lang)}</div></div>
+    ${LS.hard?"":`<p class="note" style="margin:0">Нажмите на подчёркнутое слово, чтобы увидеть его перевод.</p>`}${optList(q.opts)}`;
+  if(q.ty==="lr") return `<h2 class="q-title">Послушайте и выберите перевод</h2>
+    <div class="goal-sel" style="justify-content:center"><button class="speak big" data-act="say" data-text="${esc(q.w.t)}" aria-label="Прослушать">${ICON_SPK}</button><button class="speak" style="align-self:end" data-act="sayslow" data-text="${esc(q.w.t)}" aria-label="Медленно" title="Медленно">½</button></div>
+    ${st?`<div class="prompt"><div class="p" style="font-size:18px">${gl(q.w.t, lang, true)}</div></div>`:""}${optList(q.opts)}`;
+  if(q.ty==="gq"){
+    const fill = st ? q.ans : (LS.sel || "___");
+    const parts = q.g.s.split("___");
+    return `<div class="label">Грамматика</div><h2 class="q-title">Вставьте пропущенное</h2>
+      <div class="prompt"><div class="p" style="font-size:21px">${esc(parts[0])}<span class="gap">${esc(fill)}</span>${esc(parts[1]||"")}</div></div>
+      ${LS.hard && !st ? "" : `<div class="note">${esc(q.g.r)}</div>`}${optList(q.opts)}`;
+  }
+  if(q.ty==="dq") return `<div class="label">Вопрос по диалогу</div><h2 class="q-title">${esc(q.text)}</h2>
+    <div><button class="btn ghost" style="padding:8px 14px" data-act="dplay">Прослушать диалог ещё раз</button></div>${optList(q.opts)}`;
+  if(q.ty==="say"){
+    LS.mic ||= {lang, heard:"", partial:"", listening:false};
+    const M = LS.mic, r = LS.sayRes;
+    let tail;
+    if(st && r) tail = `<div class="heard">${r.marks.map(m=>`<span class="${m.ok?"ok":"miss"}">${esc(m.w)}</span>`).join(" ")}</div><div class="note" style="text-align:center">Услышано: «${esc(r.said)}»</div>`;
+    else if(st) tail = "";
+    else if(micOk(lang)) tail = `<div style="display:grid;justify-items:center;gap:10px"><button class="mic ${M.listening?"on":""}" data-act="lmic" aria-label="${M.listening?"Закончить":"Говорить"}">${ICON_MIC}</button>
+      <div class="note">${M.listening?"Говорите… нажмите ещё раз, когда закончите":"Нажмите и произнесите фразу"}</div><div class="heard" id="heard"></div></div>`;
+    else tail = `<p class="note" style="text-align:center;margin:0">Микрофон здесь недоступен. Послушайте, произнесите фразу вслух 2–3 раза и отметьте, что сделали это.</p>`;
+    return `<div class="label">Произношение</div><h2 class="q-title">Скажите вслух</h2>
+      <div class="prompt">${spk(q.w.t)}<div style="min-width:0"><div class="p" style="font-size:22px">${gl(q.w.t, lang)}</div>${LS.hard?"":`<div class="note">${esc(q.w.r)}</div>`}</div></div>${tail}`;
+  }
   if(q.ty==="build"){
     const used = new Set(LS.sel||[]);
     return `<h2 class="q-title">Соберите предложение</h2>
@@ -1375,11 +1934,12 @@ function renderQ(q){
       <div class="col">${m.left.map(w=>`<button class="opt ${m.done.has(w.key)?"gone":""} ${m.selL===w.key?"sel":""}" data-act="ml" data-k="${w.key}" ${m.done.has(w.key)?"disabled":""}>${esc(w.t)}</button>`).join("")}</div>
       <div class="col">${m.right.map(w=>`<button class="opt ${m.done.has(w.key)?"gone":""} ${m.selR===w.key?"sel":""} ${m.flash===w.key?"wrong":""}" data-act="mr" data-k="${w.key}" ${m.done.has(w.key)?"disabled":""}>${esc(w.r)}</button>`).join("")}</div></div>`;
   }
+  return "";
 }
 function checkAnswer(){
   const q = LS.qs[LS.qi]; if(LS.state || !hasAnswer(q)) return;
   let ok=false, lz=false;
-  if(q.ty==="type" || q.ty==="dict"){
+  if(isTyped(q)){
     const a = norm(LS.sel), t = norm(q.ans);
     ok = a===t || a===t.replace(/^to /,"") || norm(q.ans.replace(/'/g,""))===a.replace(/'/g,"");
     if(!ok && LS.lang==="kk" && loose(LS.sel)===loose(q.ans)){ ok=true; lz=true; }
@@ -1389,7 +1949,8 @@ function checkAnswer(){
     ok = norm(built)===norm(q.ans);
   } else ok = LS.sel===q.ans;
   finishQ(ok, lz);
-  if(q.w && (q.ty!=="t2r" || ok) && q.ty!=="dict") speak(q.ty==="build"?q.ans:q.w.t, LS.lang);
+  if(q.ty==="gq") speak(q.g.s.replace("___", q.ans), LS.lang);
+  else if(q.w && q.ty!=="dict" && q.ty!=="lr" && (q.ty!=="t2r" || ok)) speak(q.ty==="build"?q.ans:q.w.t, LS.lang);
 }
 function finishQ(ok, lz=false){
   const q = LS.qs[LS.qi];
@@ -1399,30 +1960,206 @@ function finishQ(ok, lz=false){
   else { LS.combo=0; sfx("bad"); }
   if(!ok){
     if(q.w) LS.wrong.add(q.w.key||"");
-    if(!q.retry && q.ty!=="match"){ LS.qs.push({...q, retry:true, opts:q.opts?shuffle(q.opts):undefined, toks:q.toks?shuffle(q.toks):undefined}); }
+    if(!q.retry && q.ty!=="match"){
+      const c = {...q, retry:true}; if(q.opts) c.opts = shuffle(q.opts); if(q.toks) c.toks = shuffle(q.toks);
+      if(q.popts){ c.popts = shuffle(q.popts); c.opts = c.popts.map(p=>p.t); }
+      LS.qs.push(c);
+    }
   }
   renderOverlay();
 }
 function nextQ(){
+  if(LS.mic && LS.mic.listening && dict) dict.stop().catch(()=>{});
+  LS.mic=null; LS.sayRes=null;
   LS.qi++; LS.state=null; LS.sel=null;
-  if(LS.qi>=LS.qs.length) return finishLesson();
-  renderOverlay();
-  const q=LS.qs[LS.qi]; if(q.ty==="listen"||q.ty==="dict") setTimeout(()=>{ if(LS) speak(q.w.t, LS.lang); }, 200);
+  if(LS.qi>=LS.qs.length){
+    if(LS.topic.dlg){ LS.phase="dbreak"; renderOverlay(); return; }
+    return finishLesson();
+  }
+  renderOverlay(); cueQ();
 }
 function finishLesson(){
-  const pct = Math.round(LS.right/LS.total*100), st = S.langs[LS.lang];
+  const pct = Math.round(LS.right/Math.max(1,LS.total)*100), st = S.langs[LS.lang], T = LS.topic;
   LS.pass = pct>=60;
-  LS.xp = LS.pass ? 5 + LS.right*2 + LS.bonus + (pct===100?5:0) : LS.right;
+  let xp = LS.pass ? 5 + LS.right*2 + LS.bonus + (pct===100?5:0) : LS.right;
+  if(LS.hard) xp = Math.round(xp*1.5);
+  LS.xp = xp;
   if(LS.pass){ sfx("win"); setTimeout(confetti, 50); }
-  if(LS.pass){
-    st.done[LS.topic.id] = Math.max(st.done[LS.topic.id]||0, pct);
-    words(LS.topic).forEach(w=>{
+  if(LS.pass && !T.game){
+    st.done[T.id] = Math.max(st.done[T.id]||0, pct);
+    if(LS.hard) st.hard[T.id] = Math.max(st.hard[T.id]||0, pct);
+    words(T).forEach(w=>{ if(!w.key) return;
       if(!st.cards[w.key]) st.cards[w.key] = {e:2.5, i:1, r:1, d:Date.now()+DAY};
       if(LS.wrong.has(w.key)) st.cards[w.key] = {...st.cards[w.key], d:Date.now(), r:0, i:0};
     });
   }
   addXp(LS.xp);
+  stopSpeech();
   LS.phase="result"; renderOverlay();
+}
+/* speaking inside lessons */
+const micTarget = () => PS || (LS && LS.phase==="quiz" && LS.mic) || null;
+function micDone(){ if(PS) evalPron(); else sayEval(); }
+function lessonMic(){
+  const M = LS && LS.mic; if(!M || !dict) return;
+  if(M.listening){ clearTimeout(M.t); dict.stop().then(sayEval).catch(()=>{}); return; }
+  M.heard=""; M.partial=""; stopSpeech();
+  dict.start({language: LS.lang==="kk"?"kk":"en-US"}).catch(e=>{
+    if(e?.code==="unavailable" || e?.code==="not_granted"){ dictNo[LS.lang]=true; toast(LS.lang==="kk" ? "Распознавание казахской речи здесь недоступно. Включена самопроверка." : "Микрофон недоступен. Включена самопроверка."); }
+    else if(e?.code!=="stopped") toast("Не получилось включить микрофон, попробуйте ещё раз");
+    if(LS && LS.mic){ LS.mic.listening=false; renderOverlay(); }
+  });
+}
+function sayEval(){
+  if(!LS || LS.state || LS.phase!=="quiz") return;
+  const q = LS.qs[LS.qi], M = LS.mic; if(!M || q.ty!=="say") return;
+  const said = (M.heard+" "+M.partial).trim();
+  if(!said){ toast("Ничего не услышал. Нажмите на микрофон и говорите чуть громче."); renderOverlay(); return; }
+  const r = pronScore(q.w.t, said);
+  LS.sayRes = {marks:r.marks, said};
+  finishQ(r.score>=.6);
+}
+function skipSay(){
+  if(LS.mic && LS.mic.listening && dict) dict.stop().catch(()=>{});
+  if(!LS.qs[LS.qi].retry) LS.total--;
+  LS.qs.splice(LS.qi,1); LS.qi--; nextQ();
+}
+
+/* ===================== QUEST GAME ===================== */
+let QS = null;
+const qWalk = (x,y) => x>=0 && y>=0 && x<QW && y<QH && (QMAP[y][x]==="g" || QMAP[y][x]==="=");
+const qPlaceAt = (x,y) => Object.keys(QPLACE).find(k=>QPLACE[k].n[0]===x && QPLACE[k].n[1]===y);
+function startQuest(id, hard){
+  const q = QUESTS[S.lang].find(x=>x.id===id); if(!q) return;
+  if(QS) clearInterval(QS.timer);
+  LS=null;
+  QS = {q, lang:S.lang, hard:!!hard, step:0, pos:[5,4], mist:0, talk:null, phase: hard===undefined ? "intro" : "walk", timer:null};
+  renderOverlay();
+}
+function qGoal(){ const s = QS.step===0 ? QS.q.g0 : QS.q.st[QS.step-1][4]; return s ? pair(s) : null; }
+const qTarget = () => (QS.q.st[QS.step]||[])[0] || null;
+function qMapSvg(){
+  const P = PLACES[QS.lang], tgt = QS.talk ? null : qTarget();
+  let s = `<svg class="qmap" id="qmap" viewBox="0 0 ${QW*TS} ${QH*TS}" role="img" aria-label="Карта города"><rect width="${QW*TS}" height="${QH*TS}" fill="#a6d89c"/>`;
+  QMAP.forEach((row,y)=>[...row].forEach((ch,x)=>{ const X=x*TS, Y=y*TS;
+    if(ch==="=") s += `<rect x="${X}" y="${Y}" width="${TS}" height="${TS}" fill="#d6cfbf"/><path d="M${X+3} ${Y+16}h11M${X+19} ${Y+16}h10" stroke="#ffffff" stroke-width="2"/>`;
+    else if(ch==="g" && (x*7+y*3)%4===0) s += `<path d="M${X+9} ${Y+22}l2-5 2 5M${X+19} ${Y+13}l2-5 2 5" stroke="#6fae63" stroke-width="1.5" fill="none"/>`;
+  }));
+  s += `<rect x="${3*TS+3}" y="${3*TS+4}" width="${2*TS-6}" height="${2*TS-8}" rx="22" fill="#6cb7e6" stroke="#4a95c7" stroke-width="2"/><path d="M${3*TS+16} ${3*TS+26}c4-3 8 3 12 0M${3*TS+30} ${4*TS+12}c4-3 8 3 12 0" stroke="#d5ecfa" stroke-width="2" fill="none"/>`;
+  QMAP.forEach((row,y)=>[...row].forEach((ch,x)=>{ if(ch==="T") s += `<g transform="translate(${x*TS},${y*TS})"><rect x="13" y="18" width="6" height="11" fill="#8b5a3c"/><circle cx="16" cy="13" r="11" fill="#4f9d58" stroke="#2d6b36" stroke-width="1.5"/></g>`; }));
+  for(const [k,pl] of Object.entries(QPLACE)) if(pl.b){
+    const name = P[k][0];
+    s += `<g transform="translate(${pl.b[0]*TS},${pl.b[1]*TS})"><rect x="5" y="20" width="54" height="42" rx="2" fill="${pl.wall}" stroke="#22313a" stroke-width="1.6"/>
+      <path d="M1 24L32 3l31 21z" fill="${pl.roof}" stroke="#22313a" stroke-width="1.6" stroke-linejoin="round"/>
+      <rect x="8" y="27" width="48" height="12" rx="2" fill="#ffffff" stroke="#22313a" stroke-width="1.2"/>
+      <text x="32" y="36" text-anchor="middle" font-size="${name.length>8?6.6:8}" font-weight="800" fill="#22313a" font-family="Manrope,system-ui,sans-serif">${esc(name)}</text>
+      <rect x="38" y="44" width="12" height="18" fill="#8b5a3c" stroke="#22313a" stroke-width="1.2"/><rect x="13" y="45" width="12" height="9" fill="#cfe8f6" stroke="#22313a" stroke-width="1.2"/></g>`;
+  }
+  s += `<g transform="translate(${8*TS},${3*TS})"><rect x="15" y="17" width="3" height="13" fill="#8b5a3c"/><rect x="0" y="5" width="32" height="13" rx="2" fill="#b27a4b" stroke="#22313a" stroke-width="1.2"/><text x="16" y="14.5" text-anchor="middle" font-size="7" font-weight="800" fill="#ffffff" font-family="Manrope,system-ui,sans-serif">${esc(P.park[0])}</text></g>
+    <g transform="translate(${9*TS},${5*TS})"><rect x="4" y="11" width="24" height="5" rx="1" fill="#b27a4b"/><rect x="4" y="18" width="24" height="4" rx="1" fill="#b27a4b"/><path d="M7 22v6M25 22v6" stroke="#5a3b28" stroke-width="2"/></g>`;
+  for(const [k,pl] of Object.entries(QPLACE)){
+    const cx = pl.n[0]*TS+21, cy = pl.n[1]*TS+15;
+    s += `<g><ellipse cx="${cx}" cy="${cy+12}" rx="9" ry="3" fill="rgba(0,0,0,.18)"/><path d="M${cx-8} ${cy+12}c0-10 4-13 8-13s8 3 8 13z" fill="${pl.c}" stroke="#22313a" stroke-width="1.4"/><circle cx="${cx}" cy="${cy-5}" r="6.5" fill="#f6d2b0" stroke="#22313a" stroke-width="1.4"/><circle cx="${cx-2.2}" cy="${cy-5.5}" r=".9" fill="#22313a"/><circle cx="${cx+2.2}" cy="${cy-5.5}" r=".9" fill="#22313a"/></g>`;
+    if(k===tgt) s += `<g class="bang"><circle cx="${cx}" cy="${cy-21}" r="7" fill="#f2b632" stroke="#22313a" stroke-width="1.4"/><text x="${cx}" y="${cy-17.4}" text-anchor="middle" font-size="10" font-weight="900" fill="#22313a">!</text></g>`;
+  }
+  const [px,py] = QS.pos;
+  s += `<g id="me" style="transform:translate(${px*TS}px,${py*TS}px)"><g transform="translate(-4 1)"><ellipse cx="16" cy="28" rx="9" ry="3" fill="rgba(0,0,0,.2)"/><path d="M8 28c0-10 4-13 8-13s8 3 8 13z" fill="var(--accent)" stroke="#22313a" stroke-width="1.4"/><circle cx="16" cy="11" r="7" fill="#f6d2b0" stroke="#22313a" stroke-width="1.4"/><path d="M9 9.5c1-5 4-6.5 7-6.5s6 1.5 7 6.5c-3-2-11-2-14 0z" fill="#5a3b28"/><circle cx="13.6" cy="11.5" r="1" fill="#22313a"/><circle cx="18.4" cy="11.5" r="1" fill="#22313a"/></g></g></svg>`;
+  return s;
+}
+function renderQuest(){
+  const root = $("#overlay-root"); document.body.style.overflow="hidden";
+  const Q = QS.q, n = Q.st.length, P = PLACES[QS.lang];
+  if(QS.phase==="intro"){
+    root.innerHTML = shell(0, `<div class="intro"><div class="label">Квест · ${esc(Q.lv)}</div><h2 class="q-title" style="font-size:26px">${esc(Q.t)}</h2><p class="muted" style="margin:0">${esc(Q.s)}</p>
+      <p style="margin:0">Ходите по городу, разговаривайте с людьми и выбирайте правильные ответы ${langName(QS.lang)}. Задания и реплики тоже ${langName(QS.lang)}: нажмите на слово, чтобы увидеть перевод. Жизней нет, ошибаться можно сколько угодно.</p>
+      <div class="ex"><b>Сложный режим</b><span>Без перевода реплик и без подсказок по словам. XP в полтора раза больше.</span></div></div>`,
+      `<div style="display:flex;gap:10px"><button class="btn ghost wide" data-act="qgo" data-h="1">Сложный режим</button><button class="btn wide" data-act="qgo" data-h="0">Начать</button></div>`);
+    return;
+  }
+  if(QS.phase==="done"){
+    root.innerHTML = shell(100, `<div class="result"><div class="label">Квест${QS.hard?" · сложный режим":""}</div>${starsHtml(QS.stars)}<h2 class="q-title">Задание выполнено!</h2>
+      <p class="muted" style="margin:0;max-width:44ch">${esc(Q.t)}. Неверных ответов: ${QS.mist}. +${QS.xp} XP.</p></div>`,
+      `<div class="res-actions"><button class="btn ghost" data-act="qagain">Пройти заново</button>${QS.hard?`<button class="btn ghost" data-act="qnorm">Обычный режим</button>`:`<button class="btn ghost" data-act="qhard">Сложный режим</button>`}<button class="btn wide" data-act="close">К урокам</button></div>`);
+    return;
+  }
+  const g = qGoal();
+  let body = `<div class="qhud"><div class="label">${esc(Q.t)} · шаг ${Math.min(QS.step+1,n)} из ${n}</div><div class="qgoal">${g?gl(g.t, QS.lang):""}</div>${g&&!QS.hard?`<div class="note">${esc(g.r)}</div>`:""}</div>${qMapSvg()}`;
+  let foot;
+  if(QS.talk){
+    const t = QS.talk;
+    const head = `<div class="who"><span class="dot" style="background:${QPLACE[t.pl].c}"></span>${esc(P[t.pl][1])}</div>`;
+    const line = s => { const p = pair(s); return `<div class="tl"><button class="speak sm" data-act="say" data-text="${esc(p.t)}" aria-label="Озвучить">${ICON_SPK}</button><div style="min-width:0"><div>${gl(p.t, QS.lang)}</div>${QS.hard?"":`<div class="note">${esc(p.r)}</div>`}</div></div>`; };
+    if(t.phase==="line"){
+      const s = Q.st[QS.step];
+      foot = `<div class="talk">${head}${line(s[1])}<div class="label">Ваш ответ</div><div class="options">${t.opts.map((o,i)=>{ const bad=t.bad.includes(o);
+        return `<button class="opt ${bad?"wrong":""}" data-act="qopt" data-v="${esc(o)}" ${bad?"disabled":""}><span class="k">${i+1}</span><span>${esc(o)}</span></button>`; }).join("")}</div>
+        ${t.bad.length?`<div class="note" style="color:var(--bad)">Не подходит по смыслу. Попробуйте другой ответ.</div>`:""}</div>`;
+    } else if(t.phase==="ok"){
+      foot = `<div class="talk">${head}${line(Q.st[QS.step-1][3])}<button class="btn wide" data-act="qnext">${QS.step>=n?"Завершить квест":"Дальше"}</button></div>`;
+    } else {
+      const g2 = qGoal();
+      foot = `<div class="talk">${head}${line(P[t.pl][2])}${g2?`<div class="note">Сейчас нужно: <b>${esc(QS.hard?g2.t:g2.r)}</b></div>`:""}<button class="btn ghost wide" data-act="qbye">Пока!</button></div>`;
+    }
+  } else foot = `<div class="note" style="text-align:center">Нажмите на клетку карты, чтобы идти (на компьютере можно стрелками). Цель отмечена жёлтым «!». Чтобы поговорить, встаньте на клетку с человеком.</div>`;
+  root.innerHTML = shell(QS.step/n*100, body, foot, QS.talk && QS.talk.phase==="ok" ? "ok" : "");
+}
+function qPath(from, to){
+  if(!qWalk(to[0],to[1])) return null;
+  const key = p => p[0]+","+p[1], prev = {[key(from)]:null}, qu = [from];
+  while(qu.length){
+    const c = qu.shift();
+    if(c[0]===to[0] && c[1]===to[1]){ const path=[]; let p=c; while(prev[key(p)]!==null){ path.unshift(p); p=prev[key(p)]; } return path; }
+    for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const nx=c[0]+dx, ny=c[1]+dy; if(qWalk(nx,ny) && !(key([nx,ny]) in prev)){ prev[key([nx,ny])]=c; qu.push([nx,ny]); } }
+  }
+  return null;
+}
+function qMoveMe(){ const me=$("#me"); if(me) me.style.transform = `translate(${QS.pos[0]*TS}px,${QS.pos[1]*TS}px)`; }
+function qWalkTo(x, y){
+  if(!QS || QS.phase!=="walk" || QS.talk) return;
+  clearInterval(QS.timer);
+  const path = qPath(QS.pos, [x,y]); if(!path) return;
+  if(!path.length){ qArrive(); return; }
+  QS.timer = setInterval(()=>{
+    if(!QS) return;
+    QS.pos = path.shift(); qMoveMe();
+    if(!path.length){ clearInterval(QS.timer); setTimeout(()=>{ if(QS) qArrive(); }, 170); }
+  }, 165);
+}
+function qStep([dx,dy]){ const nx=QS.pos[0]+dx, ny=QS.pos[1]+dy; if(!qWalk(nx,ny)) return; clearInterval(QS.timer); QS.pos=[nx,ny]; qMoveMe(); qArrive(); }
+function qTap(e, svg){
+  if(!QS || QS.phase!=="walk" || QS.talk) return;
+  const r = svg.getBoundingClientRect();
+  qWalkTo(Math.floor((e.clientX-r.left)/r.width*QW), Math.floor((e.clientY-r.top)/r.height*QH));
+}
+function qArrive(){ const pl = qPlaceAt(QS.pos[0], QS.pos[1]); if(pl) qTalk(pl); }
+function qTalk(pl){
+  const s = QS.q.st[QS.step];
+  if(s && s[0]===pl){ QS.talk = {pl, phase:"line", opts:shuffle(s[2]), bad:[]}; speak(pair(s[1]).t, QS.lang); }
+  else { QS.talk = {pl, phase:"idle"}; speak(pair(PLACES[QS.lang][pl][2]).t, QS.lang); }
+  renderOverlay();
+}
+function qPick(v){
+  const s = QS.q.st[QS.step];
+  if(v===s[2][0]){ sfx("good"); QS.talk.phase="ok"; QS.step++; speak(pair(s[3]).t, QS.lang); }
+  else { sfx("bad"); QS.talk.bad.push(v); QS.mist++; }
+  renderOverlay();
+}
+function qNext(){
+  const pl = QS.talk.pl;
+  if(QS.step>=QS.q.st.length) return finishQuest();
+  const s = QS.q.st[QS.step];
+  if(s[0]===pl){ QS.talk = {pl, phase:"line", opts:shuffle(s[2]), bad:[]}; speak(pair(s[1]).t, QS.lang); }
+  else QS.talk = null;
+  renderOverlay();
+}
+function finishQuest(){
+  const st = S.langs[QS.lang], n = QS.q.st.length, id = "qs-"+QS.q.id;
+  const pct = Math.max(40, 100-QS.mist*15);
+  QS.stars = QS.mist===0 ? 3 : QS.mist<=2 ? 2 : 1;
+  QS.xp = Math.round((10+n*3)*(QS.hard?1.5:1));
+  st.done[id] = Math.max(st.done[id]||0, pct);
+  if(QS.hard) st.hard[id] = Math.max(st.hard[id]||0, pct);
+  addXp(QS.xp); QS.phase="done"; QS.talk=null; sfx("win"); setTimeout(confetti, 50); renderOverlay();
 }
 
 /* ===================== PRONUNCIATION ===================== */
@@ -1445,8 +2182,8 @@ function startPron(id){
   renderOverlay(); setTimeout(()=>{ if(PS) speak(pair(lv.items[0]).t, PS.lang); }, 300);
 }
 function paintHeard(){
-  const el = $("#heard"); if(!el || !PS) return;
-  el.innerHTML = `${esc(PS.heard.trim())} <span class="part">${esc(PS.partial)}</span>`;
+  const el = $("#heard"), M = micTarget(); if(!el || !M) return;
+  el.innerHTML = `${esc(M.heard.trim())} <span class="part">${esc(M.partial)}</span>`;
 }
 function evalPron(){
   if(!PS || PS.res) return;
@@ -1759,6 +2496,8 @@ async function generateLesson(topic){
 
 /* ===================== EVENTS ===================== */
 document.addEventListener("click", e=>{
+  const mp = e.target.closest("#qmap"); if(mp && QS){ qTap(e, mp); return; }
+  const gw = e.target.closest(".gw"); if(gw && !e.target.closest("[data-act]")){ speak(gw.textContent, gw.dataset.l); return; }
   const b = e.target.closest("[data-act],[data-tab],[data-lang]"); if(!b || b.disabled) return;
   if(b.dataset.tab){ ui.tab=b.dataset.tab; try{localStorage.setItem("ekitil.tab",ui.tab)}catch(_){}; render(); window.scrollTo(0,0); return; }
   if(b.dataset.lang && !b.dataset.act){ if(S.lang===b.dataset.lang) return; if(dict && CH?.listening) dict.stop().catch(()=>{}); S.lang=b.dataset.lang; rv=null; chatLv=null; genLv=null; genErr=""; loadChat(); save(); render(); window.scrollTo(0,0); return; }
@@ -1766,15 +2505,39 @@ document.addEventListener("click", e=>{
   switch(a){
     case "start": startLesson(b.dataset.id); break;
     case "goreview": ui.tab="review"; render(); break;
-    case "say": speak(b.dataset.text, LS?LS.lang:S.lang); break;
+    case "say": speak(b.dataset.text, LS?LS.lang:QS?QS.lang:S.lang); break;
     case "close": closeLesson(); break;
-    case "snext": { const n=LS.topic.w.length; if(LS.si<n-1){ LS.si++; renderOverlay(); speak(words(LS.topic)[LS.si].t, LS.lang);} else { LS.phase="quiz"; renderOverlay(); const q=LS.qs[0]; if(q.ty==="listen"||q.ty==="dict") speak(q.w.t, LS.lang);} break; }
+    case "snext": { const n=words(LS.topic).length; if(LS.si<n-1){ LS.si++; renderOverlay(); speak(words(LS.topic)[LS.si].t, LS.lang);} else goPhase("quiz"); break; }
     case "sprev": LS.si=Math.max(0,LS.si-1); renderOverlay(); break;
-    case "skipstudy": LS.phase="quiz"; renderOverlay(); { const q=LS.qs[0]; if(q.ty==="listen"||q.ty==="dict") speak(q.w.t, LS.lang);} break;
+    case "skipstudy": goPhase("quiz"); break;
+    case "hardnow": LS.hard=true; LS.qs=LS.build(LS.topic, true); LS.total=LS.qs.length; goPhase("quiz"); break;
+    case "lsgo": LS.hard=b.dataset.h==="1"; LS.qs=LS.build(LS.topic, LS.hard); LS.total=LS.qs.length; goPhase(LS.first); break;
+    case "hardgo": LS.again(true); break;
+    case "restartnorm": LS.again(false); break;
+    case "startrev": startReview(b.dataset.id); break;
+    case "pics": startPics(); break;
+    case "dlg": startDlg(b.dataset.id); break;
+    case "dplay": playDialog(.9); break;
+    case "dslow": playDialog(.65); break;
+    case "dline": speak(LS.topic.d.lines[+b.dataset.i][1], LS.lang); break;
+    case "dtext": LS.showText=!LS.showText; renderOverlay(); break;
+    case "dqgo": stopSpeech(); LS.playing=-1; goPhase("quiz"); break;
+    case "dfinish": finishLesson(); break;
+    case "lmic": lessonMic(); break;
+    case "sayskip": skipSay(); break;
+    case "sayself": LS.sayRes=null; finishQ(true); break;
+    case "quest": startQuest(b.dataset.id); break;
+    case "qgo": QS.hard=b.dataset.h==="1"; QS.phase="walk"; renderOverlay(); break;
+    case "qopt": qPick(b.dataset.v); break;
+    case "qnext": qNext(); break;
+    case "qbye": QS.talk=null; renderOverlay(); break;
+    case "qagain": startQuest(QS.q.id, QS.hard); break;
+    case "qhard": startQuest(QS.q.id, true); break;
+    case "qnorm": startQuest(QS.q.id, false); break;
     case "pick": if(!LS.state){ LS.sel=b.dataset.v; renderOverlay(); } break;
     case "check": checkAnswer(); break;
     case "next": nextQ(); break;
-    case "restart": startLesson(LS.topic.id); break;
+    case "restart": LS.again(LS.hard); break;
     case "kchar": { const tb=$("#typebox")||$("#chat-in"); if(!tb) break; const s=tb.selectionStart??tb.value.length; tb.value=tb.value.slice(0,s)+b.dataset.c+tb.value.slice(tb.selectionEnd??s); if(LS) LS.sel=tb.value; tb.focus(); tb.setSelectionRange(s+1,s+1); const cb=$("#check-btn"); if(cb) cb.disabled=!tb.value.trim(); break; }
     case "tok": { LS.sel=[...(LS.sel||[]), +b.dataset.i]; renderOverlay(); break; }
     case "untok": { LS.sel=(LS.sel||[]).filter(i=>i!==+b.dataset.i); renderOverlay(); break; }
@@ -1831,12 +2594,21 @@ function matchClick(side, key){
 }
 document.addEventListener("input", e=>{ if(e.target.id==="typebox" && LS){ LS.sel=e.target.value; const c=$("#check-btn"); if(c) c.disabled=!e.target.value.trim(); }});
 document.addEventListener("keydown", e=>{
+  if(QS){
+    if(e.key==="Escape"){ closeLesson(); return; }
+    if(QS.phase==="walk" && !QS.talk){ const d={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key]; if(d){ e.preventDefault(); qStep(d); } }
+    else if(QS.talk){
+      if(QS.talk.phase==="line" && /^[1-3]$/.test(e.key)){ const o=QS.talk.opts[+e.key-1]; if(o && !QS.talk.bad.includes(o)) qPick(o); }
+      else if(e.key==="Enter"){ e.preventDefault(); if(QS.talk.phase==="ok") qNext(); else if(QS.talk.phase==="idle"){ QS.talk=null; renderOverlay(); } }
+    }
+    return;
+  }
   if(BZ && BZ.phase==="play" && /^[1-4]$/.test(e.key)){ blitzAnswer(BZ.q.opts[+e.key-1]); return; }
   if((BZ||PS) && e.key==="Escape"){ closeLesson(); return; }
   if(LS && LS.phase==="quiz"){
     const q=LS.qs[LS.qi];
     if(e.key==="Enter"){ e.preventDefault(); if(LS.state) nextQ(); else checkAnswer(); return; }
-    if(!LS.state && q.opts && /^[1-4]$/.test(e.key) && e.target.id!=="typebox"){ LS.sel=q.opts[+e.key-1]; renderOverlay(); }
+    if(!LS.state && q.opts && q.ty!=="match" && /^[1-4]$/.test(e.key) && e.target.id!=="typebox"){ LS.sel=q.opts[+e.key-1]; renderOverlay(); }
     return;
   }
   if(LS && LS.phase==="study" && (e.key==="Enter"||e.key==="ArrowRight")){ e.preventDefault(); $('[data-act="snext"]')?.click(); return; }
